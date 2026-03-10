@@ -86,6 +86,13 @@
       var lang = btn.dataset.lang;
       var path = window.location.pathname;
 
+      // Prefer explicit alternate links from <head> for correct routing on every host/path setup.
+      var alternate = document.querySelector('link[rel="alternate"][hreflang="' + lang + '"]');
+      if (alternate && alternate.href) {
+        window.location.href = alternate.href;
+        return;
+      }
+
       // Map PL filenames to EN filenames
       var plToEn = {
         'index.html': 'index.html',
