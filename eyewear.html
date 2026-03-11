@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENNS.STUDIO — Eyewear Visual Production</title>
+  <meta name="description" content="Visual production for eyewear brands. Campaign imagery, e-commerce, editorial and detail photography without traditional photoshoots.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.ico" sizes="32x32">
+  <style>
+/* ============================================================
+   SENNS.STUDIO — Eyewear Landing (standalone)
+   Tokens match main site style.css
+   ============================================================ */
+:root {
+  --bg:             #0E0E10;
+  --bg-alt:         #14141A;
+  --bg-elevated:    #1A1A22;
+  --bg-card:        #18181E;
+  --text:           #F2F2F2;
+  --text-muted:     #B7BBC2;
+  --text-dim:       #7E828A;
+  --accent:         #3B5BFF;
+  --accent-hover:   #5A75FF;
+  --border:         rgba(255, 255, 255, 0.08);
+  --border-subtle:  rgba(255, 255, 255, 0.04);
+  --border-strong:  rgba(255, 255, 255, 0.12);
+  --font-display:   'Instrument Serif', Georgia, serif;
+  --font-body:      'Outfit', 'Helvetica Neue', sans-serif;
+  --max-width:      1400px;
+  --page-padding:   clamp(24px, 5vw, 80px);
+  --ease:           cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body { font-family:var(--font-body); font-weight:300; color:var(--text); background:var(--bg); line-height:1.7; overflow-x:hidden; }
+img { display:block; max-width:100%; height:auto; }
+a { color:inherit; text-decoration:none; transition:color 0.3s var(--ease); }
+ul,ol { list-style:none; }
+
+/* Language toggle: hide inactive content */
+[data-lang-content="pl"] { display:none; }
+[data-lang-content="en"] { display:none; }
+body.lang-en [data-lang-content="en"] { display:block; }
+body.lang-en [data-lang-content="pl"] { display:none; }
+body.lang-pl [data-lang-content="pl"] { display:block; }
+body.lang-pl [data-lang-content="en"] { display:none; }
+/* Inline variants */
+body.lang-en [data-lang-inline="en"] { display:inline; }
+body.lang-en [data-lang-inline="pl"] { display:none; }
+body.lang-pl [data-lang-inline="pl"] { display:inline; }
+body.lang-pl [data-lang-inline="en"] { display:none; }
+
+.container { width:100%; max-width:var(--max-width); margin:0 auto; padding-left:var(--page-padding); padding-right:var(--page-padding); }
+
+/* ── Top bar ────────────────────────────────────── */
+.topbar {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:72px; display:flex; align-items:center;
+  background:rgba(14,14,16,0.85);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.topbar__inner {
+  display:flex; align-items:center; justify-content:space-between;
+  width:100%; max-width:var(--max-width); margin:0 auto;
+  padding:0 var(--page-padding); height:100%;
+}
+.topbar__logo {
+  font-family:var(--font-body); font-size:0.8125rem; font-weight:400;
+  letter-spacing:0.22em; text-transform:uppercase; color:var(--text);
+}
+.topbar__logo span { color:var(--text-dim); }
+.topbar__right { display:flex; align-items:center; gap:24px; }
+.lang-switch {
+  font-size:0.75rem; font-weight:300; letter-spacing:0.08em;
+  color:var(--text-dim); display:flex; gap:6px; align-items:center;
+}
+.lang-switch button {
+  font:inherit; font-size:0.75rem; font-weight:300; letter-spacing:0.08em;
+  color:var(--text-dim); background:none; border:none; cursor:pointer;
+  padding:4px 2px; transition:color 0.3s var(--ease);
+}
+.lang-switch button:hover, .lang-switch button.is-active { color:var(--text); }
+.lang-switch__sep { color:var(--border-strong); user-select:none; }
+
+/* ── Hero ────────────────────────────────────────── */
+.hero {
+  position:relative; width:100%;
+  min-height:520px; max-height:720px;
+  height:70vh;
+  margin-top:72px; overflow:hidden;
+}
+.hero__img {
+  position:absolute; inset:0; width:100%; height:100%;
+}
+.hero__img img {
+  width:100%; height:100%; object-fit:cover; object-position:center 30%;
+}
+/* Placeholder when no image */
+.hero__placeholder {
+  width:100%; height:100%;
+  background:linear-gradient(160deg, var(--bg-elevated), var(--bg-card), var(--bg-alt));
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-dim); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase;
+}
+.hero__overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(14,14,16,0.85) 0%, rgba(14,14,16,0.4) 40%, rgba(14,14,16,0.15) 100%);
+}
+.hero__content {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:0 var(--page-padding) clamp(48px, 8vh, 80px);
+  max-width:var(--max-width); margin:0 auto;
+}
+.hero__label {
+  font-size:12px; font-weight:500; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--text-dim); margin-bottom:16px;
+}
+.hero__title {
+  font-family:var(--font-display); font-weight:400; font-style:italic;
+  font-size:clamp(2.25rem, 5vw, 4rem); line-height:1.08;
+  letter-spacing:-0.02em; color:#fff; margin-bottom:16px; max-width:600px;
+}
+.hero__sub {
+  font-size:clamp(0.9375rem, 1.2vw, 1.0625rem); font-weight:300;
+  color:rgba(255,255,255,0.6); max-width:480px; line-height:1.65;
+}
+
+/* ── Section base ────────────────────────────────── */
+.section { padding-top:clamp(80px, 10vw, 120px); padding-bottom:clamp(80px, 10vw, 120px); }
+.section--border { border-top:1px solid var(--border); }
+.text-label {
+  font-size:12px; font-weight:500; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--text-dim); margin-bottom:16px;
+}
+.section__title {
+  font-family:var(--font-display); font-size:clamp(2rem, 4vw, 3.5rem);
+  font-weight:400; font-style:italic; line-height:1.1;
+  letter-spacing:-0.02em; color:var(--text); margin-bottom:12px;
+}
+.section__sub {
+  font-size:clamp(0.875rem, 1.1vw, 1rem); font-weight:300;
+  color:var(--text-muted); max-width:520px; line-height:1.65; margin-bottom:0;
+}
+
+/* ── Format block ────────────────────────────────── */
+.format {
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(48px, 6vw, 96px);
+  align-items:center;
+  padding:clamp(56px, 7vw, 80px) 0;
+  border-bottom:1px solid var(--border);
+}
+.format:last-child { border-bottom:none; }
+.format--reverse .format__media { order:2; }
+.format--reverse .format__text  { order:1; }
+
+.format__number {
+  font-family:var(--font-body); font-size:13px; font-weight:400;
+  letter-spacing:0.12em; color:var(--text-dim); margin-bottom:20px;
+}
+.format__title {
+  font-family:var(--font-display); font-size:clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight:400; font-style:italic; color:var(--text);
+  line-height:1.15; margin-bottom:16px;
+}
+.format__desc {
+  font-size:clamp(0.875rem, 1.1vw, 1rem); font-weight:300;
+  color:var(--text-muted); line-height:1.7; max-width:420px;
+}
+
+/* Format media: 2 images stacked or side by side */
+.format__media {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.format__img {
+  position:relative; overflow:hidden; border-radius:12px;
+  border:1px solid var(--border); background:var(--bg-card);
+  aspect-ratio:4/5;
+}
+.format__img img {
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.format__img--placeholder {
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(160deg, var(--bg-elevated) 0%, var(--bg-card) 50%, var(--bg-alt) 100%);
+  color:var(--text-dim); font-size:0.6875rem; letter-spacing:0.08em;
+  text-align:center; padding:16px; line-height:1.5;
+}
+
+/* ── Process section ─────────────────────────────── */
+.process-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr);
+  gap:clamp(36px, 5vw, 72px);
+  margin-top:56px;
+  counter-reset:proc;
+}
+.proc-step {
+  counter-increment:proc;
+  padding-top:28px; border-top:1px solid var(--border);
+}
+.proc-step::before {
+  content:counter(proc, decimal-leading-zero);
+  display:block; font-size:0.75rem; letter-spacing:0.12em;
+  color:var(--text-dim); margin-bottom:24px;
+}
+.proc-step h3 {
+  font-family:var(--font-display); font-size:1.375rem;
+  font-weight:400; font-style:italic; color:var(--text);
+  margin-bottom:14px; line-height:1.2;
+}
+.proc-step p {
+  color:var(--text-muted); font-size:0.9375rem; line-height:1.7;
+}
+
+/* ── CTA band ────────────────────────────────────── */
+.cta-band {
+  background:var(--bg-alt); padding:clamp(80px, 10vw, 140px) 0;
+  text-align:center; border-top:1px solid var(--border-subtle);
+}
+.cta-band h2 {
+  font-family:var(--font-display); font-size:clamp(2rem, 4vw, 3rem);
+  font-weight:400; font-style:italic; color:var(--text); margin-bottom:20px;
+}
+.cta-band p {
+  color:var(--text-muted); margin:0 auto 44px; font-size:1rem;
+  max-width:480px; line-height:1.7;
+}
+.cta-actions { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.btn {
+  display:inline-block; font-family:var(--font-body); font-size:0.8125rem;
+  font-weight:300; letter-spacing:0.08em; padding:16px 48px; text-align:center;
+  transition:background-color 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.btn--primary {
+  background:var(--text); border:1px solid var(--text); color:var(--bg);
+}
+.btn--primary:hover { opacity:0.85; }
+.btn--secondary {
+  background:transparent; border:1px solid var(--border-strong); color:var(--text);
+}
+.btn--secondary:hover { border-color:var(--text-muted); }
+
+/* ── Micro footer ────────────────────────────────── */
+.micro-footer {
+  border-top:1px solid var(--border); padding:40px 0; text-align:center;
+}
+.micro-footer p {
+  font-size:0.75rem; color:var(--text-dim); letter-spacing:0.04em; max-width:100%;
+}
+.micro-footer a { color:var(--text-muted); transition:color 0.3s var(--ease); }
+.micro-footer a:hover { color:var(--text); }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width:768px) {
+  .topbar { height:60px; }
+  .hero { margin-top:60px; min-height:400px; }
+  .format { grid-template-columns:1fr; gap:32px; }
+  .format--reverse .format__media { order:0; }
+  .format--reverse .format__text  { order:0; }
+  .format__media { gap:8px; }
+  .process-grid { grid-template-columns:1fr; gap:36px; }
+  .section { padding-top:64px; padding-bottom:64px; }
+  .btn { width:100%; padding:14px 36px; }
+  .cta-actions { flex-direction:column; gap:12px; align-items:center; }
+}
+
+@media (max-width:480px) {
+  :root { --page-padding:20px; }
+  .topbar { height:56px; }
+  .hero { margin-top:56px; min-height:340px; }
+  .topbar__logo { font-size:0.6875rem; letter-spacing:0.15em; }
+  .format__media { grid-template-columns:1fr; }
+}
+  </style>
+</head>
+
+<body class="lang-pl">
+
+<!-- ============ TOPBAR ============ -->
+<div class="topbar">
+  <div class="topbar__inner">
+    <a href="https://senns.studio" class="topbar__logo">SENNS<span>.STUDIO</span></a>
+    <div class="topbar__right">
+      <div class="lang-switch">
+        <button id="btnEN" onclick="setLang('en')">EN</button>
+        <span class="lang-switch__sep">/</span>
+        <button id="btnPL" class="is-active" onclick="setLang('pl')">PL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__img">
+    <!-- PLACEHOLDER: Replace with hero eyewear image (campaign-level, model wearing sunglasses, studio lighting) -->
+    <img src="assets/eyewear/hero.webp" alt="Eyewear campaign visual">
+</div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__label">Eyewear</div>
+
+    <div data-lang-content="en">
+      <h1 class="hero__title">Visual production<br>for eyewear brands.</h1>
+      <p class="hero__sub">Campaign imagery, e-commerce and editorial visuals. Without traditional photoshoots.</p>
+    </div>
+    <div data-lang-content="pl">
+      <h1 class="hero__title">Produkcja wizualna<br>dla marek eyewear.</h1>
+      <p class="hero__sub">Kampanie, e-commerce i wizuale edytorialowe. Bez tradycyjnych sesji zdjęciowych.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<!-- ============ INTRO ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div data-lang-content="en">
+      <p class="text-label">What we produce</p>
+      <h2 class="section__title">Every format your brand needs.</h2>
+      <p class="section__sub">From campaign hero shots to precision detail work. One production partner. Consistent quality across every touchpoint.</p>
+    </div>
+    <div data-lang-content="pl">
+      <p class="text-label">Co produkujemy</p>
+      <h2 class="section__title">Każdy format, jakiego potrzebuje Twoja marka.</h2>
+      <p class="section__sub">Od ujęć kampanijnych po precyzyjne detale. Jeden partner produkcyjny. Spójna jakość na każdym touchpoincie.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORMAT 01: CAMPAIGN ============ -->
+<section class="section">
+  <div class="container">
+    <div class="format">
+      <div class="format__text">
+        <div class="format__number">01</div>
+        <div data-lang-content="en">
+          <h3 class="format__title">Campaign imagery</h3>
+          <p class="format__desc">Hero visuals that define a season. Lookbook sets, brand campaigns and key visuals built around your creative direction. Print-ready quality. Full control over mood, casting and lighting.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3 class="format__title">Kampanie wizerunkowe</h3>
+          <p class="format__desc">Wizuale, które definiują sezon. Lookbooki, kampanie i key visuals oparte o Twój kierunek kreatywny. Jakość do druku. Pełna kontrola nad nastrojem, castingiem i swiatłem.</p>
+        </div>
+      </div>
+      <div class="format__media">
+        <!-- PLACEHOLDER: Replace with campaign eyewear images -->
+        <div class="format__img">
+          <img src="assets/eyewear/campaign-1.webp" alt="Eyewear campaign visual">
+        </div>
+        <div class="format__img">
+          <img src="assets/eyewear/campaign-2.webp" alt="Eyewear campaign variant">
+        </div>
+        <!-- Usage:
+        <div class="format__img">
+        <div class="format__img">
+          <img src="assets/eyewear/campaign-1.webp" alt="Eyewear campaign visual">
+        </div></div>
+        <div class="format__img"><img src="assets/eyewear/campaign-2.webp" alt="Eyewear campaign variant"></div>
+        -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORMAT 02: E-COMMERCE ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="format format--reverse">
+      <div class="format__text">
+        <div class="format__number">02</div>
+        <div data-lang-content="en">
+          <h3 class="format__title">E-commerce visuals</h3>
+          <p class="format__desc">Product photography ready for your store. Clean packshots on white or neutral backgrounds. Lifestyle variants with model context. Consistent across full collections.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3 class="format__title">Wizuale e-commerce</h3>
+          <p class="format__desc">Zdjęcia produktowe gotowe do sklepu. Packshoty na białym lub neutralnym tle. Warianty lifestyle z modelem. Spójność w ramach całych kolekcji.</p>
+        </div>
+      </div>
+      <div class="format__media">
+        <!-- PLACEHOLDER: Replace with e-commerce eyewear images -->
+        <div class="format__img">
+          <img src="assets/eyewear/ecom-1.webp" alt="Packshot sunglasses">
+        </div>
+        <div class="format__img">
+          <img src="assets/eyewear/ecom-2.webp" alt="ecommerce shot model wearing sunglasses">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORMAT 03: EDITORIAL ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="format">
+      <div class="format__text">
+        <div class="format__number">03</div>
+        <div data-lang-content="en">
+          <h3 class="format__title">Editorial direction</h3>
+          <p class="format__desc">Magazine-grade visuals. Model-focused compositions with editorial lighting and mood. Crafted for lookbooks, press kits and brand storytelling.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3 class="format__title">Kierunek edytorialowy</h3>
+          <p class="format__desc">Wizuale na poziomie magazynowym. Kompozycje z modelem, edytorialne światło i nastrój. Przygotowane pod lookbooki, press kity i narracje marki.</p>
+        </div>
+      </div>
+      <div class="format__media">
+        <div class="format__img">
+          <img src="assets/eyewear/editorial-1.webp" alt="Editorial shot model + eyewear">
+        </div>
+        <div class="format__img">
+          <img src="assets/eyewear/editorial-2.webp" alt="editorial variant close-up mood driven">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORMAT 04: DETAIL ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="format format--reverse">
+      <div class="format__text">
+        <div class="format__number">04</div>
+        <div data-lang-content="en">
+          <h3 class="format__title">Detail precision</h3>
+          <p class="format__desc">Close-up visuals that show craftsmanship. Frame texture, hinge detail, material quality. The level of precision that builds trust and justifies premium pricing.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3 class="format__title">Precyzja detalu</h3>
+          <p class="format__desc">Ujęcia close-up pokazujące rzemieślniczą jakość. Tekstura oprawek, detale zawiasow, jakość materiałów. Poziom precyzji, ktory buduje zaufanie i uzasadnia premium pricing.</p>
+        </div>
+      </div>
+      <div class="format__media">
+        <div class="format__img">
+          <img src="assets/eyewear/detail-1.webp" alt="Frame detail closeup texture">
+        </div>
+        <div class="format__img">
+          <img src="assets/eyewear/detail-2.webp" alt="Material detail acetate grain">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORMAT 05: SOCIAL ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="format">
+      <div class="format__text">
+        <div class="format__number">05</div>
+        <div data-lang-content="en">
+          <h3 class="format__title">Social and performance</h3>
+          <p class="format__desc">Ad creatives and social content optimized for conversion. Multiple variants from a single direction. A/B testing-ready visuals without reshooting.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3 class="format__title">Social i performance</h3>
+          <p class="format__desc">Kreacje reklamowe i content socialowy zoptymalizowane pod konwersję. Wiele wariantów z jednego kierunku. Wizuale gotowe do testów A/B bez powtarzania sesji.</p>
+        </div>
+      </div>
+      <div class="format__media">
+        <div class="format__img">
+          <img src="assets/eyewear/social-1.webp" alt="Ad creative A product eyewear">
+        </div>
+        <div class="format__img">
+          <img src="assets/eyewear/social-2.webp" alt="Ad creative A product eyewear">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ PROCESS ============ -->
+<section class="section section--border">
+  <div class="container">
+    <div data-lang-content="en">
+      <p class="text-label">How it works</p>
+      <h2 class="section__title">Your vision. Our production.</h2>
+    </div>
+    <div data-lang-content="pl">
+      <p class="text-label">Jak pracujemy</p>
+      <h2 class="section__title">Twoja wizja. Nasza produkcja.</h2>
+    </div>
+
+    <div class="process-grid">
+      <div class="proc-step">
+        <div data-lang-content="en">
+          <h3>Creative direction stays with you.</h3>
+          <p>You control mood, casting, styling and final approval. We translate your vision into production-ready visuals.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3>Kierunek kreatywny zostaje u Ciebie.</h3>
+          <p>Kontrolujesz nastrój, casting, stylizacje i finalną akceptację. My przekładamy Twoją wizję na gotowe wizuale.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div data-lang-content="en">
+          <h3>Iterative refinement.</h3>
+          <p>No image is final until you approve it. Every visual goes through rounds of refinement until full acceptance.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3>Iteracyjne dopracowanie.</h3>
+          <p>Żaden obraz nie jest finalny, dopóki go nie zatwierdzisz. Każdy wizual przechodzi rundy dopracowania aż do pełnej akceptacji.</p>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div data-lang-content="en">
+          <h3>Print-ready output.</h3>
+          <p>Every deliverable meets print and billboard standards. High resolution, color-accurate, production-grade files.</p>
+        </div>
+        <div data-lang-content="pl">
+          <h3>Jakość do druku.</h3>
+          <p>Każdy deliverable spełnia standardy druku i billboardu. Wysoka rozdzielczość, wierne kolory, pliki klasy produkcyjnej.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ CTA ============ -->
+<section class="cta-band">
+  <div class="container">
+    <div data-lang-content="en">
+      <h2>Ready to see how it works?</h2>
+      <p>15-minute call. No pitch deck. Just a conversation about your visual needs and how we can deliver.</p>
+    </div>
+    <div data-lang-content="pl">
+      <h2>Chcesz zobaczyc jak to dziala?</h2>
+      <p>15-minutowa rozmowa. Bez prezentacji. Konkretnie o Twoich potrzebach wizualnych, i o tym jak możemy je zrealizować.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+        <span data-lang-inline="en">Book a call</span>
+        <span data-lang-inline="pl">Umów spotkanie</span>
+      </a>
+      <a href="mailto:hello@senns.studio" class="btn btn--secondary">hello@senns.studio</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ MICRO FOOTER ============ -->
+<footer class="micro-footer">
+  <div class="container">
+    <p>&copy; 2026 SENNS.STUDIO &nbsp;&middot;&nbsp; <a href="https://senns.studio">senns.studio</a></p>
+  </div>
+</footer>
+
+</main>
+
+<script>
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btnEN').classList.toggle('is-active', lang === 'en');
+  document.getElementById('btnPL').classList.toggle('is-active', lang === 'pl');
+  document.documentElement.lang = lang;
+}
+// Default: PL
+setLang('pl');
+</script>
+
+</body>
+</html>
