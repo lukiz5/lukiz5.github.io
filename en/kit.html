@@ -80,9 +80,15 @@
 
     .kit-hero__grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-      gap: clamp(32px, 5vw, 72px);
+      grid-template-columns: 1fr;
+      gap: 28px;
       align-items: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .kit-hero__content {
+      text-align: center;
     }
 
     .kit-hero__title {
@@ -93,22 +99,22 @@
       line-height: 0.98;
       letter-spacing: -0.04em;
       color: var(--text);
-      max-width: 11ch;
       margin-bottom: 22px;
     }
 
     .kit-hero__subtitle {
-      max-width: 58ch;
+      max-width: 46ch;
       font-size: clamp(1rem, 1.4vw, 1.125rem);
       line-height: 1.8;
       color: var(--text-muted);
-      margin-bottom: 30px;
+      margin: 0 auto 30px;
     }
 
     .kit-hero__checks {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      justify-content: center;
       margin-bottom: 36px;
     }
 
@@ -138,7 +144,7 @@
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 12px;
       max-width: 640px;
-      margin-bottom: 14px;
+      margin: 0 auto 14px;
     }
 
     .kit-form__input {
@@ -166,93 +172,13 @@
       justify-content: center;
     }
 
-    .kit-form__note {
-      max-width: 620px;
-      color: var(--text-dim);
-      font-size: 12px;
-      line-height: 1.7;
-      letter-spacing: 0.03em;
-      margin-bottom: 28px;
-    }
-
     .kit-hero__actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
+      justify-content: center;
     }
 
-    .kit-hero__aside {
-      padding: 30px;
-      background: linear-gradient(180deg, rgba(26, 26, 34, 0.98) 0%, rgba(19, 19, 26, 0.98) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.22);
-    }
-
-    .kit-hero__aside h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.7rem, 3vw, 2.5rem);
-      font-style: italic;
-      font-weight: 400;
-      line-height: 1.04;
-      margin-bottom: 14px;
-      color: var(--text);
-    }
-
-    .kit-hero__aside p {
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 18px;
-    }
-
-    .kit-hero__list {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 26px;
-    }
-
-    .kit-hero__list-item {
-      display: grid;
-      grid-template-columns: 36px 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .kit-hero__list-item:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .kit-hero__list-number {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      color: #d9b57a;
-      padding-top: 4px;
-    }
-
-    .kit-hero__list-title {
-      display: block;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .kit-hero__list-copy {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .kit-hero__note {
-      margin-top: 14px;
-      color: var(--text-dim);
-      font-size: 12px;
-      line-height: 1.6;
-      letter-spacing: 0.03em;
-    }
-
-    .kit-proof,
     .kit-showcase,
     .kit-upgrade,
     .kit-service,
@@ -261,7 +187,6 @@
       border-top: 1px solid var(--border-subtle);
     }
 
-    .kit-proof__grid,
     .kit-service__grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -269,14 +194,12 @@
       margin-top: 36px;
     }
 
-    .kit-proof__card,
     .kit-service__card {
       padding: 24px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
     }
 
-    .kit-proof__card strong,
     .kit-service__card strong {
       display: block;
       font-family: var(--font-display);
@@ -287,7 +210,6 @@
       color: var(--text);
     }
 
-    .kit-proof__card p,
     .kit-service__card p {
       color: var(--text-muted);
       line-height: 1.7;
@@ -329,32 +251,9 @@
 
     .kit-upgrade__layout {
       display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.9fr);
+      grid-template-columns: 1fr;
       gap: clamp(28px, 5vw, 64px);
       align-items: start;
-    }
-
-    .kit-upgrade__summary {
-      max-width: 54ch;
-    }
-
-    .kit-upgrade__stack {
-      display: grid;
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .kit-upgrade__stack-item {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .kit-upgrade__stack-item strong {
-      color: var(--text);
-      display: block;
-      margin-bottom: 4px;
     }
 
     .kit-upgrade__card {
@@ -363,6 +262,8 @@
       color: var(--text);
       border: 1px solid var(--border-strong);
       box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
+      max-width: 520px;
+      margin: 0 auto;
     }
 
     .kit-upgrade__card .text-label {
@@ -424,14 +325,6 @@
       justify-content: center;
     }
 
-    .kit-upgrade__footnote {
-      margin-top: 14px;
-      color: var(--text-dim);
-      font-size: 12px;
-      line-height: 1.6;
-      text-align: center;
-    }
-
     .kit-service__grid {
       grid-template-columns: 1.1fr 0.95fr;
       align-items: start;
@@ -488,8 +381,7 @@
         grid-template-columns: 1fr;
       }
 
-      .kit-showcase__grid,
-      .kit-proof__grid {
+      .kit-showcase__grid {
         grid-template-columns: 1fr 1fr;
       }
     }
@@ -499,16 +391,13 @@
         padding-top: 118px;
       }
 
-      .kit-hero__aside,
-      .kit-proof__card,
       .kit-service__card,
       .kit-upgrade__card,
       .kit-dfy__band {
         padding: 22px;
       }
 
-      .kit-showcase__grid,
-      .kit-proof__grid {
+      .kit-showcase__grid {
         grid-template-columns: 1fr;
       }
 
@@ -577,80 +466,23 @@
       <section class="kit-hero">
         <div class="container">
           <div class="kit-hero__grid">
-            <div>
+            <div class="kit-hero__content">
               <p class="text-label">Production Kit</p>
-              <h1 class="kit-hero__title">A free starting point for campaign production without the guesswork.</h1>
-              <p class="kit-hero__subtitle">
-                You get the same starter pack we use to kick off brand work: prompts, session structure,
-                workflow logic and visual references that make the process easier to evaluate before you spend production time or budget.
-              </p>
+              <h1 class="kit-hero__title">Our production kit.</h1>
+              <p class="kit-hero__subtitle">The same references, briefs and workflows we use when building campaigns for brands. Free.</p>
               <div class="kit-hero__checks">
-                <span class="kit-hero__check">10 prompts to start with</span>
-                <span class="kit-hero__check">session brief and shot logic</span>
-                <span class="kit-hero__check">real SENNS workflow</span>
+                <span class="kit-hero__check">10 ready-to-use prompts</span>
+                <span class="kit-hero__check">Session planning brief</span>
+                <span class="kit-hero__check">Studio workflow</span>
               </div>
               <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST">
                 <input type="hidden" name="source" value="kit-en">
                 <input type="email" name="email" class="kit-form__input" placeholder="Your email address" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Get the free kit</button>
               </form>
-              <p class="kit-form__note">This stays a lead capture form. The visitor leaves an email, and you can send the Production Kit later from your own process or mailing flow.</p>
               <div class="kit-hero__actions">
                 <a href="#system" class="btn btn--secondary">See the full system</a>
               </div>
-            </div>
-
-            <aside class="kit-hero__aside">
-              <h2>What exactly do you get?</h2>
-              <p>This is not a generic lead magnet. It is a practical production starter you can use immediately when planning your own visual work.</p>
-              <div class="kit-hero__list">
-                <div class="kit-hero__list-item">
-                  <span class="kit-hero__list-number">01</span>
-                  <div>
-                    <strong class="kit-hero__list-title">Prompts that lead somewhere</strong>
-                    <div class="kit-hero__list-copy">Ready-to-use examples for fashion, beauty, eyewear and lifestyle with a clear direction for style and expected outcome.</div>
-                  </div>
-                </div>
-                <div class="kit-hero__list-item">
-                  <span class="kit-hero__list-number">02</span>
-                  <div>
-                    <strong class="kit-hero__list-title">A session brief instead of random renders</strong>
-                    <div class="kit-hero__list-copy">How we think about image roles, narrative and production order so the output can support a campaign, not just exist.</div>
-                  </div>
-                </div>
-                <div class="kit-hero__list-item">
-                  <span class="kit-hero__list-number">03</span>
-                  <div>
-                    <strong class="kit-hero__list-title">A simplified path from prompt to final image</strong>
-                    <div class="kit-hero__list-copy">Less theory, more clarity. Enough to quickly assess whether this direction makes sense for your brand or team.</div>
-                  </div>
-                </div>
-              </div>
-              <p class="kit-hero__note">The visual layer is cleaner now, but the core logic stays lead-based: the user submits an email and you follow up with the kit afterwards.</p>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <section class="kit-proof" id="whats-inside">
-        <div class="container">
-          <div class="kit-showcase__head">
-            <p class="text-label">What is inside</p>
-            <h2 class="section__title">Everything is designed to help you judge the direction faster.</h2>
-            <p class="section__subtitle">If you handle marketing, e-commerce or creative production, the point of this pack is to speed up decision-making, not to become another PDF saved for later.</p>
-          </div>
-          <div class="kit-proof__grid">
-            <div class="kit-proof__card">
-              <strong>Prompts</strong>
-              <p>Starter sets for campaigns, lookbooks, packshots and lighter social-first production formats.</p>
-            </div>
-            <div class="kit-proof__card">
-              <strong>Brief</strong>
-              <p>A way to think about sessions: which images you need, what role they play and how to build them in the right order.</p>
-            </div>
-            <div class="kit-proof__card">
-              <strong>Workflow</strong>
-              <p>A compressed path from the first direction to imagery you can actually assess for brand fit and production quality.</p>
             </div>
           </div>
         </div>
@@ -660,8 +492,8 @@
         <div class="container">
           <div class="kit-showcase__head">
             <p class="text-label">The same workflow</p>
-            <h2 class="section__title">This is the system behind the images you already see from us.</h2>
-            <p class="section__subtitle">It is not detached theory. The same logic supports campaign production, e-commerce materials and creative testing for brand work.</p>
+            <h2 class="section__title">Built with this system.</h2>
+            <p class="section__subtitle">Every image on our feed uses this workflow.</p>
           </div>
           <div class="kit-showcase__grid">
             <picture><img src="../assets/work-main.webp" alt="SENNS fashion campaign visual" loading="lazy"></picture>
@@ -674,30 +506,11 @@
       <section class="kit-upgrade" id="system">
         <div class="container">
           <div class="kit-upgrade__layout">
-            <div class="kit-upgrade__summary">
-              <p class="text-label">If you want the full version</p>
-              <h2 class="section__title">The SENNS System gives you the complete production framework.</h2>
-              <p class="section__subtitle">The Production Kit is your starting point. The SENNS System is the full structure: more prompts, more control, and much less trial and error inside the process.</p>
-              <div class="kit-upgrade__stack">
-                <div class="kit-upgrade__stack-item">
-                  <strong>A real process, not just inspiration</strong>
-                  Instead of a handful of examples, you get a working structure you can adapt inside your team or use for your own visual production.
-                </div>
-                <div class="kit-upgrade__stack-item">
-                  <strong>More categories, more use cases</strong>
-                  Expanded material for campaigns, lookbooks, e-commerce, testing variants and keeping brand consistency under control.
-                </div>
-                <div class="kit-upgrade__stack-item">
-                  <strong>Fewer wasted attempts</strong>
-                  You are buying a shortcut into a process already tested on real work, not a polished collection of vague creative tips.
-                </div>
-              </div>
-            </div>
-
             <div class="kit-upgrade__card">
               <p class="text-label">Digital offer</p>
               <h3>The SENNS System</h3>
-              <p>An expanded package for individuals and teams who want to build visual production with more structure and less friction.</p>
+              <p class="section__title">The complete production framework.</p>
+              <p>50+ prompts, full workflow, session templates, realism controls. Everything we use, nothing held back.</p>
               <div class="kit-upgrade__price">$99</div>
               <p class="kit-upgrade__price-note">one-time purchase / lifetime access</p>
               <ul class="kit-upgrade__list">
@@ -708,7 +521,6 @@
                 <li>built from actual SENNS.STUDIO production work</li>
               </ul>
               <a href="mailto:hello@senns.studio?subject=The%20SENNS%20System%20EN" class="btn btn--primary">I want The SENNS System</a>
-              <p class="kit-upgrade__footnote">This opens an email so the CTA works immediately, even before checkout is connected.</p>
             </div>
           </div>
         </div>
@@ -719,12 +531,12 @@
           <div class="kit-service__head">
             <p class="text-label">If you want to go through it with us</p>
             <h2 class="section__title">1-on-1 production consultation.</h2>
-            <p class="section__subtitle">For brands and teams that want to turn a creative direction into a realistic action plan faster instead of drifting through disconnected tests.</p>
+            <p class="section__subtitle">60 minutes. Your brand, your challenges, a concrete action plan.</p>
           </div>
           <div class="kit-service__grid">
             <div class="kit-service__card">
               <strong>What we focus on during the session</strong>
-              <p>We review your product, current materials, quality expectations, formats you need and the most realistic route to a result that fits your brand and production goals.</p>
+              <p>We review your product, current visuals, and the most realistic route to results that fit your brand.</p>
             </div>
             <div class="kit-service__card kit-service__card--consult">
               <div class="kit-service__price">$149<span>60 min / video call</span></div>
@@ -741,7 +553,7 @@
             <div class="kit-dfy__head">
               <p class="text-label">Done for you</p>
               <h2 class="section__title">And if you would rather just have it built, we can handle the production.</h2>
-              <p class="section__subtitle">Campaigns, lookbooks, e-commerce, eyewear and creative testing. We run the visual production, you stay focused on approvals and outcomes.</p>
+              <p class="section__subtitle">Campaigns. Lookbooks. E-commerce. Eyewear. We handle production, you approve results.</p>
             </div>
             <div class="kit-dfy__actions">
               <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Talk to us about production</a>
