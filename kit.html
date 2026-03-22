@@ -85,33 +85,6 @@
       align-items: center;
     }
 
-    .kit-hero__eyebrow,
-    .kit-proof__eyebrow,
-    .kit-showcase__eyebrow,
-    .kit-upgrade__eyebrow,
-    .kit-service__eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 22px;
-    }
-
-    .kit-hero__eyebrow::before,
-    .kit-proof__eyebrow::before,
-    .kit-showcase__eyebrow::before,
-    .kit-upgrade__eyebrow::before,
-    .kit-service__eyebrow::before {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--border-strong);
-    }
-
     .kit-hero__title {
       font-family: var(--font-display);
       font-size: clamp(3rem, 6vw, 5.5rem);
@@ -392,8 +365,7 @@
       box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
     }
 
-    .kit-upgrade__card .text-label,
-    .kit-upgrade__card .kit-upgrade__eyebrow {
+    .kit-upgrade__card .text-label {
       color: var(--text-dim);
     }
 
@@ -606,7 +578,7 @@
         <div class="container">
           <div class="kit-hero__grid">
             <div>
-              <p class="kit-hero__eyebrow">Production Kit</p>
+              <p class="text-label">Production Kit</p>
               <h1 class="kit-hero__title">Darmowy starter do produkcji kampanii bez chaosu.</h1>
               <p class="kit-hero__subtitle">
                 Dostajesz ten sam zestaw, od którego zaczynamy pracę z markami: prompty, brief sesji,
@@ -663,7 +635,7 @@
       <section class="kit-proof" id="whats-inside">
         <div class="container">
           <div class="kit-showcase__head">
-            <p class="kit-proof__eyebrow">Co jest w środku</p>
+            <p class="text-label">Co jest w środku</p>
             <h2 class="section__title">Wszystko po to, żeby szybciej ocenić potencjał kierunku.</h2>
             <p class="section__subtitle">Jeśli odpowiadasz za marketing, e-commerce albo kreatywę, ten pakiet ma pomóc Ci szybciej podjąć decyzję, a nie dodać kolejny PDF do folderu “na później”.</p>
           </div>
@@ -687,7 +659,7 @@
       <section class="kit-showcase">
         <div class="container">
           <div class="kit-showcase__head">
-            <p class="kit-showcase__eyebrow">Ten sam workflow</p>
+            <p class="text-label">Ten sam workflow</p>
             <h2 class="section__title">Tym systemem powstają obrazy, które widzisz u nas.</h2>
             <p class="section__subtitle">To nie teoria odklejona od praktyki. Te same zasady porządkują pracę przy kampaniach, materiałach e-commerce i testach kreatywnych dla marek.</p>
           </div>
@@ -703,7 +675,7 @@
         <div class="container">
           <div class="kit-upgrade__layout">
             <div class="kit-upgrade__summary">
-              <p class="kit-upgrade__eyebrow">Jeśli chcesz wejść głębiej</p>
+              <p class="text-label">Jeśli chcesz wejść głębiej</p>
               <h2 class="section__title">The SENNS System to pełna wersja tego procesu.</h2>
               <p class="section__subtitle">Production Kit daje Ci start. The SENNS System daje cały framework: więcej promptów, więcej kontroli i dużo mniej zgadywania w trakcie pracy.</p>
               <div class="kit-upgrade__stack">
@@ -745,7 +717,7 @@
       <section class="kit-service">
         <div class="container">
           <div class="kit-service__head">
-            <p class="kit-service__eyebrow">Jeśli chcesz przejść przez to z nami</p>
+            <p class="text-label">Jeśli chcesz przejść przez to z nami</p>
             <h2 class="section__title">Konsultacja produkcyjna 1:1.</h2>
             <p class="section__subtitle">Dla marek i zespołów, które chcą szybciej przełożyć kierunek kreatywny na konkretny plan działania, zamiast błądzić między testami.</p>
           </div>
@@ -767,7 +739,7 @@
         <div class="container">
           <div class="kit-dfy__band">
             <div class="kit-dfy__head">
-              <p class="kit-service__eyebrow">Done for you</p>
+              <p class="text-label">Done for you</p>
               <h2 class="section__title">A jeśli wolisz po prostu mieć to zrobione, zrobimy to za Ciebie.</h2>
               <p class="section__subtitle">Kampanie, lookbooki, e-commerce, eyewear i testy kreatywne. Bierzemy produkcję po swojej stronie, a Ty skupiasz się na decyzjach i wyniku.</p>
             </div>

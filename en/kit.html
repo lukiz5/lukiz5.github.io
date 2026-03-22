@@ -85,33 +85,6 @@
       align-items: center;
     }
 
-    .kit-hero__eyebrow,
-    .kit-proof__eyebrow,
-    .kit-showcase__eyebrow,
-    .kit-upgrade__eyebrow,
-    .kit-service__eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 22px;
-    }
-
-    .kit-hero__eyebrow::before,
-    .kit-proof__eyebrow::before,
-    .kit-showcase__eyebrow::before,
-    .kit-upgrade__eyebrow::before,
-    .kit-service__eyebrow::before {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--border-strong);
-    }
-
     .kit-hero__title {
       font-family: var(--font-display);
       font-size: clamp(3rem, 6vw, 5.5rem);
@@ -392,8 +365,7 @@
       box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
     }
 
-    .kit-upgrade__card .text-label,
-    .kit-upgrade__card .kit-upgrade__eyebrow {
+    .kit-upgrade__card .text-label {
       color: var(--text-dim);
     }
 
@@ -606,7 +578,7 @@
         <div class="container">
           <div class="kit-hero__grid">
             <div>
-              <p class="kit-hero__eyebrow">Production Kit</p>
+              <p class="text-label">Production Kit</p>
               <h1 class="kit-hero__title">A free starting point for campaign production without the guesswork.</h1>
               <p class="kit-hero__subtitle">
                 You get the same starter pack we use to kick off brand work: prompts, session structure,
@@ -663,7 +635,7 @@
       <section class="kit-proof" id="whats-inside">
         <div class="container">
           <div class="kit-showcase__head">
-            <p class="kit-proof__eyebrow">What is inside</p>
+            <p class="text-label">What is inside</p>
             <h2 class="section__title">Everything is designed to help you judge the direction faster.</h2>
             <p class="section__subtitle">If you handle marketing, e-commerce or creative production, the point of this pack is to speed up decision-making, not to become another PDF saved for later.</p>
           </div>
@@ -687,7 +659,7 @@
       <section class="kit-showcase">
         <div class="container">
           <div class="kit-showcase__head">
-            <p class="kit-showcase__eyebrow">The same workflow</p>
+            <p class="text-label">The same workflow</p>
             <h2 class="section__title">This is the system behind the images you already see from us.</h2>
             <p class="section__subtitle">It is not detached theory. The same logic supports campaign production, e-commerce materials and creative testing for brand work.</p>
           </div>
@@ -703,7 +675,7 @@
         <div class="container">
           <div class="kit-upgrade__layout">
             <div class="kit-upgrade__summary">
-              <p class="kit-upgrade__eyebrow">If you want the full version</p>
+              <p class="text-label">If you want the full version</p>
               <h2 class="section__title">The SENNS System gives you the complete production framework.</h2>
               <p class="section__subtitle">The Production Kit is your starting point. The SENNS System is the full structure: more prompts, more control, and much less trial and error inside the process.</p>
               <div class="kit-upgrade__stack">
@@ -745,7 +717,7 @@
       <section class="kit-service">
         <div class="container">
           <div class="kit-service__head">
-            <p class="kit-service__eyebrow">If you want to go through it with us</p>
+            <p class="text-label">If you want to go through it with us</p>
             <h2 class="section__title">1-on-1 production consultation.</h2>
             <p class="section__subtitle">For brands and teams that want to turn a creative direction into a realistic action plan faster instead of drifting through disconnected tests.</p>
           </div>
@@ -767,7 +739,7 @@
         <div class="container">
           <div class="kit-dfy__band">
             <div class="kit-dfy__head">
-              <p class="kit-service__eyebrow">Done for you</p>
+              <p class="text-label">Done for you</p>
               <h2 class="section__title">And if you would rather just have it built, we can handle the production.</h2>
               <p class="section__subtitle">Campaigns, lookbooks, e-commerce, eyewear and creative testing. We run the visual production, you stay focused on approvals and outcomes.</p>
             </div>
