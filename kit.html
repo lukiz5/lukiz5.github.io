@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Production Kit - SENNS.STUDIO</title>
-  <meta name="description" content="SENNS production kit. Te same referencje, briefy i workflow, ktorych uzywamy w studiu. Za darmo za email.">
+  <title>Production Kit | SENNS.STUDIO</title>
+  <meta name="description" content="Darmowy Production Kit od SENNS.STUDIO. Prompty, brief sesji, workflow i przykłady, których używamy w produkcji kampanii dla marek fashion i lifestyle.">
   <link rel="alternate" hreflang="pl" href="https://senns.studio/kit.html">
   <link rel="alternate" hreflang="en" href="https://senns.studio/en/kit.html">
   <link rel="alternate" hreflang="x-default" href="https://senns.studio/kit.html">
@@ -18,14 +18,14 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SENNS.STUDIO">
-  <meta property="og:title" content="Production Kit - SENNS.STUDIO">
-  <meta property="og:description" content="SENNS production kit. Te same narzedzia, ktorych uzywamy codziennie.">
+  <meta property="og:title" content="Production Kit | SENNS.STUDIO">
+  <meta property="og:description" content="Darmowy zestaw promptów, briefów i workflow, których używamy przy produkcji kampanii dla marek.">
   <meta property="og:url" content="https://senns.studio/kit.html">
   <meta property="og:image" content="https://senns.studio/assets/og-image.jpg">
   <meta property="og:locale" content="pl_PL">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Production Kit - SENNS.STUDIO">
-  <meta name="twitter:description" content="SENNS production kit. Te same narzedzia, ktorych uzywamy codziennie.">
+  <meta name="twitter:title" content="Production Kit | SENNS.STUDIO">
+  <meta name="twitter:description" content="Darmowy zestaw promptów, briefów i workflow, których używamy przy produkcji kampanii dla marek.">
   <meta name="twitter:image" content="https://senns.studio/assets/og-image.jpg">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VP39KQRSG"></script>
   <script>
@@ -35,45 +35,492 @@
     gtag('config', 'G-3VP39KQRSG');
   </script>
   <style>
-    .kit-hero{padding:clamp(140px,15vw,200px) 0 clamp(80px,10vw,120px);text-align:center}
-    .kit-hero__label{font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:24px}
-    .kit-hero__title{font-family:var(--font-display);font-size:clamp(2.5rem,5.5vw,4.5rem);font-style:italic;font-weight:400;line-height:1.05;letter-spacing:-.02em;color:var(--text);margin-bottom:20px}
-    .kit-hero__subtitle{font-family:var(--font-body);font-size:clamp(.9375rem,1.2vw,1.0625rem);font-weight:300;color:var(--text-muted);max-width:480px;margin:0 auto 48px;line-height:1.7}
-    .kit-form{max-width:440px;margin:0 auto;display:flex;gap:12px}
-    .kit-form__input{flex:1;font-family:var(--font-body);font-size:.875rem;font-weight:300;color:var(--text);background:var(--bg-elevated);border:1px solid var(--border-strong);padding:14px 20px;outline:none;transition:border-color .3s var(--ease);letter-spacing:.02em}
-    .kit-form__input::placeholder{color:var(--text-dim)}
-    .kit-form__input:focus{border-color:var(--text-muted)}
-    .kit-form__btn{font-family:var(--font-body);font-size:.8125rem;font-weight:300;letter-spacing:.08em;padding:14px 32px;background:var(--text);border:1px solid var(--text);color:var(--bg);cursor:pointer;transition:opacity .3s var(--ease);white-space:nowrap}
-    .kit-form__btn:hover{opacity:.85}
-    .kit-form__note{text-align:center;margin-top:14px;font-size:12px;color:var(--text-dim);letter-spacing:.03em}
-    .kit-contents{padding:clamp(64px,8vw,96px) 0;border-top:1px solid var(--border-subtle)}
-    .kit-contents__grid{max-width:800px;margin:48px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:40px 64px}
-    .kit-contents__item{text-align:left}
-    .kit-contents__number{display:block;font-family:var(--font-body);font-size:24px;font-weight:500;color:var(--text);margin-bottom:4px}
-    .kit-contents__item h3{font-family:var(--font-display);font-size:clamp(1.125rem,1.8vw,1.375rem);font-style:italic;font-weight:400;color:var(--text);margin-bottom:8px;line-height:1.2}
-    .kit-contents__item p{font-size:var(--body-size);font-weight:300;color:var(--text-muted);line-height:1.6}
-    .kit-portfolio{padding:clamp(64px,8vw,96px) 0;border-top:1px solid var(--border-subtle)}
-    .kit-portfolio__grid{max-width:var(--stage-max);margin:48px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .kit-portfolio__grid picture{display:block;overflow:hidden;border-radius:12px;aspect-ratio:4/5}
-    .kit-portfolio__grid img{width:100%;height:100%;object-fit:cover;display:block}
-    .kit-system{padding:clamp(80px,10vw,120px) 0;background:var(--bg-alt);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)}
-    .kit-system__inner{max-width:700px;margin:0 auto;text-align:center}
-    .kit-system__price{font-family:var(--font-body);font-size:clamp(2rem,4vw,3rem);font-weight:200;color:var(--text);letter-spacing:-.02em;margin-bottom:8px}
-    .kit-system__price-note{font-size:13px;color:var(--text-dim);letter-spacing:.04em;margin-bottom:32px}
-    .kit-system__features{max-width:500px;margin:0 auto 44px;text-align:left}
-    .kit-system__feature{display:flex;align-items:baseline;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:var(--body-size);font-weight:300;color:var(--text-muted)}
-    .kit-system__feature::before{content:'';width:6px;height:6px;background:var(--text-dim);border-radius:50%;flex-shrink:0;margin-top:6px}
-    .kit-dfy{padding:clamp(80px,10vw,120px) 0;text-align:center}
-    .kit-dfy__inner{max-width:600px;margin:0 auto}
-    .kit-consult{padding:clamp(64px,8vw,96px) 0;border-top:1px solid var(--border-subtle)}
-    .kit-consult__inner{max-width:700px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
-    .kit-consult__price{font-family:var(--font-body);font-size:clamp(1.75rem,3.5vw,2.5rem);font-weight:200;color:var(--text);letter-spacing:-.02em;text-align:right}
-    .kit-consult__price span{display:block;font-size:13px;color:var(--text-dim);letter-spacing:.04em;margin-top:4px;font-weight:300}
-    @media(max-width:768px){.kit-form{flex-direction:column}.kit-contents__grid{grid-template-columns:1fr;gap:32px}.kit-portfolio__grid{grid-template-columns:1fr 1fr;gap:8px}.kit-consult__inner{grid-template-columns:1fr;text-align:center;gap:24px}.kit-consult__price{text-align:center}}
+    .kit-page {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kit-page::before,
+    .kit-page::after {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(18px);
+      opacity: 0.7;
+    }
+
+    .kit-page::before {
+      top: 80px;
+      right: -120px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(194, 168, 128, 0.22) 0%, rgba(194, 168, 128, 0) 72%);
+    }
+
+    .kit-page::after {
+      top: 420px;
+      left: -140px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(96, 84, 66, 0.12) 0%, rgba(96, 84, 66, 0) 72%);
+    }
+
+    .kit-page main,
+    .kit-page .footer,
+    .kit-page .nav {
+      position: relative;
+      z-index: 1;
+    }
+
+    .kit-hero {
+      padding: clamp(128px, 14vw, 180px) 0 clamp(64px, 8vw, 96px);
+    }
+
+    .kit-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: center;
+    }
+
+    .kit-hero__eyebrow,
+    .kit-proof__eyebrow,
+    .kit-showcase__eyebrow,
+    .kit-upgrade__eyebrow,
+    .kit-service__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 22px;
+    }
+
+    .kit-hero__eyebrow::before,
+    .kit-proof__eyebrow::before,
+    .kit-showcase__eyebrow::before,
+    .kit-upgrade__eyebrow::before,
+    .kit-service__eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--border-strong);
+    }
+
+    .kit-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      max-width: 11ch;
+      margin-bottom: 22px;
+    }
+
+    .kit-hero__subtitle {
+      max-width: 58ch;
+      font-size: clamp(1rem, 1.4vw, 1.125rem);
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .kit-hero__checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .kit-hero__check {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.64);
+      color: var(--text-muted);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+    }
+
+    .kit-hero__check::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #b08a54;
+      flex-shrink: 0;
+    }
+
+    .kit-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .kit-hero__aside {
+      padding: 30px;
+      background:
+        linear-gradient(180deg, rgba(253, 251, 248, 0.96) 0%, rgba(245, 240, 232, 0.94) 100%);
+      border: 1px solid rgba(78, 67, 53, 0.12);
+      box-shadow: 0 26px 80px rgba(32, 24, 16, 0.08);
+    }
+
+    .kit-hero__aside h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.04;
+      margin-bottom: 14px;
+    }
+
+    .kit-hero__aside p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .kit-hero__list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .kit-hero__list-item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kit-hero__list-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .kit-hero__list-number {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+      padding-top: 4px;
+    }
+
+    .kit-hero__list-title {
+      display: block;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .kit-hero__list-copy {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .kit-hero__note {
+      margin-top: 14px;
+      color: var(--text-dim);
+      font-size: 12px;
+      line-height: 1.6;
+      letter-spacing: 0.03em;
+    }
+
+    .kit-proof,
+    .kit-showcase,
+    .kit-upgrade,
+    .kit-service,
+    .kit-dfy {
+      padding: clamp(72px, 9vw, 110px) 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .kit-proof__grid,
+    .kit-service__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .kit-proof__card,
+    .kit-service__card {
+      padding: 24px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+    }
+
+    .kit-proof__card strong,
+    .kit-service__card strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .kit-proof__card p,
+    .kit-service__card p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .kit-showcase__head,
+    .kit-upgrade__head,
+    .kit-service__head,
+    .kit-dfy__head {
+      max-width: 760px;
+      margin-bottom: 36px;
+    }
+
+    .kit-showcase__grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr 0.95fr;
+      gap: 16px;
+    }
+
+    .kit-showcase__grid picture {
+      display: block;
+      overflow: hidden;
+      border-radius: 14px;
+      aspect-ratio: 4 / 5;
+      background: var(--bg-elevated);
+    }
+
+    .kit-showcase__grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .kit-upgrade {
+      background: linear-gradient(180deg, rgba(245, 240, 232, 0.74) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .kit-upgrade__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.9fr);
+      gap: clamp(28px, 5vw, 64px);
+      align-items: start;
+    }
+
+    .kit-upgrade__summary {
+      max-width: 54ch;
+    }
+
+    .kit-upgrade__stack {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .kit-upgrade__stack-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .kit-upgrade__stack-item strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .kit-upgrade__card {
+      padding: clamp(26px, 4vw, 34px);
+      background: #1f1913;
+      color: #f8f5ef;
+      box-shadow: 0 24px 80px rgba(21, 17, 13, 0.18);
+    }
+
+    .kit-upgrade__card .text-label,
+    .kit-upgrade__card .kit-upgrade__eyebrow {
+      color: rgba(248, 245, 239, 0.66);
+    }
+
+    .kit-upgrade__card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .kit-upgrade__price {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 200;
+      letter-spacing: -0.04em;
+      margin: 20px 0 6px;
+    }
+
+    .kit-upgrade__price-note {
+      color: rgba(248, 245, 239, 0.7);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .kit-upgrade__list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .kit-upgrade__list li {
+      list-style: none;
+      position: relative;
+      padding-left: 18px;
+      color: rgba(248, 245, 239, 0.88);
+      line-height: 1.65;
+    }
+
+    .kit-upgrade__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d9b57a;
+    }
+
+    .kit-upgrade__card .btn--primary {
+      width: 100%;
+      justify-content: center;
+      background: #f5efe4;
+      color: #1f1913;
+      border-color: #f5efe4;
+    }
+
+    .kit-upgrade__card .btn--primary:hover,
+    .kit-upgrade__card .btn--primary:focus {
+      background: transparent;
+      color: #f5efe4;
+      border-color: rgba(245, 239, 228, 0.68);
+    }
+
+    .kit-upgrade__footnote {
+      margin-top: 14px;
+      color: rgba(248, 245, 239, 0.58);
+      font-size: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .kit-service__grid {
+      grid-template-columns: 1.1fr 0.95fr;
+      align-items: start;
+      gap: 24px;
+    }
+
+    .kit-service__card--consult {
+      display: grid;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(253, 251, 248, 0.96) 0%, rgba(245, 240, 232, 0.94) 100%);
+      border-color: rgba(78, 67, 53, 0.12);
+      box-shadow: 0 20px 60px rgba(32, 24, 16, 0.06);
+    }
+
+    .kit-service__price {
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.04em;
+      color: var(--text);
+      font-weight: 200;
+    }
+
+    .kit-service__price span {
+      display: block;
+      margin-top: 6px;
+      color: var(--text-dim);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .kit-dfy__band {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
+      padding: clamp(28px, 4vw, 38px);
+      background: linear-gradient(135deg, rgba(250, 247, 242, 1) 0%, rgba(240, 233, 223, 1) 100%);
+      border: 1px solid rgba(78, 67, 53, 0.12);
+    }
+
+    .kit-dfy__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .kit-hero__grid,
+      .kit-upgrade__layout,
+      .kit-service__grid,
+      .kit-dfy__band {
+        grid-template-columns: 1fr;
+      }
+
+      .kit-showcase__grid,
+      .kit-proof__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .kit-hero {
+        padding-top: 118px;
+      }
+
+      .kit-hero__aside,
+      .kit-proof__card,
+      .kit-service__card,
+      .kit-upgrade__card,
+      .kit-dfy__band {
+        padding: 22px;
+      }
+
+      .kit-showcase__grid,
+      .kit-proof__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kit-hero__actions,
+      .kit-dfy__actions {
+        flex-direction: column;
+      }
+
+      .kit-hero__actions .btn,
+      .kit-dfy__actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="page-wrapper">
+  <div class="page-wrapper kit-page">
     <nav class="nav is-scrolled" id="nav">
       <div class="nav__inner">
         <a href="index.html" class="nav__logo">SENNS<span class="logo__suffix">.STUDIO</span></a>
@@ -89,11 +536,12 @@
             <span class="nav__lang-sep">/</span>
             <button class="nav__lang-btn" data-lang="en">EN</button>
           </div>
-          <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Umow rozmowe</a>
+          <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Spotkanie</a>
           <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
         </div>
       </div>
     </nav>
+
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu__links">
         <a href="portfolio.html" class="mobile-menu__link">Portfolio</a>
@@ -107,104 +555,220 @@
           <span class="nav__lang-sep">/</span>
           <button class="nav__lang-btn" data-lang="en">EN</button>
         </div>
-        <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Umow rozmowe</a>
+        <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Spotkanie</a>
       </div>
     </div>
+
     <main>
-    <section class="kit-hero">
-      <div class="container">
-        <p class="kit-hero__label">Production kit</p>
-        <h1 class="kit-hero__title">Narzedzia, ktorych uzywamy codziennie.</h1>
-        <p class="kit-hero__subtitle">Referencje, briefy i workflow prosto ze studia. Ten sam system, ktory stoi za wszystkim, co widzisz na naszym feedzie.</p>
-        <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST">
-          <input type="email" name="email" class="kit-form__input" placeholder="twoj@email.com" required>
-          <button type="submit" class="kit-form__btn">Pobierz kit</button>
-        </form>
-        <p class="kit-form__note">Za darmo. Bez spamu. Wypisz sie kiedy chcesz.</p>
-      </div>
-    </section>
-    <section class="kit-contents">
-      <div class="container">
-        <p class="text-label">Co w srodku</p>
-        <h2 class="section__title">Nie tutorial. Narzedzie produkcyjne.</h2>
-        <p class="section__subtitle">Te same referencje, ktorych uzywamy budujac kampanie dla marek.</p>
-        <div class="kit-contents__grid">
-          <div class="kit-contents__item"><span class="kit-contents__number">01</span><h3>Gotowe prompty</h3><p>10 promptow na fashion, beauty, eyewear i lifestyle. Kazdy z oczekiwanym wynikiem i ustawieniami.</p></div>
-          <div class="kit-contents__item"><span class="kit-contents__number">02</span><h3>Brief sesji</h3><p>Jak myslimy o sesjach wizualnych. Nie losowe rendery - zaplanowane produkcje z rolami dla kazdego zdjecia.</p></div>
-          <div class="kit-contents__item"><span class="kit-contents__number">03</span><h3>Przykladowe wyniki</h3><p>Realne outputy ze studia. Do czego celowasc i jakiego poziomu oczekiwac.</p></div>
-          <div class="kit-contents__item"><span class="kit-contents__number">04</span><h3>Workflow na start</h3><p>Od pierwszego promptu do zdjecia gotowego do kampanii. Pipeline w uproszczeniu.</p></div>
-        </div>
-      </div>
-    </section>
-    <section class="kit-portfolio">
-      <div class="container">
-        <p class="text-label">Zbudowane tym systemem</p>
-        <h2 class="section__title">Kazde zdjecie na naszym feedzie uzywa tego workflow.</h2>
-        <div class="kit-portfolio__grid">
-          <picture><img src="assets/work-main.webp" alt="SENNS kampania wizualna" loading="lazy"></picture>
-          <picture><img src="assets/work-1.webp" alt="SENNS editorial" loading="lazy"></picture>
-          <picture><img src="assets/work-2.webp" alt="SENNS lookbook" loading="lazy"></picture>
-        </div>
-      </div>
-    </section>
-    <section class="kit-system" id="system">
-      <div class="container">
-        <div class="kit-system__inner">
-          <p class="text-label">Pelny system</p>
-          <h2 class="section__title">The SENNS System.</h2>
-          <p class="section__subtitle" style="margin:0 auto 16px">Kompletny framework produkcyjny. 50+ promptow, pelny workflow, szablony sesji, kontrola realizmu. Wszystko czego uzywamy - bez ukrywania.</p>
-          <div class="kit-system__price">$99</div>
-          <p class="kit-system__price-note">Jednorazowy zakup. Dozywotni dostep.</p>
-          <div class="kit-system__features">
-            <div class="kit-system__feature">50+ gotowych promptow w 8 kategoriach</div>
-            <div class="kit-system__feature">Kompletny system planowania sesji z szablonami</div>
-            <div class="kit-system__feature">Przewodnik po swietle i referencjach kamer</div>
-            <div class="kit-system__feature">Checklista realizmu i proces kontroli jakosci</div>
-            <div class="kit-system__feature">Pelny workflow od pierwszego promptu do dostarczenia kampanii</div>
-            <div class="kit-system__feature">Framework spojnosci marki</div>
-            <div class="kit-system__feature">120+ stron, bogato ilustrowanych praca SENNS</div>
-          </div>
-          <a href="#" class="btn btn--primary">Kup The SENNS System</a>
-        </div>
-      </div>
-    </section>
-    <section class="kit-consult">
-      <div class="container">
-        <div class="kit-consult__inner">
-          <div>
-            <p class="text-label">1-na-1</p>
-            <h2 class="section__title">Konsultacja produkcyjna.</h2>
-            <p class="section__subtitle">60 minut. Twoja marka, Twoj produkt, Twoje wyzwania wizualne. Przegladamy to co masz, pokazujemy co jest mozliwe i budujemy plan dzialania.</p>
-            <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="margin-top:32px">Umow sesje</a>
-          </div>
-          <div class="kit-consult__price">$149<span>60 min / rozmowa wideo</span></div>
-        </div>
-      </div>
-    </section>
-    <section class="kit-dfy">
-      <div class="container">
-        <div class="kit-dfy__inner">
-          <p class="text-label">Zrobimy to za Ciebie</p>
-          <h2 class="section__title">Zbudujemy to dla Twojej marki.</h2>
-          <p class="section__subtitle" style="margin:0 auto 16px">Kampanie. Lookbooki. E-commerce. Eyewear. Zajmujemy sie cala produkcja wizualna - Ty akceptujesz wyniki.</p>
-          <p style="color:var(--text-dim);font-size:14px;margin:0 auto 40px;max-width:400px">Indywidualny zakres. Indywidualna wycena. Zaczyna sie od rozmowy.</p>
-          <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-            <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Umow rozmowe</a>
-            <a href="portfolio.html" class="btn btn--secondary">Zobacz portfolio</a>
+      <section class="kit-hero">
+        <div class="container">
+          <div class="kit-hero__grid">
+            <div>
+              <p class="kit-hero__eyebrow">Production Kit</p>
+              <h1 class="kit-hero__title">Darmowy starter do produkcji kampanii bez chaosu.</h1>
+              <p class="kit-hero__subtitle">
+                Dostajesz ten sam zestaw, od którego zaczynamy pracę z markami: prompty, brief sesji,
+                workflow i przykłady, które porządkują proces zanim wydasz czas i budżet na produkcję.
+              </p>
+              <div class="kit-hero__checks">
+                <span class="kit-hero__check">10 promptów na start</span>
+                <span class="kit-hero__check">brief sesji i układ ujęć</span>
+                <span class="kit-hero__check">realny workflow SENNS</span>
+              </div>
+              <div class="kit-hero__actions">
+                <a href="mailto:hello@senns.studio?subject=Production%20Kit%20PL" class="btn btn--primary">Wyślijcie mi kit</a>
+                <a href="#system" class="btn btn--secondary">Zobacz pełny system</a>
+              </div>
+            </div>
+
+            <aside class="kit-hero__aside">
+              <h2>Co dokładnie dostaniesz?</h2>
+              <p>To nie lead magnet z ogólnikami. To praktyczny pakiet, który możesz od razu wykorzystać przy planowaniu własnych wizualnych sesji.</p>
+              <div class="kit-hero__list">
+                <div class="kit-hero__list-item">
+                  <span class="kit-hero__list-number">01</span>
+                  <div>
+                    <strong class="kit-hero__list-title">Prompty, które prowadzą do wyniku</strong>
+                    <div class="kit-hero__list-copy">Gotowe przykłady dla fashion, beauty, eyewear i lifestyle, z jasnym kierunkiem co do stylu i efektu.</div>
+                  </div>
+                </div>
+                <div class="kit-hero__list-item">
+                  <span class="kit-hero__list-number">02</span>
+                  <div>
+                    <strong class="kit-hero__list-title">Brief sesji zamiast przypadkowych renderów</strong>
+                    <div class="kit-hero__list-copy">Jak układamy role obrazów, narrację i kolejność pracy, żeby materiał nadawał się do kampanii.</div>
+                  </div>
+                </div>
+                <div class="kit-hero__list-item">
+                  <span class="kit-hero__list-number">03</span>
+                  <div>
+                    <strong class="kit-hero__list-title">Skrócony workflow od promptu do finala</strong>
+                    <div class="kit-hero__list-copy">Minimum teorii, maksimum konkretu. Tak, żebyś szybko ocenił czy ten kierunek ma sens dla Twojej marki.</div>
+                  </div>
+                </div>
+              </div>
+              <a href="mailto:hello@senns.studio?subject=Production%20Kit%20PL" class="btn btn--primary">Odbierz darmowy kit</a>
+              <p class="kit-hero__note">Kliknięcie otworzy mail do hello@senns.studio. Odsyłamy kit bez automatycznych lejków i bez spamu.</p>
+            </aside>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="kit-proof" id="whats-inside">
+        <div class="container">
+          <div class="kit-showcase__head">
+            <p class="kit-proof__eyebrow">Co jest w środku</p>
+            <h2 class="section__title">Wszystko po to, żeby szybciej ocenić potencjał kierunku.</h2>
+            <p class="section__subtitle">Jeśli odpowiadasz za marketing, e-commerce albo kreatywę, ten pakiet ma pomóc Ci szybciej podjąć decyzję, a nie dodać kolejny PDF do folderu “na później”.</p>
+          </div>
+          <div class="kit-proof__grid">
+            <div class="kit-proof__card">
+              <strong>Prompty</strong>
+              <p>Startowe zestawy do budowania kampanii, lookbooków, packshotów i lżejszych socialowych formatów.</p>
+            </div>
+            <div class="kit-proof__card">
+              <strong>Brief</strong>
+              <p>Szablon myślenia o sesji: jakie obrazy są potrzebne, jaką pełnią funkcję i w jakiej kolejności je budować.</p>
+            </div>
+            <div class="kit-proof__card">
+              <strong>Workflow</strong>
+              <p>Uproszczona ścieżka od pierwszego kierunku do materiału, który da się ocenić pod kątem marki i jakości.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-showcase">
+        <div class="container">
+          <div class="kit-showcase__head">
+            <p class="kit-showcase__eyebrow">Ten sam workflow</p>
+            <h2 class="section__title">Tym systemem powstają obrazy, które widzisz u nas.</h2>
+            <p class="section__subtitle">To nie teoria odklejona od praktyki. Te same zasady porządkują pracę przy kampaniach, materiałach e-commerce i testach kreatywnych dla marek.</p>
+          </div>
+          <div class="kit-showcase__grid">
+            <picture><img src="assets/work-main.webp" alt="Kampania modowa SENNS.STUDIO" loading="lazy"></picture>
+            <picture><img src="assets/work-1.webp" alt="Editorial SENNS.STUDIO" loading="lazy"></picture>
+            <picture><img src="assets/work-2.webp" alt="Lookbook SENNS.STUDIO" loading="lazy"></picture>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-upgrade" id="system">
+        <div class="container">
+          <div class="kit-upgrade__layout">
+            <div class="kit-upgrade__summary">
+              <p class="kit-upgrade__eyebrow">Jeśli chcesz wejść głębiej</p>
+              <h2 class="section__title">The SENNS System to pełna wersja tego procesu.</h2>
+              <p class="section__subtitle">Production Kit daje Ci start. The SENNS System daje cały framework: więcej promptów, więcej kontroli i dużo mniej zgadywania w trakcie pracy.</p>
+              <div class="kit-upgrade__stack">
+                <div class="kit-upgrade__stack-item">
+                  <strong>Pełny proces, nie tylko inspiracje</strong>
+                  Zamiast kilku przykładów dostajesz kompletną strukturę pracy, którą możesz wdrożyć w swoim zespole albo wykorzystać przy własnej produkcji.
+                </div>
+                <div class="kit-upgrade__stack-item">
+                  <strong>Więcej kategorii i więcej scenariuszy</strong>
+                  Materiał rozszerzony o konkretne zastosowania: kampanie, lookbooki, e-commerce, warianty testowe i kontrolę spójności marki.
+                </div>
+                <div class="kit-upgrade__stack-item">
+                  <strong>Mniej prób i błędów</strong>
+                  Kupujesz skrót do procesu, który już został przepracowany na realnych projektach, a nie zestaw estetycznych ogólników.
+                </div>
+              </div>
+            </div>
+
+            <div class="kit-upgrade__card">
+              <p class="text-label">Oferta cyfrowa</p>
+              <h3>The SENNS System</h3>
+              <p>Rozszerzony pakiet dla osób i zespołów, które chcą samodzielnie układać produkcję wizualną na wyższym poziomie.</p>
+              <div class="kit-upgrade__price">369 PLN</div>
+              <p class="kit-upgrade__price-note">jednorazowy zakup / dostęp bez limitu czasu</p>
+              <ul class="kit-upgrade__list">
+                <li>50+ promptów uporządkowanych w 8 praktycznych kategoriach</li>
+                <li>szablony sesji, struktura ujęć i logika planowania materiału</li>
+                <li>kontrola realizmu, światła i spójności brandowej</li>
+                <li>pełny workflow od pierwszego kierunku do materiału gotowego do oceny</li>
+                <li>opracowanie oparte na realnych pracach SENNS.STUDIO</li>
+              </ul>
+              <a href="mailto:hello@senns.studio?subject=The%20SENNS%20System%20PL" class="btn btn--primary">Chcę kupić The SENNS System</a>
+              <p class="kit-upgrade__footnote">Po kliknięciu otworzysz wiadomość mailową. To działa już teraz, zanim podepniemy checkout.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-service">
+        <div class="container">
+          <div class="kit-service__head">
+            <p class="kit-service__eyebrow">Jeśli chcesz przejść przez to z nami</p>
+            <h2 class="section__title">Konsultacja produkcyjna 1:1.</h2>
+            <p class="section__subtitle">Dla marek i zespołów, które chcą szybciej przełożyć kierunek kreatywny na konkretny plan działania, zamiast błądzić między testami.</p>
+          </div>
+          <div class="kit-service__grid">
+            <div class="kit-service__card">
+              <strong>Na czym skupiamy się podczas rozmowy</strong>
+              <p>Przeglądamy Twój produkt, obecne materiały, poziom jakości, potrzebne formaty i realistyczny sposób dojścia do wyniku, który będzie spójny z marką.</p>
+            </div>
+            <div class="kit-service__card kit-service__card--consult">
+              <div class="kit-service__price">549 PLN<span>60 minut / rozmowa video</span></div>
+              <p>Po konsultacji wychodzisz z kierunkiem, listą priorytetów i rekomendacją, czy lepiej działać samodzielnie, kupić system, czy od razu zlecić produkcję.</p>
+              <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Umów konsultację</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-dfy">
+        <div class="container">
+          <div class="kit-dfy__band">
+            <div class="kit-dfy__head">
+              <p class="kit-service__eyebrow">Done for you</p>
+              <h2 class="section__title">A jeśli wolisz po prostu mieć to zrobione, zrobimy to za Ciebie.</h2>
+              <p class="section__subtitle">Kampanie, lookbooki, e-commerce, eyewear i testy kreatywne. Bierzemy produkcję po swojej stronie, a Ty skupiasz się na decyzjach i wyniku.</p>
+            </div>
+            <div class="kit-dfy__actions">
+              <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Porozmawiajmy o produkcji</a>
+              <a href="portfolio.html" class="btn btn--secondary">Zobacz portfolio</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+
     <footer class="footer">
       <div class="container">
         <div class="footer__inner">
-          <div><div class="footer__logo">SENNS<span class="logo__suffix">.STUDIO</span></div><p class="footer__tagline">Studio produkcji wizualnej dla marek fashion&nbsp;i&nbsp;lifestyle.</p></div>
-          <div><p class="footer__nav-title">Studio</p><ul class="footer__nav-list"><li><a href="portfolio.html">Portfolio</a></li><li><a href="projekty.html">Projekty</a></li><li><a href="o-nas.html">O nas</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
-          <div><p class="footer__nav-title">Kontakt</p><ul class="footer__nav-list"><li><a href="mailto:hello@senns.studio">hello@senns.studio</a></li></ul></div>
+          <div>
+            <div class="footer__logo">SENNS<span class="logo__suffix">.STUDIO</span></div>
+            <p class="footer__tagline">Wykonawcze studio wizualne dla marek fashion i lifestyle.</p>
+          </div>
+          <div>
+            <p class="footer__nav-title">Studio</p>
+            <ul class="footer__nav-list">
+              <li><a href="portfolio.html">Portfolio</a></li>
+              <li><a href="projekty.html">Projekty</a></li>
+              <li><a href="o-nas.html">O nas</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer__nav-title">Kontakt</p>
+            <ul class="footer__nav-list">
+              <li><a href="mailto:hello@senns.studio">hello@senns.studio</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="footer__bottom"><span>&copy; 2026 SENNS.STUDIO. Wszelkie prawa zastrzezone.</span></div>
-        <div class="footer-legal"><a href="privacy.html">Prywatnosc</a><span class="footer-legal__sep">&bull;</span><a href="terms.html">Regulamin</a><span class="footer-legal__sep">&bull;</span><a href="technical.html">Standardy techniczne</a><span class="footer-legal__sep">&bull;</span><a href="licensing.html">Licencje</a></div>
+        <div class="footer__bottom">
+          <span>© 2026 SENNS.STUDIO. Wszelkie prawa zastrzeżone.</span>
+        </div>
+        <div class="footer-legal">
+          <a href="privacy.html">Ochrona danych</a>
+          <span class="footer-legal__sep">•</span>
+          <a href="terms.html">Regulamin</a>
+          <span class="footer-legal__sep">•</span>
+          <a href="technical.html">Standardy techniczne</a>
+          <span class="footer-legal__sep">•</span>
+          <a href="licensing.html">Licencjonowanie</a>
+        </div>
       </div>
     </footer>
   </div>
