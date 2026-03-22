@@ -172,6 +172,26 @@
       justify-content: center;
     }
 
+    .kit-form__success {
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .kit-form__success-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .kit-form__success-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
     .kit-hero__actions {
       display: flex;
       flex-wrap: wrap;
@@ -188,8 +208,9 @@
 
     .kit-service__grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: 1.1fr 0.95fr;
+      gap: 24px;
+      align-items: start;
       margin-top: 36px;
     }
 
@@ -261,7 +282,7 @@
       color: var(--text);
       border: 1px solid var(--border-strong);
       box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
-      max-width: 520px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
@@ -322,12 +343,6 @@
     .kit-upgrade__card .btn--primary {
       width: 100%;
       justify-content: center;
-    }
-
-    .kit-service__grid {
-      grid-template-columns: 1.1fr 0.95fr;
-      align-items: start;
-      gap: 24px;
     }
 
     .kit-service__card--consult {
@@ -470,15 +485,22 @@
               <h1 class="kit-hero__title">Nasz production kit.</h1>
               <p class="kit-hero__subtitle">Te same referencje, briefy i workflow, których używamy budując kampanie dla marek. Za darmo.</p>
               <div class="kit-hero__checks">
-                <span class="kit-hero__check">10 gotowych promptów</span>
-                <span class="kit-hero__check">Brief planowania sesji</span>
-                <span class="kit-hero__check">Workflow studia</span>
+                <span class="kit-hero__check">10 promptow dajacych wyniki na poziomie kampanii</span>
+                <span class="kit-hero__check">Metoda planowania sesji za kazdym zdjeciem SENNS</span>
+                <span class="kit-hero__check">Referencje kamer i swiatla, ktore sprawiaja ze AI wyglada realnie</span>
+                <span class="kit-hero__check">Workflow, ktory mozesz uzyc od razu</span>
+                <span class="kit-hero__check">Prawdziwe przyklady z produkcji studia</span>
               </div>
               <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST">
                 <input type="hidden" name="source" value="kit-pl">
                 <input type="email" name="email" class="kit-form__input" placeholder="Twój adres e-mail" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Wyślijcie mi kit</button>
               </form>
+              <div class="kit-form__success" style="display:none;">
+                <p class="kit-form__success-title">Sprawdz skrzynke.</p>
+                <p class="kit-form__success-subtitle">Kit jest w drodze. W miedzyczasie:</p>
+                <a href="#system" class="btn btn--secondary">Zobacz jak wyglada pelny system</a>
+              </div>
               <div class="kit-hero__actions">
                 <a href="#system" class="btn btn--secondary">Zobacz pełny system</a>
               </div>
@@ -499,6 +521,7 @@
             <picture><img src="assets/work-1.webp" alt="Editorial SENNS.STUDIO" loading="lazy"></picture>
             <picture><img src="assets/work-2.webp" alt="Lookbook SENNS.STUDIO" loading="lazy"></picture>
           </div>
+          <p class="section__caption" style="margin-top:28px;">Bez sesji. Bez studia. Bez ekipy. Tylko ten system.</p>
         </div>
       </section>
 
@@ -551,7 +574,7 @@
           <div class="kit-dfy__band">
             <div class="kit-dfy__head">
               <p class="text-label">Done for you</p>
-              <h2 class="section__title">A jeśli wolisz po prostu mieć to zrobione, zrobimy to za Ciebie.</h2>
+              <h2 class="section__title">Zajmiemy sie produkcja.</h2>
               <p class="section__subtitle">Kampanie. Lookbooki. E-commerce. Eyewear. My zajmujemy się produkcją, Ty akceptujesz wyniki.</p>
             </div>
             <div class="kit-dfy__actions">
@@ -602,5 +625,24 @@
     </footer>
   </div>
   <script src="script.js"></script>
+  <script>
+  (function() {
+    var form = document.querySelector('.kit-form');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      var action = form.getAttribute('action');
+      if (action === 'YOUR_EMAIL_SERVICE_ENDPOINT') {
+        e.preventDefault();
+      }
+      form.style.display = 'none';
+      var checks = document.querySelector('.kit-hero__checks');
+      if (checks) checks.style.display = 'none';
+      var actions = document.querySelector('.kit-hero__actions');
+      if (actions) actions.style.display = 'none';
+      var success = document.querySelector('.kit-form__success');
+      if (success) success.style.display = 'block';
+    });
+  })();
+  </script>
 </body>
 </html>

@@ -172,6 +172,26 @@
       justify-content: center;
     }
 
+    .kit-form__success {
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    .kit-form__success-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .kit-form__success-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
     .kit-hero__actions {
       display: flex;
       flex-wrap: wrap;
@@ -189,8 +209,9 @@
 
     .kit-service__grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: 1.1fr 0.95fr;
+      gap: 24px;
+      align-items: start;
       margin-top: 36px;
     }
 
@@ -262,7 +283,7 @@
       color: var(--text);
       border: 1px solid var(--border-strong);
       box-shadow: 0 18px 54px rgba(0, 0, 0, 0.18);
-      max-width: 520px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
@@ -323,12 +344,6 @@
     .kit-upgrade__card .btn--primary {
       width: 100%;
       justify-content: center;
-    }
-
-    .kit-service__grid {
-      grid-template-columns: 1.1fr 0.95fr;
-      align-items: start;
-      gap: 24px;
     }
 
     .kit-service__card--consult {
@@ -471,15 +486,22 @@
               <h1 class="kit-hero__title">Our production kit.</h1>
               <p class="kit-hero__subtitle">The same references, briefs and workflows we use when building campaigns for brands. Free.</p>
               <div class="kit-hero__checks">
-                <span class="kit-hero__check">10 ready-to-use prompts</span>
-                <span class="kit-hero__check">Session planning brief</span>
-                <span class="kit-hero__check">Studio workflow</span>
+                <span class="kit-hero__check">10 prompts that produce campaign-quality results</span>
+                <span class="kit-hero__check">Session planning method behind every SENNS image</span>
+                <span class="kit-hero__check">Camera and light references that make AI look real</span>
+                <span class="kit-hero__check">A workflow you can use today</span>
+                <span class="kit-hero__check">Real examples from studio production</span>
               </div>
               <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST">
                 <input type="hidden" name="source" value="kit-en">
                 <input type="email" name="email" class="kit-form__input" placeholder="Your email address" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Get the free kit</button>
               </form>
+              <div class="kit-form__success" style="display:none;">
+                <p class="kit-form__success-title">Check your inbox.</p>
+                <p class="kit-form__success-subtitle">The kit is on its way. While you wait:</p>
+                <a href="#system" class="btn btn--secondary">See what the full system looks like</a>
+              </div>
               <div class="kit-hero__actions">
                 <a href="#system" class="btn btn--secondary">See the full system</a>
               </div>
@@ -500,6 +522,7 @@
             <picture><img src="../assets/work-1.webp" alt="SENNS editorial visual" loading="lazy"></picture>
             <picture><img src="../assets/work-2.webp" alt="SENNS lookbook visual" loading="lazy"></picture>
           </div>
+          <p class="section__caption" style="margin-top:28px;">No photoshoot. No studio. No crew. Just this system.</p>
         </div>
       </section>
 
@@ -552,7 +575,7 @@
           <div class="kit-dfy__band">
             <div class="kit-dfy__head">
               <p class="text-label">Done for you</p>
-              <h2 class="section__title">And if you would rather just have it built, we can handle the production.</h2>
+              <h2 class="section__title">We can handle the production.</h2>
               <p class="section__subtitle">Campaigns. Lookbooks. E-commerce. Eyewear. We handle production, you approve results.</p>
             </div>
             <div class="kit-dfy__actions">
@@ -603,5 +626,24 @@
     </footer>
   </div>
   <script src="../script.js"></script>
+  <script>
+  (function() {
+    var form = document.querySelector('.kit-form');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      var action = form.getAttribute('action');
+      if (action === 'YOUR_EMAIL_SERVICE_ENDPOINT') {
+        e.preventDefault();
+      }
+      form.style.display = 'none';
+      var checks = document.querySelector('.kit-hero__checks');
+      if (checks) checks.style.display = 'none';
+      var actions = document.querySelector('.kit-hero__actions');
+      if (actions) actions.style.display = 'none';
+      var success = document.querySelector('.kit-form__success');
+      if (success) success.style.display = 'block';
+    });
+  })();
+  </script>
 </body>
 </html>
