@@ -96,6 +96,7 @@
       // Map PL filenames to EN filenames
       var plToEn = {
         'index.html': 'index.html',
+        'kit.html': 'kit.html',
         'portfolio.html': 'portfolio.html',
         'projekty.html': 'projects.html',
         'o-nas.html': 'about.html',
