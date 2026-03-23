@@ -337,46 +337,6 @@
       color: var(--text-dim);
     }
 
-    .brief-progress {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 40px;
-    }
-
-    .brief-progress__item {
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      background: var(--bg-alt);
-      color: var(--text-dim);
-      transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
-    }
-
-    .brief-progress__eyebrow {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: inherit;
-    }
-
-    .brief-progress__label {
-      display: block;
-      font-size: 14px;
-      color: inherit;
-    }
-
-    .brief-progress__item.is-active {
-      border-color: var(--text-dim);
-      background: var(--bg-card);
-      color: var(--text);
-    }
-
-    .brief-progress__item.is-complete {
-      color: var(--text-muted);
-    }
-
     .brief-section {
       padding: 0 0 64px;
     }
@@ -793,24 +753,10 @@
         font-size: 11px;
       }
 
-      .brief-progress {
-        gap: 10px;
-        margin-bottom: 28px;
-      }
-
-      .brief-progress__item {
-        padding: 12px 14px;
-      }
-
-      .brief-progress__label {
-        font-size: 13px;
-      }
-
       .brief-checkbox-group,
       .brief-output__buttons,
       .mobile-menu__footer,
-      .brief-grid,
-      .brief-progress {
+      .brief-grid {
         grid-template-columns: 1fr;
       }
 
@@ -999,20 +945,6 @@
       <section class="brief-form-wrap">
         <div class="container">
           <div class="stage--narrow">
-            <div class="brief-progress" aria-label="Brief progress">
-              <div class="brief-progress__item is-active" data-progress-step="essential">
-                <span class="brief-progress__eyebrow">01</span>
-                <span class="brief-progress__label"><span data-lang-content="pl">Podstawy</span><span data-lang-content="en">Essential</span></span>
-              </div>
-              <div class="brief-progress__item" data-progress-step="optional">
-                <span class="brief-progress__eyebrow">02</span>
-                <span class="brief-progress__label"><span data-lang-content="pl">Dodatki</span><span data-lang-content="en">Optional</span></span>
-              </div>
-              <div class="brief-progress__item" data-progress-step="output">
-                <span class="brief-progress__eyebrow">03</span>
-                <span class="brief-progress__label"><span data-lang-content="pl">Pobranie</span><span data-lang-content="en">Downloads</span></span>
-              </div>
-            </div>
             <form id="briefForm" novalidate>
               <section class="brief-section" aria-labelledby="essential-heading">
                 <p class="text-label" id="essential-heading"><span data-lang-content="pl">Informacje podstawowe</span><span data-lang-content="en">Essential information</span></p>
@@ -1350,7 +1282,6 @@
       var output = document.getElementById('briefOutput');
       var optionalToggle = document.getElementById('optionalToggle');
       var optionalContent = document.getElementById('optionalContent');
-      var progressItems = Array.prototype.slice.call(document.querySelectorAll('[data-progress-step]'));
       var fileInput = document.getElementById('moodboard_files');
       var fileList = document.getElementById('fileList');
       var burger = document.getElementById('burger');
@@ -1905,32 +1836,16 @@
           });
           setTimeout(function () { optionalContent.hidden = true; }, 450);
         }
-        updateProgress();
-      }
-
-      function updateProgress() {
-        var current = 'essential';
-        if (!output.hidden) current = 'output';
-        else if (optionalToggle.getAttribute('aria-expanded') === 'true') current = 'optional';
-
-        var order = { essential: 0, optional: 1, output: 2 };
-        progressItems.forEach(function (item) {
-          var step = item.getAttribute('data-progress-step');
-          item.classList.toggle('is-active', step === current);
-          item.classList.toggle('is-complete', order[step] < order[current]);
-        });
       }
 
       function handleGenerate(event) {
         event.preventDefault();
         if (!validate()) {
           output.hidden = true;
-          updateProgress();
           return;
         }
         generatedPayload = collectData(activeLang);
         output.hidden = false;
-        updateProgress();
       }
 
       optionalToggle.addEventListener('click', toggleOptional);
@@ -1983,7 +1898,6 @@
 
       setLanguage(activeLang);
       optionalContent.style.maxHeight = '0px';
-      updateProgress();
     })();
   </script>
 </body>
