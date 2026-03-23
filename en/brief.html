@@ -486,17 +486,31 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0;
-      border: none;
-      background: none;
+      gap: 24px;
+      padding: 24px 28px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-card);
       color: var(--text);
       text-align: left;
+      transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+    }
+
+    .brief-toggle:hover,
+    .brief-toggle:focus-visible {
+      border-color: var(--text-dim);
+      background: var(--bg-elevated);
     }
 
     .brief-toggle__copy {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+    }
+
+    .brief-toggle__prompt {
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: 0.01em;
     }
 
     .brief-toggle__icon {
@@ -712,11 +726,11 @@
             <p class="text-label">Brief</p>
             <div data-lang-content="pl">
               <h1 class="section__title">Opowiedz nam o swoim projekcie.</h1>
-              <p class="section__subtitle">Im więcej wiemy, tym lepszy efekt. Zacznij od podstaw - dodaj szczegóły, jeśli je masz.</p>
+              <p class="section__subtitle">Im więcej kontekstu mamy, tym lepiej dopasujemy kierunek. Zacznij od podstaw, a jeśli chcesz, rozwiń drugą sekcję i dodaj więcej szczegółów.</p>
             </div>
             <div data-lang-content="en">
               <h1 class="section__title">Tell us about your project.</h1>
-              <p class="section__subtitle">The more we know, the better the result. Start with the essentials - add details if you have them.</p>
+              <p class="section__subtitle">The more context we have, the better we can shape the direction. Start with the essentials, then open the second section if you want to add more detail.</p>
             </div>
           </div>
         </div>
@@ -853,8 +867,9 @@
               <section class="brief-section" aria-labelledby="optional-heading">
                 <button type="button" class="brief-toggle" id="optionalToggle" aria-expanded="false" aria-controls="optionalContent">
                   <span class="brief-toggle__copy">
-                    <span class="text-label" id="optional-heading"><span data-lang-content="pl">Dodatkowe informacje (opcjonalne)</span><span data-lang-content="en">Additional details (optional)</span></span>
-                    <span class="brief-collapsible__note"><span data-lang-content="pl">Te informacje pomagają nam szybciej trafić w kierunek. Pomiń to, czego nie masz - ustalimy to razem.</span><span data-lang-content="en">These details help us nail the direction faster. Skip what you don't have - we'll figure it out together.</span></span>
+                    <span class="text-label" id="optional-heading"><span data-lang-content="pl">Dodatkowe informacje (opcjonalne, ale bardzo pomocne)</span><span data-lang-content="en">Additional details (optional, but very helpful)</span></span>
+                    <span class="brief-toggle__prompt"><span data-lang-content="pl">Masz moodboard, referencje albo dodatkowe uwagi? Kliknij tutaj, aby rozwinąć tę sekcję.</span><span data-lang-content="en">Have a moodboard, references or extra notes? Click here to expand this section.</span></span>
+                    <span class="brief-collapsible__note"><span data-lang-content="pl">Ta część nie jest obowiązkowa, ale kilka dodatkowych informacji bardzo pomaga nam szybciej trafić w odpowiedni kierunek.</span><span data-lang-content="en">This part is not required, but a bit of extra context helps us move toward the right direction much faster.</span></span>
                   </span>
                   <span class="brief-toggle__icon">+</span>
                 </button>
@@ -885,7 +900,7 @@
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="brands_you_admire"><span data-lang-content="pl">Marki, których wizuale podziwiasz</span><span data-lang-content="en">Brands whose visuals you admire</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze? Co konkretnie podoba Ci się w ich wizerunku?</span><span data-lang-content="en">Which brands get it right? What specifically do you like about their imagery?</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze? Co konkretnie podoba Ci się w ich obrazach lub komunikacji wizualnej?</span><span data-lang-content="en">Which brands do this well? What specifically do you like about their imagery or visual communication?</span></p>
                         <textarea class="brief-textarea" id="brands_you_admire" name="brands_you_admire"></textarea>
                         <div class="brief-error" id="error-brands_you_admire"></div>
                       </div>
@@ -998,15 +1013,15 @@
                   <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
                   <div data-lang-content="pl">
                     <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief gotowy.</h2>
-                    <p class="section__subtitle">Możesz pobrać podsumowanie PDF dla klienta oraz plik studio do dalszej pracy wewnętrznej.</p>
+                    <p class="section__subtitle">Możesz pobrać podsumowanie PDF dla klienta oraz plik roboczy dla studia do dalszej pracy wewnętrznej.</p>
                   </div>
                   <div data-lang-content="en">
                     <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief ready.</h2>
-                    <p class="section__subtitle">Download the PDF summary for the client and the studio file for internal processing.</p>
+                    <p class="section__subtitle">Download the client-facing PDF summary and the studio working file for internal processing.</p>
                   </div>
                   <div class="brief-output__buttons">
                     <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz podsumowanie PDF</span><span data-lang-content="en">Download PDF summary</span></button>
-                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik studio</span><span data-lang-content="en">Download studio file</span></button>
+                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik roboczy studia</span><span data-lang-content="en">Download studio working file</span></button>
                   </div>
                 </div>
               </div>
