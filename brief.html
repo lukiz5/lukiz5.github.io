@@ -980,14 +980,14 @@
             <p class="text-label">Brief</p>
             <div data-lang-content="pl">
               <h1 class="section__title">Opowiedz nam o swoim projekcie.</h1>
-              <p class="section__subtitle">Im więcej kontekstu mamy, tym lepiej dopasujemy kierunek. Zacznij od podstaw, a jeśli chcesz, rozwiń drugą sekcję i dodaj więcej szczegółów.</p>
+              <p class="section__subtitle">Im więcej kontekstu mamy, tym lepiej dopasujemy kierunek. Zacznij od podstaw. Jeśli masz więcej materiałów, rozwiń drugą sekcję.</p>
             </div>
             <div data-lang-content="en">
               <h1 class="section__title">Tell us about your project.</h1>
-              <p class="section__subtitle">The more context we have, the better we can shape the direction. Start with the essentials, then open the second section if you want to add more detail.</p>
+              <p class="section__subtitle">The more context we have, the better we can shape the direction. Start with the essentials. If you have more to share, open the second section.</p>
             </div>
             <div class="brief-meta">
-              <span class="brief-meta__item"><span data-lang-content="pl">czas wypełnienia: około 2-3 min</span><span data-lang-content="en">estimated time: about 2-3 min</span></span>
+              <span class="brief-meta__item"><span data-lang-content="pl">czas wypełnienia: 2-3 min</span><span data-lang-content="en">estimated time: 2-3 min</span></span>
               <span class="brief-meta__item"><span data-lang-content="pl">* pola obowiązkowe</span><span data-lang-content="en">* required fields</span></span>
             </div>
           </div>
@@ -1008,7 +1008,7 @@
               </div>
               <div class="brief-progress__item" data-progress-step="output">
                 <span class="brief-progress__eyebrow">03</span>
-                <span class="brief-progress__label"><span data-lang-content="pl">Pliki</span><span data-lang-content="en">Output</span></span>
+                <span class="brief-progress__label"><span data-lang-content="pl">Pobranie</span><span data-lang-content="en">Downloads</span></span>
               </div>
             </div>
             <form id="briefForm" novalidate>
@@ -1139,9 +1139,9 @@
               <section class="brief-section" aria-labelledby="optional-heading">
                 <button type="button" class="brief-toggle" id="optionalToggle" aria-expanded="false" aria-controls="optionalContent">
                   <span class="brief-toggle__copy">
-                    <span class="text-label" id="optional-heading"><span data-lang-content="pl">Dodatkowe informacje (opcjonalne, ale bardzo pomocne)</span><span data-lang-content="en">Additional details (optional, but very helpful)</span></span>
-                    <span class="brief-toggle__prompt"><span data-lang-content="pl">Masz moodboard, referencje albo dodatkowe uwagi? Kliknij tutaj, aby rozwinąć tę sekcję.</span><span data-lang-content="en">Have a moodboard, references or extra notes? Click here to expand this section.</span></span>
-                    <span class="brief-collapsible__note"><span data-lang-content="pl">Ta część nie jest obowiązkowa, ale kilka dodatkowych informacji bardzo pomaga nam szybciej trafić w odpowiedni kierunek.</span><span data-lang-content="en">This part is not required, but a bit of extra context helps us move toward the right direction much faster.</span></span>
+                    <span class="text-label" id="optional-heading"><span data-lang-content="pl">Dodatkowe informacje (opcjonalne, ale pomocne)</span><span data-lang-content="en">Additional details (optional, but helpful)</span></span>
+                    <span class="brief-toggle__prompt"><span data-lang-content="pl">Masz referencje, moodboard albo dodatkowe uwagi? Rozwiń tę sekcję.</span><span data-lang-content="en">Have references, a moodboard or extra notes? Open this section.</span></span>
+                    <span class="brief-collapsible__note"><span data-lang-content="pl">To nie jest obowiązkowe, ale dodatkowy kontekst pomaga nam szybciej wyczuć właściwy kierunek.</span><span data-lang-content="en">Not required, but extra context helps us find the right direction faster.</span></span>
                   </span>
                   <span class="brief-toggle__icon">+</span>
                 </button>
@@ -1151,7 +1151,7 @@
                     <div class="brief-group">
                       <h2 class="brief-group__title"><span data-lang-content="pl">Referencje wizualne</span><span data-lang-content="en">Visual References</span></h2>
                       <div class="brief-field brief-field--full brief-upload-wrap">
-                        <label class="brief-label" for="moodboard_files"><span data-lang-content="pl">Wgraj moodboard lub zdjęcia referencyjne</span><span data-lang-content="en">Upload moodboard or reference images</span></label>
+                        <label class="brief-label" for="moodboard_files"><span data-lang-content="pl">Dodaj moodboard lub referencje</span><span data-lang-content="en">Add a moodboard or references</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">JPG, PNG, PDF. Maks. 10 plików, 10MB każdy.</span><span data-lang-content="en">JPG, PNG, PDF. Max 10 files, 10MB each.</span></p>
                         <input class="brief-file-input" id="moodboard_files" name="moodboard_files" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" multiple>
                         <label for="moodboard_files" class="brief-file-control" id="moodboardControl">
@@ -1172,7 +1172,7 @@
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="brands_you_admire"><span data-lang-content="pl">Marki, których wizuale podziwiasz</span><span data-lang-content="en">Brands whose visuals you admire</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze? Co konkretnie podoba Ci się w ich obrazach lub komunikacji wizualnej?</span><span data-lang-content="en">Which brands do this well? What specifically do you like about their imagery or visual communication?</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze w Twoim odczuciu? Co dokładnie działa w ich języku wizualnym?</span><span data-lang-content="en">Which brands get this right in your view? What exactly works in their visual language?</span></p>
                         <textarea class="brief-textarea" id="brands_you_admire" name="brands_you_admire" data-placeholder-pl="Np. Jacquemus za światło i kadrowanie, Toteme za minimalizm." data-placeholder-en="E.g. Jacquemus for lighting and framing, Toteme for minimalism."></textarea>
                         <div class="brief-error" id="error-brands_you_admire"></div>
                       </div>
@@ -1182,14 +1182,14 @@
                       <h2 class="brief-group__title"><span data-lang-content="pl">Casting i stylizacja</span><span data-lang-content="en">Casting &amp; Styling</span></h2>
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="model_preferences"><span data-lang-content="pl">Preferencje modeli / castingu</span><span data-lang-content="en">Model / casting preferences</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">Wiek, płeć, pochodzenie, look, charakter. Bądź tak precyzyjny lub otwarty, jak chcesz.</span><span data-lang-content="en">Age range, gender, ethnicity, look, attitude. Be as specific or as open as you want.</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">Wiek, płeć, typ urody, energia, charakter. Bądź tak precyzyjny lub otwarty, jak chcesz.</span><span data-lang-content="en">Age, gender, look, energy, attitude. Be as specific or as open as you want.</span></p>
                         <textarea class="brief-textarea" id="model_preferences" name="model_preferences" data-placeholder-pl="Np. kobieta 25-35, naturalny look, wyraziste kości policzkowe, spokojna energia." data-placeholder-en="E.g. woman, 25-35, natural look, defined cheekbones, calm energy."></textarea>
                         <div class="brief-error" id="error-model_preferences"></div>
                       </div>
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="styling_notes"><span data-lang-content="pl">Kierunek stylizacji</span><span data-lang-content="en">Styling direction</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">Kolory, tkaniny, klimat. Minimalizm? Warstwy? Sportowy? Elegancki?</span><span data-lang-content="en">Colors, fabrics, vibe. Minimalist? Layered? Sporty? Elegant?</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">Kolory, tkaniny, ogólny klimat. Minimalistycznie? Warstwowo? Sportowo? Elegancko?</span><span data-lang-content="en">Colors, fabrics, overall feel. Minimal? Layered? Sporty? Refined?</span></p>
                         <textarea class="brief-textarea" id="styling_notes" name="styling_notes" data-placeholder-pl="Np. czerń, grafit, surowe tkaniny, czysta nowoczesna sylwetka." data-placeholder-en="E.g. black, charcoal, raw fabrics, clean modern silhouette."></textarea>
                         <div class="brief-error" id="error-styling_notes"></div>
                       </div>
@@ -1270,7 +1270,7 @@
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="notes"><span data-lang-content="pl">Co jeszcze warto wiedzieć?</span><span data-lang-content="en">Anything else worth knowing?</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">Specjalne wymagania, ograniczenia, wcześniejsze doświadczenia, czego unikać...</span><span data-lang-content="en">Special requirements, constraints, past experiences, things to avoid...</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">Ograniczenia, wcześniejsze doświadczenia, rzeczy do uniknięcia, wewnętrzny kontekst...</span><span data-lang-content="en">Constraints, past learnings, things to avoid, internal context...</span></p>
                         <textarea class="brief-textarea" id="notes" name="notes" data-placeholder-pl="Np. zależy nam na ciepłym świetle i unikaniu zbyt luksusowego, chłodnego klimatu." data-placeholder-en="E.g. we want warm light and want to avoid an overly luxury, cold mood."></textarea>
                         <div class="brief-error" id="error-notes"></div>
                       </div>
@@ -1285,15 +1285,15 @@
                   <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
                   <div data-lang-content="pl">
                     <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief gotowy.</h2>
-                    <p class="section__subtitle">Możesz pobrać podsumowanie PDF dla klienta oraz plik roboczy dla studia do dalszej pracy wewnętrznej.</p>
+                    <p class="section__subtitle">Pobierz PDF dla klienta oraz plik roboczy dla studia.</p>
                   </div>
                   <div data-lang-content="en">
                     <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief ready.</h2>
-                    <p class="section__subtitle">Download the client-facing PDF summary and the studio working file for internal processing.</p>
+                    <p class="section__subtitle">Download the client PDF and the studio working file.</p>
                   </div>
                   <div class="brief-output__buttons">
-                    <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz podsumowanie PDF</span><span data-lang-content="en">Download PDF summary</span></button>
-                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik roboczy studia</span><span data-lang-content="en">Download studio working file</span></button>
+                    <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz PDF dla klienta</span><span data-lang-content="en">Download client PDF</span></button>
+                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik dla studia</span><span data-lang-content="en">Download studio file</span></button>
                   </div>
                 </div>
               </div>
