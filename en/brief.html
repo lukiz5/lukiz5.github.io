@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brief | SENNS.STUDIO</title>
+  <meta name="description" content="Client project brief form for SENNS.STUDIO.">
+  <link rel="alternate" hreflang="pl" href="https://senns.studio/brief.html">
+  <link rel="alternate" hreflang="en" href="https://senns.studio/en/brief.html">
+  <link rel="alternate" hreflang="x-default" href="https://senns.studio/brief.html">
+  <link rel="canonical" href="https://senns.studio/en/brief.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:             #0E0E10;
+      --bg-alt:         #14141A;
+      --bg-elevated:    #1A1A22;
+      --bg-card:        #18181E;
+      --text:           #F2F2F2;
+      --text-muted:     #B7BBC2;
+      --text-dim:       #7E828A;
+      --accent:         #3B5BFF;
+      --accent-hover:   #5A75FF;
+      --danger:         #E05252;
+      --success:        #C8D0DA;
+      --border:         rgba(255, 255, 255, 0.08);
+      --border-subtle:  rgba(255, 255, 255, 0.04);
+      --border-strong:  rgba(255, 255, 255, 0.12);
+      --font-display:   'Instrument Serif', Georgia, serif;
+      --font-body:      'Outfit', 'Helvetica Neue', sans-serif;
+      --nav-height:     72px;
+      --max-width:      1400px;
+      --page-padding:   clamp(24px, 5vw, 80px);
+      --ease:           cubic-bezier(0.25, 0.1, 0.25, 1);
+      --stage-max-narrow: 980px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+    [hidden] { display: none !important; }
+
+    .page-wrapper {
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-left: var(--page-padding);
+      padding-right: var(--page-padding);
+    }
+
+    .stage--narrow {
+      max-width: var(--stage-max-narrow);
+      margin: 0 auto;
+    }
+
+    .text-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .section__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .section__subtitle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: clamp(0.9375rem, 1.2vw, 1rem);
+      max-width: 64ch;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      background: rgba(14, 14, 16, 0.92);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--page-padding);
+      height: 100%;
+    }
+
+    .nav__logo {
+      font-size: 0.8125rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .logo__suffix { color: var(--text-dim); }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav__link {
+      position: relative;
+      font-size: 0.8125rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      padding: 4px 0;
+      transition: color 0.3s var(--ease);
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--text);
+      transition: width 0.3s var(--ease);
+    }
+
+    .nav__link:hover,
+    .nav__link:focus-visible { color: var(--text); }
+    .nav__link:hover::after,
+    .nav__link:focus-visible::after { width: 100%; }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav__lang {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .nav__lang-btn {
+      border: none;
+      background: none;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 4px 2px;
+      transition: color 0.3s var(--ease);
+    }
+
+    .nav__lang-btn.is-active,
+    .nav__lang-btn:hover { color: var(--text); }
+
+    .nav__lang-sep { color: var(--border-strong); }
+
+    .nav__cta,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text);
+      padding: 16px 48px;
+      font-size: 0.8125rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      transition: opacity 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
+      text-align: center;
+    }
+
+    .nav__cta { padding: 10px 18px; }
+
+    .btn--primary {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+
+    .btn--primary:hover,
+    .btn--primary:focus-visible { opacity: 0.85; }
+
+    .btn--secondary:hover,
+    .btn--secondary:focus-visible,
+    .nav__cta:hover,
+    .nav__cta:focus-visible { border-color: var(--text-muted); }
+
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      width: 24px;
+      padding: 4px 0;
+      border: none;
+      background: none;
+    }
+
+    .nav__burger span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--text);
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      padding: calc(var(--nav-height) + 48px) var(--page-padding) 48px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mobile-menu.is-open { display: flex; }
+
+    .mobile-menu__links {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .mobile-menu__link {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .mobile-menu__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brief-main {
+      padding-top: calc(var(--nav-height) + 48px);
+      padding-bottom: 96px;
+    }
+
+    .brief-header {
+      padding: 48px 0 56px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .brief-form-wrap {
+      padding-top: 56px;
+    }
+
+    .brief-section {
+      padding: 0 0 64px;
+    }
+
+    .brief-section + .brief-section {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 64px;
+    }
+
+    .brief-group + .brief-group {
+      margin-top: 40px;
+    }
+
+    .brief-group__title {
+      margin: 0 0 24px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 24px;
+    }
+
+    .brief-field {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .brief-field--full,
+    .brief-checkbox-group,
+    .brief-upload-wrap,
+    .brief-output,
+    .brief-collapsible__inner {
+      max-width: 680px;
+    }
+
+    .brief-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .brief-hint {
+      margin-top: -6px;
+      font-size: 13px;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    .brief-input,
+    .brief-select,
+    .brief-textarea,
+    .brief-file-control {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 300;
+      transition: border-color 0.3s var(--ease);
+    }
+
+    .brief-input,
+    .brief-select { min-height: 54px; }
+    .brief-textarea { min-height: 144px; resize: vertical; }
+
+    .brief-input:focus,
+    .brief-select:focus,
+    .brief-textarea:focus,
+    .brief-file-input:focus-visible + .brief-file-control {
+      outline: none;
+      border-color: var(--text-dim);
+    }
+
+    .brief-input.is-error,
+    .brief-select.is-error,
+    .brief-textarea.is-error,
+    .brief-choice.is-error,
+    .brief-file-control.is-error {
+      border-color: var(--danger);
+    }
+
+    .brief-error {
+      font-size: 12px;
+      color: var(--danger);
+      margin-top: -6px;
+      min-height: 18px;
+    }
+
+    .brief-checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 24px;
+    }
+
+    .brief-choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      min-height: 54px;
+      padding: 12px 14px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elevated);
+      transition: border-color 0.3s var(--ease);
+    }
+
+    .brief-choice input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .brief-choice__box {
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--text-dim);
+      flex: 0 0 16px;
+      margin-top: 2px;
+      position: relative;
+    }
+
+    .brief-choice__box::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: var(--text);
+      opacity: 0;
+      transition: opacity 0.2s var(--ease);
+    }
+
+    .brief-choice input:checked + .brief-choice__box {
+      border-color: var(--text);
+    }
+
+    .brief-choice input:checked + .brief-choice__box::after {
+      opacity: 1;
+    }
+
+    .brief-choice__text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .brief-file-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .brief-file-control {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 8px;
+      min-height: 132px;
+      border-style: dashed;
+      cursor: pointer;
+    }
+
+    .brief-file-note,
+    .brief-file-list {
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+
+    .brief-file-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .brief-other-wrap {
+      margin-top: 16px;
+      max-width: 420px;
+    }
+
+    .brief-toggle {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      border: none;
+      background: none;
+      color: var(--text);
+      text-align: left;
+    }
+
+    .brief-toggle__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .brief-toggle__icon {
+      font-size: 24px;
+      line-height: 1;
+      color: var(--text-dim);
+      transition: transform 0.3s var(--ease);
+    }
+
+    .brief-toggle[aria-expanded="true"] .brief-toggle__icon {
+      transform: rotate(45deg);
+    }
+
+    .brief-collapsible__note {
+      margin: 14px 0 0;
+      color: var(--text-dim);
+      font-size: 13px;
+      max-width: 62ch;
+    }
+
+    .brief-collapsible__content {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.45s var(--ease), opacity 0.3s var(--ease), margin-top 0.3s var(--ease);
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .brief-collapsible__content.is-open {
+      opacity: 1;
+      margin-top: 40px;
+    }
+
+    .brief-actions {
+      padding-top: 40px;
+      border-top: 1px solid var(--border-subtle);
+      max-width: 680px;
+    }
+
+    .brief-output {
+      margin-top: 40px;
+      padding: 28px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-card);
+    }
+
+    .brief-output__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .brief-output__buttons .btn {
+      min-width: 240px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    .footer {
+      padding: 40px 0 48px;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 96px;
+    }
+
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 28px;
+    }
+
+    .footer__logo {
+      font-size: 0.875rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .footer__tagline,
+    .footer__nav-list a,
+    .footer__bottom,
+    .footer-legal a,
+    .footer-legal__sep {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .footer__nav-title {
+      margin: 0 0 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+    }
+
+    .footer__nav-list { display: grid; gap: 10px; }
+    .footer__bottom { margin-bottom: 16px; }
+    .footer-legal { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .lang-hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .nav__links,
+      .nav__cta {
+        display: none;
+      }
+
+      .nav__burger {
+        display: flex;
+      }
+
+      .brief-grid,
+      .footer__inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .brief-main {
+        padding-top: calc(var(--nav-height) + 24px);
+      }
+
+      .brief-checkbox-group,
+      .brief-output__buttons,
+      .mobile-menu__footer,
+      .brief-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brief-checkbox-group {
+        display: grid;
+      }
+
+      .brief-output__buttons {
+        display: grid;
+      }
+
+      .brief-output__buttons .btn {
+        width: 100%;
+      }
+
+      .mobile-menu__footer {
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .brief-header {
+        padding-top: 24px;
+      }
+
+      .brief-section {
+        padding-bottom: 48px;
+      }
+
+      .brief-section + .brief-section {
+        padding-top: 48px;
+      }
+
+      .btn,
+      .nav__cta {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body data-default-lang="en">
+  <div class="page-wrapper">
+    <nav class="nav" id="nav">
+      <div class="nav__inner">
+        <a href="/index.html" class="nav__logo" data-href-pl="/index.html" data-href-en="/en/index.html">SENNS<span class="logo__suffix">.STUDIO</span></a>
+        <div class="nav__links">
+          <a href="/portfolio.html" class="nav__link" data-href-pl="/portfolio.html" data-href-en="/en/portfolio.html"><span data-lang-content="pl">Portfolio</span><span data-lang-content="en">Portfolio</span></a>
+          <a href="/projekty.html" class="nav__link" data-href-pl="/projekty.html" data-href-en="/en/projects.html"><span data-lang-content="pl">Projekty</span><span data-lang-content="en">Projects</span></a>
+          <a href="/o-nas.html" class="nav__link" data-href-pl="/o-nas.html" data-href-en="/en/about.html"><span data-lang-content="pl">O nas</span><span data-lang-content="en">About</span></a>
+          <a href="/faq.html" class="nav__link" data-href-pl="/faq.html" data-href-en="/en/faq.html"><span data-lang-content="pl">FAQ</span><span data-lang-content="en">FAQ</span></a>
+        </div>
+        <div class="nav__right">
+          <div class="nav__lang" aria-label="Language switcher">
+            <button class="nav__lang-btn" data-lang-toggle="pl">PL</button>
+            <span class="nav__lang-sep">/</span>
+            <button class="nav__lang-btn" data-lang-toggle="en">EN</button>
+          </div>
+          <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta"><span data-lang-content="pl">Spotkanie</span><span data-lang-content="en">Book a call</span></a>
+          <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu__links">
+        <a href="/portfolio.html" class="mobile-menu__link" data-href-pl="/portfolio.html" data-href-en="/en/portfolio.html"><span data-lang-content="pl">Portfolio</span><span data-lang-content="en">Portfolio</span></a>
+        <a href="/projekty.html" class="mobile-menu__link" data-href-pl="/projekty.html" data-href-en="/en/projects.html"><span data-lang-content="pl">Projekty</span><span data-lang-content="en">Projects</span></a>
+        <a href="/o-nas.html" class="mobile-menu__link" data-href-pl="/o-nas.html" data-href-en="/en/about.html"><span data-lang-content="pl">O nas</span><span data-lang-content="en">About</span></a>
+        <a href="/faq.html" class="mobile-menu__link" data-href-pl="/faq.html" data-href-en="/en/faq.html"><span data-lang-content="pl">FAQ</span><span data-lang-content="en">FAQ</span></a>
+      </div>
+      <div class="mobile-menu__footer">
+        <div class="nav__lang" aria-label="Language switcher mobile">
+          <button class="nav__lang-btn" data-lang-toggle="pl">PL</button>
+          <span class="nav__lang-sep">/</span>
+          <button class="nav__lang-btn" data-lang-toggle="en">EN</button>
+        </div>
+        <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta"><span data-lang-content="pl">Spotkanie</span><span data-lang-content="en">Book a call</span></a>
+      </div>
+    </div>
+
+    <main class="brief-main">
+      <section class="brief-header">
+        <div class="container">
+          <div class="stage--narrow">
+            <p class="text-label">Brief</p>
+            <div data-lang-content="pl">
+              <h1 class="section__title">Opowiedz nam o swoim projekcie.</h1>
+              <p class="section__subtitle">Im więcej wiemy, tym lepszy efekt. Zacznij od podstaw - dodaj szczegóły, jeśli je masz.</p>
+            </div>
+            <div data-lang-content="en">
+              <h1 class="section__title">Tell us about your project.</h1>
+              <p class="section__subtitle">The more we know, the better the result. Start with the essentials - add details if you have them.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="brief-form-wrap">
+        <div class="container">
+          <div class="stage--narrow">
+            <form id="briefForm" novalidate>
+              <section class="brief-section" aria-labelledby="essential-heading">
+                <p class="text-label" id="essential-heading"><span data-lang-content="pl">Informacje podstawowe</span><span data-lang-content="en">Essential information</span></p>
+
+                <div class="brief-group">
+                  <h2 class="brief-group__title"><span data-lang-content="pl">O Tobie</span><span data-lang-content="en">About You</span></h2>
+                  <div class="brief-grid">
+                    <div class="brief-field">
+                      <label class="brief-label" for="company_name"><span data-lang-content="pl">Nazwa firmy / marki</span><span data-lang-content="en">Company / Brand name</span></label>
+                      <input class="brief-input" id="company_name" name="company_name" type="text" aria-required="true" data-placeholder-pl="np. Maison Noir" data-placeholder-en="e.g. Maison Noir">
+                      <div class="brief-error" id="error-company_name"></div>
+                    </div>
+                    <div class="brief-field">
+                      <label class="brief-label" for="contact_name"><span data-lang-content="pl">Twoje imię</span><span data-lang-content="en">Your name</span></label>
+                      <input class="brief-input" id="contact_name" name="contact_name" type="text" aria-required="true" data-placeholder-pl="Np. Aleksandra" data-placeholder-en="e.g. Alex">
+                      <div class="brief-error" id="error-contact_name"></div>
+                    </div>
+                    <div class="brief-field">
+                      <label class="brief-label" for="contact_email"><span data-lang-content="pl">Email</span><span data-lang-content="en">Email</span></label>
+                      <input class="brief-input" id="contact_email" name="contact_email" type="email" aria-required="true" data-placeholder-pl="name@company.com" data-placeholder-en="name@company.com">
+                      <div class="brief-error" id="error-contact_email"></div>
+                    </div>
+                    <div class="brief-field">
+                      <label class="brief-label" for="industry"><span data-lang-content="pl">Branża</span><span data-lang-content="en">Industry</span></label>
+                      <select class="brief-select" id="industry" name="industry" aria-required="true">
+                        <option value="" data-label-pl="Wybierz branżę" data-label-en="Select industry"></option>
+                        <option value="fashion" data-label-pl="Moda" data-label-en="Fashion"></option>
+                        <option value="eyewear" data-label-pl="Okulary" data-label-en="Eyewear"></option>
+                        <option value="beauty-skincare" data-label-pl="Uroda i pielęgnacja" data-label-en="Beauty &amp; Skincare"></option>
+                        <option value="jewelry-accessories" data-label-pl="Biżuteria i akcesoria" data-label-en="Jewelry &amp; Accessories"></option>
+                        <option value="lifestyle" data-label-pl="Lifestyle" data-label-en="Lifestyle"></option>
+                        <option value="interior-hospitality" data-label-pl="Wnętrza i hotelarstwo" data-label-en="Interior &amp; Hospitality"></option>
+                        <option value="ecommerce" data-label-pl="E-commerce" data-label-en="E-commerce"></option>
+                        <option value="other" data-label-pl="Inne" data-label-en="Other"></option>
+                      </select>
+                      <div class="brief-error" id="error-industry"></div>
+                    </div>
+                    <div class="brief-field brief-field--full">
+                      <label class="brief-label" for="website"><span data-lang-content="pl">Strona (jeśli jest)</span><span data-lang-content="en">Website (if available)</span></label>
+                      <input class="brief-input" id="website" name="website" type="url" data-placeholder-pl="https://..." data-placeholder-en="https://...">
+                      <div class="brief-error" id="error-website"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="brief-group">
+                  <h2 class="brief-group__title"><span data-lang-content="pl">Czego potrzebujesz</span><span data-lang-content="en">What Do You Need</span></h2>
+                  <div class="brief-field brief-field--full">
+                    <label class="brief-label"><span data-lang-content="pl">Typ produkcji</span><span data-lang-content="en">Production type</span></label>
+                    <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące</span><span data-lang-content="en">Select all that apply</span></p>
+                    <div class="brief-checkbox-group" id="production_type_group">
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="campaign"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Kampania wizerunkowa</span><span data-lang-content="en">Campaign imagery</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="lookbook"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Lookbook</span><span data-lang-content="en">Lookbook</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="ecommerce"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">E-commerce (packshot, on-model, lifestyle)</span><span data-lang-content="en">E-commerce (packshot, on-model, lifestyle)</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="editorial"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Editorial</span><span data-lang-content="en">Editorial</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="social"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Content social media</span><span data-lang-content="en">Social media content</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="performance"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Reklamy performance (Meta, TikTok)</span><span data-lang-content="en">Performance ads (Meta, TikTok)</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="postproduction"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Postprodukcja istniejących zdjęć</span><span data-lang-content="en">Post-production of existing photos</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="production_type" value="other" id="production_type_other_toggle"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Inne</span><span data-lang-content="en">Other</span></span></label>
+                    </div>
+                    <div class="brief-other-wrap" id="production_type_other_wrap" hidden>
+                      <input class="brief-input" id="production_type_other" name="production_type_other" type="text" data-placeholder-pl="Doprecyzuj typ produkcji" data-placeholder-en="Specify production type">
+                    </div>
+                    <div class="brief-error" id="error-production_type"></div>
+                  </div>
+
+                  <div class="brief-grid">
+                    <div class="brief-field">
+                      <label class="brief-label" for="image_count"><span data-lang-content="pl">Szacunkowa liczba finalnych zdjęć</span><span data-lang-content="en">Estimated number of final images</span></label>
+                      <select class="brief-select" id="image_count" name="image_count" aria-required="true">
+                        <option value="" data-label-pl="Wybierz zakres" data-label-en="Select range"></option>
+                        <option value="5-10" data-label-pl="5-10 zdjęć" data-label-en="5-10 images"></option>
+                        <option value="10-25" data-label-pl="10-25 zdjęć" data-label-en="10-25 images"></option>
+                        <option value="25-50" data-label-pl="25-50 zdjęć" data-label-en="25-50 images"></option>
+                        <option value="50+" data-label-pl="50+ zdjęć" data-label-en="50+ images"></option>
+                        <option value="not-sure" data-label-pl="Jeszcze nie wiem" data-label-en="Not sure yet"></option>
+                      </select>
+                      <div class="brief-error" id="error-image_count"></div>
+                    </div>
+                    <div class="brief-field">
+                      <label class="brief-label" for="deadline"><span data-lang-content="pl">Termin / deadline</span><span data-lang-content="en">Timeline / deadline</span></label>
+                      <input class="brief-input" id="deadline" name="deadline" type="text" data-placeholder-pl="np. Start za 6 tygodni / Bez pośpiechu" data-placeholder-en="e.g. Launch in 6 weeks / No rush">
+                      <div class="brief-error" id="error-deadline"></div>
+                    </div>
+                  </div>
+
+                  <div class="brief-field brief-field--full">
+                    <label class="brief-label"><span data-lang-content="pl">Gdzie będą użyte?</span><span data-lang-content="en">Where will these be used?</span></label>
+                    <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące</span><span data-lang-content="en">Select all that apply</span></p>
+                    <div class="brief-checkbox-group" id="usage_group">
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="website"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Strona / karty produktu</span><span data-lang-content="en">Website / product pages</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="social"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Social media</span><span data-lang-content="en">Social media</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="ads"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Reklamy płatne</span><span data-lang-content="en">Paid ads</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="print"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Druk (katalogi, billboardy)</span><span data-lang-content="en">Print (catalogs, billboards)</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="press"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Prasa / PR</span><span data-lang-content="en">Press / PR</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="internal"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Prezentacje wewnętrzne</span><span data-lang-content="en">Internal presentations</span></span></label>
+                      <label class="brief-choice"><input type="checkbox" name="usage" value="other"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Inne</span><span data-lang-content="en">Other</span></span></label>
+                    </div>
+                    <div class="brief-error" id="error-usage"></div>
+                  </div>
+                </div>
+
+                <div class="brief-group">
+                  <h2 class="brief-group__title"><span data-lang-content="pl">Twoja wizja</span><span data-lang-content="en">Your Vision</span></h2>
+                  <div class="brief-field brief-field--full">
+                    <label class="brief-label" for="project_description"><span data-lang-content="pl">Opisz swój projekt w kilku zdaniach</span><span data-lang-content="en">Describe your project in a few sentences</span></label>
+                    <p class="brief-hint"><span data-lang-content="pl">Co wprowadzasz? Jaką historię mają opowiedzieć wizuale? Jaki nastrój powinny budować?</span><span data-lang-content="en">What are you launching? What story should the visuals tell? What feeling should they evoke?</span></p>
+                    <textarea class="brief-textarea" id="project_description" name="project_description" aria-required="true"></textarea>
+                    <div class="brief-error" id="error-project_description"></div>
+                  </div>
+                  <div class="brief-field brief-field--full">
+                    <label class="brief-label" for="brand_aesthetic"><span data-lang-content="pl">Czy macie zdefiniowaną estetykę marki?</span><span data-lang-content="en">Do you have a defined brand aesthetic?</span></label>
+                    <select class="brief-select" id="brand_aesthetic" name="brand_aesthetic" aria-required="true">
+                      <option value="" data-label-pl="Wybierz odpowiedź" data-label-en="Select an option"></option>
+                      <option value="strict" data-label-pl="Tak, ściśle zdefiniowana - potrzebujemy dokładnego odwzorowania" data-label-en="Yes, strictly defined - we need exact match"></option>
+                      <option value="open" data-label-pl="Tak, ale jesteśmy otwarci na interpretację" data-label-en="Yes, but open to creative interpretation"></option>
+                      <option value="some-direction" data-label-pl="Mamy pewien kierunek, ale niesformalizowany" data-label-en="We have some direction but not formalized"></option>
+                      <option value="open-to-you" data-label-pl="Nie - jesteśmy otwarci na Wasz kierunek" data-label-en="No - we're open to your direction"></option>
+                      <option value="need-help" data-label-pl="Potrzebujemy pomocy w zdefiniowaniu" data-label-en="We need help defining it"></option>
+                    </select>
+                    <div class="brief-error" id="error-brand_aesthetic"></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="brief-section" aria-labelledby="optional-heading">
+                <button type="button" class="brief-toggle" id="optionalToggle" aria-expanded="false" aria-controls="optionalContent">
+                  <span class="brief-toggle__copy">
+                    <span class="text-label" id="optional-heading"><span data-lang-content="pl">Dodatkowe informacje (opcjonalne)</span><span data-lang-content="en">Additional details (optional)</span></span>
+                    <span class="brief-collapsible__note"><span data-lang-content="pl">Te informacje pomagają nam szybciej trafić w kierunek. Pomiń to, czego nie masz - ustalimy to razem.</span><span data-lang-content="en">These details help us nail the direction faster. Skip what you don't have - we'll figure it out together.</span></span>
+                  </span>
+                  <span class="brief-toggle__icon">+</span>
+                </button>
+
+                <div class="brief-collapsible__content" id="optionalContent">
+                  <div class="brief-collapsible__inner">
+                    <div class="brief-group">
+                      <h2 class="brief-group__title"><span data-lang-content="pl">Referencje wizualne</span><span data-lang-content="en">Visual References</span></h2>
+                      <div class="brief-field brief-field--full brief-upload-wrap">
+                        <label class="brief-label" for="moodboard_files"><span data-lang-content="pl">Wgraj moodboard lub zdjęcia referencyjne</span><span data-lang-content="en">Upload moodboard or reference images</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">JPG, PNG, PDF. Maks. 10 plików, 10MB każdy.</span><span data-lang-content="en">JPG, PNG, PDF. Max 10 files, 10MB each.</span></p>
+                        <input class="brief-file-input" id="moodboard_files" name="moodboard_files" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" multiple>
+                        <label for="moodboard_files" class="brief-file-control" id="moodboardControl">
+                          <span data-lang-content="pl">Kliknij, aby wybrać pliki</span>
+                          <span data-lang-content="en">Click to choose files</span>
+                        </label>
+                        <div class="brief-file-note"><span data-lang-content="pl">Wgrane pliki nie zostaną dołączone do briefu. Wyślij je osobno na hello@senns.studio.</span><span data-lang-content="en">Uploaded files will not be included in the downloaded brief. Please send them separately to hello@senns.studio.</span></div>
+                        <div class="brief-file-list" id="fileList"></div>
+                        <div class="brief-error" id="error-moodboard_files"></div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="reference_links"><span data-lang-content="pl">Linki do referencji wizualnych</span><span data-lang-content="en">Links to visual references</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Tablice Pinterest, posty na Instagramie, strony - cokolwiek, co pokazuje kierunek.</span><span data-lang-content="en">Pinterest boards, Instagram posts, websites - anything that shows the direction you want.</span></p>
+                        <textarea class="brief-textarea" id="reference_links" name="reference_links"></textarea>
+                        <div class="brief-error" id="error-reference_links"></div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="brands_you_admire"><span data-lang-content="pl">Marki, których wizuale podziwiasz</span><span data-lang-content="en">Brands whose visuals you admire</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze? Co konkretnie podoba Ci się w ich wizerunku?</span><span data-lang-content="en">Which brands get it right? What specifically do you like about their imagery?</span></p>
+                        <textarea class="brief-textarea" id="brands_you_admire" name="brands_you_admire"></textarea>
+                        <div class="brief-error" id="error-brands_you_admire"></div>
+                      </div>
+                    </div>
+
+                    <div class="brief-group">
+                      <h2 class="brief-group__title"><span data-lang-content="pl">Casting i stylizacja</span><span data-lang-content="en">Casting &amp; Styling</span></h2>
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="model_preferences"><span data-lang-content="pl">Preferencje modeli / castingu</span><span data-lang-content="en">Model / casting preferences</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Wiek, płeć, pochodzenie, look, charakter. Bądź tak precyzyjny lub otwarty, jak chcesz.</span><span data-lang-content="en">Age range, gender, ethnicity, look, attitude. Be as specific or as open as you want.</span></p>
+                        <textarea class="brief-textarea" id="model_preferences" name="model_preferences"></textarea>
+                        <div class="brief-error" id="error-model_preferences"></div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="styling_notes"><span data-lang-content="pl">Kierunek stylizacji</span><span data-lang-content="en">Styling direction</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Kolory, tkaniny, klimat. Minimalizm? Warstwy? Sportowy? Elegancki?</span><span data-lang-content="en">Colors, fabrics, vibe. Minimalist? Layered? Sporty? Elegant?</span></p>
+                        <textarea class="brief-textarea" id="styling_notes" name="styling_notes"></textarea>
+                        <div class="brief-error" id="error-styling_notes"></div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="product_to_feature"><span data-lang-content="pl">Konkretne produkty do sfotografowania</span><span data-lang-content="en">Specific products to feature</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Nazwy produktów, SKU lub opis tego, co ma być w kadrze.</span><span data-lang-content="en">Product names, SKUs, or describe what needs to be in the shots.</span></p>
+                        <textarea class="brief-textarea" id="product_to_feature" name="product_to_feature"></textarea>
+                        <div class="brief-error" id="error-product_to_feature"></div>
+                      </div>
+                    </div>
+
+                    <div class="brief-group">
+                      <h2 class="brief-group__title"><span data-lang-content="pl">Techniczne i nastrój</span><span data-lang-content="en">Technical &amp; Mood</span></h2>
+                      <div class="brief-grid">
+                        <div class="brief-field">
+                          <label class="brief-label" for="mood_keywords"><span data-lang-content="pl">Nastrój w 3-5 słowach</span><span data-lang-content="en">Mood in 3-5 words</span></label>
+                          <input class="brief-input" id="mood_keywords" name="mood_keywords" type="text" data-placeholder-pl="np. ciepły, intymny, pewny, naturalny" data-placeholder-en="e.g. warm, intimate, confident, natural">
+                          <div class="brief-error" id="error-mood_keywords"></div>
+                        </div>
+                        <div class="brief-field">
+                          <label class="brief-label" for="color_palette"><span data-lang-content="pl">Preferowana paleta kolorów</span><span data-lang-content="en">Preferred color palette</span></label>
+                          <input class="brief-input" id="color_palette" name="color_palette" type="text" data-placeholder-pl="np. Ziemiste tony, krem, bursztyn" data-placeholder-en="e.g. Earth tones, cream, amber">
+                          <div class="brief-error" id="error-color_palette"></div>
+                        </div>
+                        <div class="brief-field">
+                          <label class="brief-label" for="setting_preference"><span data-lang-content="pl">Sceneria / otoczenie</span><span data-lang-content="en">Setting / environment</span></label>
+                          <select class="brief-select" id="setting_preference" name="setting_preference">
+                            <option value="" data-label-pl="Wybierz opcję" data-label-en="Select an option"></option>
+                            <option value="studio" data-label-pl="Studio / czyste tło" data-label-en="Studio / clean background"></option>
+                            <option value="urban" data-label-pl="Miejski / ulica" data-label-en="Urban / street"></option>
+                            <option value="interior" data-label-pl="Wnętrze / architektura" data-label-en="Interior / architectural"></option>
+                            <option value="nature" data-label-pl="Natura / plener" data-label-en="Nature / outdoor"></option>
+                            <option value="lifestyle" data-label-pl="Lifestyle / kontekstowy" data-label-en="Lifestyle / contextual"></option>
+                            <option value="no-preference" data-label-pl="Bez preferencji / otwarci na propozycję" data-label-en="No preference / open to suggestion"></option>
+                          </select>
+                          <div class="brief-error" id="error-setting_preference"></div>
+                        </div>
+                        <div class="brief-field">
+                          <label class="brief-label" for="light_preference"><span data-lang-content="pl">Preferencja oświetlenia</span><span data-lang-content="en">Light preference</span></label>
+                          <select class="brief-select" id="light_preference" name="light_preference">
+                            <option value="" data-label-pl="Wybierz opcję" data-label-en="Select an option"></option>
+                            <option value="natural" data-label-pl="Naturalne / dzienne" data-label-en="Natural / daylight"></option>
+                            <option value="studio" data-label-pl="Studyjne / kontrolowane" data-label-en="Studio / controlled"></option>
+                            <option value="warm" data-label-pl="Ciepłe / złota godzina" data-label-en="Warm / golden hour"></option>
+                            <option value="dramatic" data-label-pl="Dramatyczne / editorial" data-label-en="Dramatic / editorial"></option>
+                            <option value="soft" data-label-pl="Miękkie / rozproszone" data-label-en="Soft / diffused"></option>
+                            <option value="no-preference" data-label-pl="Bez preferencji" data-label-en="No preference"></option>
+                          </select>
+                          <div class="brief-error" id="error-light_preference"></div>
+                        </div>
+                        <div class="brief-field">
+                          <label class="brief-label" for="existing_materials"><span data-lang-content="pl">Czy macie istniejące zdjęcia produktu, z którymi możemy pracować?</span><span data-lang-content="en">Do you have existing product photos we can work with?</span></label>
+                          <select class="brief-select" id="existing_materials" name="existing_materials">
+                            <option value="" data-label-pl="Wybierz opcję" data-label-en="Select an option"></option>
+                            <option value="high-quality" data-label-pl="Tak, zdjęcia produktu w wysokiej jakości" data-label-en="Yes, high-quality product photos"></option>
+                            <option value="average" data-label-pl="Tak, ale jakość średnia" data-label-en="Yes, but quality is average"></option>
+                            <option value="packshots" data-label-pl="Mamy tylko packshoty" data-label-en="We have packshots only"></option>
+                            <option value="none" data-label-pl="Brak materiałów" data-label-en="No existing materials"></option>
+                            <option value="samples" data-label-pl="Możemy dostarczyć próbki" data-label-en="We can provide samples for reference"></option>
+                          </select>
+                          <div class="brief-error" id="error-existing_materials"></div>
+                        </div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label"><span data-lang-content="pl">Wymagane proporcje / formaty</span><span data-lang-content="en">Required aspect ratios / formats</span></label>
+                        <div class="brief-checkbox-group" id="aspect_ratios_group">
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="1:1"><span class="brief-choice__box"></span><span class="brief-choice__text">1:1 (Instagram feed, product cards)</span></label>
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="4:5"><span class="brief-choice__box"></span><span class="brief-choice__text">4:5 (Instagram portrait, ads)</span></label>
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="9:16"><span class="brief-choice__box"></span><span class="brief-choice__text">9:16 (Stories, Reels, TikTok)</span></label>
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="16:9"><span class="brief-choice__box"></span><span class="brief-choice__text">16:9 (Website banners, presentations)</span></label>
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="3:4 / 2:3"><span class="brief-choice__box"></span><span class="brief-choice__text">3:4 / 2:3 (Lookbook, editorial)</span></label>
+                          <label class="brief-choice"><input type="checkbox" name="aspect_ratios" value="custom"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Custom / Inne</span><span data-lang-content="en">Custom / Other</span></span></label>
+                        </div>
+                        <div class="brief-error" id="error-aspect_ratios"></div>
+                      </div>
+
+                      <div class="brief-field brief-field--full">
+                        <label class="brief-label" for="notes"><span data-lang-content="pl">Cokolwiek jeszcze powinniśmy wiedzieć</span><span data-lang-content="en">Anything else we should know</span></label>
+                        <p class="brief-hint"><span data-lang-content="pl">Specjalne wymagania, ograniczenia, wcześniejsze doświadczenia, czego unikać...</span><span data-lang-content="en">Special requirements, constraints, past experiences, things to avoid...</span></p>
+                        <textarea class="brief-textarea" id="notes" name="notes"></textarea>
+                        <div class="brief-error" id="error-notes"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div class="brief-actions">
+                <button type="submit" class="btn btn--primary" id="generateButton"><span data-lang-content="pl">Wygeneruj brief</span><span data-lang-content="en">Generate brief</span></button>
+                <div class="brief-output" id="briefOutput" hidden>
+                  <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
+                  <div data-lang-content="pl">
+                    <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief gotowy.</h2>
+                    <p class="section__subtitle">Możesz pobrać podsumowanie PDF dla klienta oraz plik studio do dalszej pracy wewnętrznej.</p>
+                  </div>
+                  <div data-lang-content="en">
+                    <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief ready.</h2>
+                    <p class="section__subtitle">Download the PDF summary for the client and the studio file for internal processing.</p>
+                  </div>
+                  <div class="brief-output__buttons">
+                    <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz podsumowanie PDF</span><span data-lang-content="en">Download PDF summary</span></button>
+                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik studio</span><span data-lang-content="en">Download studio file</span></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div>
+            <div class="footer__logo">SENNS<span class="logo__suffix">.STUDIO</span></div>
+            <p class="footer__tagline"><span data-lang-content="pl">Wykonawcze studio wizualne dla marek fashion i lifestyle.</span><span data-lang-content="en">Visual production studio for fashion and lifestyle brands.</span></p>
+          </div>
+          <div>
+            <p class="footer__nav-title"><span data-lang-content="pl">Studio</span><span data-lang-content="en">Studio</span></p>
+            <ul class="footer__nav-list">
+              <li><a href="/portfolio.html" data-href-pl="/portfolio.html" data-href-en="/en/portfolio.html"><span data-lang-content="pl">Portfolio</span><span data-lang-content="en">Portfolio</span></a></li>
+              <li><a href="/projekty.html" data-href-pl="/projekty.html" data-href-en="/en/projects.html"><span data-lang-content="pl">Projekty</span><span data-lang-content="en">Projects</span></a></li>
+              <li><a href="/o-nas.html" data-href-pl="/o-nas.html" data-href-en="/en/about.html"><span data-lang-content="pl">O nas</span><span data-lang-content="en">About</span></a></li>
+              <li><a href="/faq.html" data-href-pl="/faq.html" data-href-en="/en/faq.html"><span data-lang-content="pl">FAQ</span><span data-lang-content="en">FAQ</span></a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer__nav-title"><span data-lang-content="pl">Kontakt</span><span data-lang-content="en">Contact</span></p>
+            <ul class="footer__nav-list">
+              <li><a href="mailto:hello@senns.studio">hello@senns.studio</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__bottom"><span data-lang-content="pl">© 2026 SENNS.STUDIO. Wszelkie prawa zastrzeżone.</span><span data-lang-content="en">© 2026 SENNS.STUDIO. All rights reserved.</span></div>
+        <div class="footer-legal">
+          <a href="/privacy.html" data-href-pl="/privacy.html" data-href-en="/en/privacy.html"><span data-lang-content="pl">Ochrona danych</span><span data-lang-content="en">Privacy</span></a>
+          <span class="footer-legal__sep">•</span>
+          <a href="/terms.html" data-href-pl="/terms.html" data-href-en="/en/terms.html"><span data-lang-content="pl">Regulamin</span><span data-lang-content="en">Terms</span></a>
+          <span class="footer-legal__sep">•</span>
+          <a href="/technical.html" data-href-pl="/technical.html" data-href-en="/en/technical.html"><span data-lang-content="pl">Standardy techniczne</span><span data-lang-content="en">Technical standards</span></a>
+          <span class="footer-legal__sep">•</span>
+          <a href="/licensing.html" data-href-pl="/licensing.html" data-href-en="/en/licensing.html"><span data-lang-content="pl">Licencjonowanie</span><span data-lang-content="en">Licensing</span></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('briefForm');
+      var output = document.getElementById('briefOutput');
+      var optionalToggle = document.getElementById('optionalToggle');
+      var optionalContent = document.getElementById('optionalContent');
+      var fileInput = document.getElementById('moodboard_files');
+      var fileList = document.getElementById('fileList');
+      var burger = document.getElementById('burger');
+      var mobileMenu = document.getElementById('mobileMenu');
+      var productionOtherToggle = document.getElementById('production_type_other_toggle');
+      var productionOtherWrap = document.getElementById('production_type_other_wrap');
+      var activeLang = document.body.getAttribute('data-default-lang') || 'pl';
+      var generatedPayload = null;
+      var MAX_FILES = 10;
+      var MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+      var copy = {
+        pl: {
+          errors: {
+            required: 'To pole jest wymagane.',
+            email: 'Podaj poprawny adres email.',
+            minCheck: 'Wybierz przynajmniej jedną opcję.',
+            filesCount: 'Możesz dodać maksymalnie 10 plików.',
+            filesSize: 'Każdy plik musi mieć mniej niż 10MB.',
+            filesType: 'Dozwolone są tylko JPG, PNG, WEBP i PDF.'
+          },
+          pdf: {
+            title: 'Brief Projektowy',
+            overview: 'INFORMACJE O PROJEKCIE',
+            vision: 'WIZJA',
+            visual: 'KIERUNEK WIZUALNY',
+            casting: 'CASTING I STYLIZACJA',
+            technical: 'TECHNICZNE',
+            footer: 'senns.studio | hello@senns.studio'
+          }
+        },
+        en: {
+          errors: {
+            required: 'This field is required.',
+            email: 'Enter a valid email address.',
+            minCheck: 'Select at least one option.',
+            filesCount: 'You can upload up to 10 files.',
+            filesSize: 'Each file must be smaller than 10MB.',
+            filesType: 'Only JPG, PNG, WEBP and PDF files are allowed.'
+          },
+          pdf: {
+            title: 'Project Brief',
+            overview: 'PROJECT OVERVIEW',
+            vision: 'VISION',
+            visual: 'VISUAL DIRECTION',
+            casting: 'CASTING & STYLING',
+            technical: 'TECHNICAL',
+            footer: 'senns.studio | hello@senns.studio'
+          }
+        }
+      };
+
+      var valueLabels = {
+        industry: {
+          fashion: { pl: 'Moda', en: 'Fashion' },
+          eyewear: { pl: 'Okulary', en: 'Eyewear' },
+          'beauty-skincare': { pl: 'Uroda i pielęgnacja', en: 'Beauty & Skincare' },
+          'jewelry-accessories': { pl: 'Biżuteria i akcesoria', en: 'Jewelry & Accessories' },
+          lifestyle: { pl: 'Lifestyle', en: 'Lifestyle' },
+          'interior-hospitality': { pl: 'Wnętrza i hotelarstwo', en: 'Interior & Hospitality' },
+          ecommerce: { pl: 'E-commerce', en: 'E-commerce' },
+          other: { pl: 'Inne', en: 'Other' }
+        },
+        production_type: {
+          campaign: { pl: 'Kampania wizerunkowa', en: 'Campaign imagery' },
+          lookbook: { pl: 'Lookbook', en: 'Lookbook' },
+          ecommerce: { pl: 'E-commerce (packshot, on-model, lifestyle)', en: 'E-commerce (packshot, on-model, lifestyle)' },
+          editorial: { pl: 'Editorial', en: 'Editorial' },
+          social: { pl: 'Content social media', en: 'Social media content' },
+          performance: { pl: 'Reklamy performance (Meta, TikTok)', en: 'Performance ads (Meta, TikTok)' },
+          postproduction: { pl: 'Postprodukcja istniejących zdjęć', en: 'Post-production of existing photos' },
+          other: { pl: 'Inne', en: 'Other' }
+        },
+        image_count: {
+          '5-10': { pl: '5-10 zdjęć', en: '5-10 images' },
+          '10-25': { pl: '10-25 zdjęć', en: '10-25 images' },
+          '25-50': { pl: '25-50 zdjęć', en: '25-50 images' },
+          '50+': { pl: '50+ zdjęć', en: '50+ images' },
+          'not-sure': { pl: 'Jeszcze nie wiem', en: 'Not sure yet' }
+        },
+        usage: {
+          website: { pl: 'Strona / karty produktu', en: 'Website / product pages' },
+          social: { pl: 'Social media', en: 'Social media' },
+          ads: { pl: 'Reklamy płatne', en: 'Paid ads' },
+          print: { pl: 'Druk (katalogi, billboardy)', en: 'Print (catalogs, billboards)' },
+          press: { pl: 'Prasa / PR', en: 'Press / PR' },
+          internal: { pl: 'Prezentacje wewnętrzne', en: 'Internal presentations' },
+          other: { pl: 'Inne', en: 'Other' }
+        },
+        brand_aesthetic: {
+          strict: { pl: 'Tak, ściśle zdefiniowana - potrzebujemy dokładnego odwzorowania', en: 'Yes, strictly defined - we need exact match' },
+          open: { pl: 'Tak, ale jesteśmy otwarci na interpretację', en: 'Yes, but open to creative interpretation' },
+          'some-direction': { pl: 'Mamy pewien kierunek, ale niesformalizowany', en: 'We have some direction but not formalized' },
+          'open-to-you': { pl: 'Nie - jesteśmy otwarci na Wasz kierunek', en: 'No - we\'re open to your direction' },
+          'need-help': { pl: 'Potrzebujemy pomocy w zdefiniowaniu', en: 'We need help defining it' }
+        },
+        setting_preference: {
+          studio: { pl: 'Studio / czyste tło', en: 'Studio / clean background' },
+          urban: { pl: 'Miejski / ulica', en: 'Urban / street' },
+          interior: { pl: 'Wnętrze / architektura', en: 'Interior / architectural' },
+          nature: { pl: 'Natura / plener', en: 'Nature / outdoor' },
+          lifestyle: { pl: 'Lifestyle / kontekstowy', en: 'Lifestyle / contextual' },
+          'no-preference': { pl: 'Bez preferencji / otwarci na propozycję', en: 'No preference / open to suggestion' }
+        },
+        light_preference: {
+          natural: { pl: 'Naturalne / dzienne', en: 'Natural / daylight' },
+          studio: { pl: 'Studyjne / kontrolowane', en: 'Studio / controlled' },
+          warm: { pl: 'Ciepłe / złota godzina', en: 'Warm / golden hour' },
+          dramatic: { pl: 'Dramatyczne / editorial', en: 'Dramatic / editorial' },
+          soft: { pl: 'Miękkie / rozproszone', en: 'Soft / diffused' },
+          'no-preference': { pl: 'Bez preferencji', en: 'No preference' }
+        },
+        existing_materials: {
+          'high-quality': { pl: 'Tak, zdjęcia produktu w wysokiej jakości', en: 'Yes, high-quality product photos' },
+          average: { pl: 'Tak, ale jakość średnia', en: 'Yes, but quality is average' },
+          packshots: { pl: 'Mamy tylko packshoty', en: 'We have packshots only' },
+          none: { pl: 'Brak materiałów', en: 'No existing materials' },
+          samples: { pl: 'Możemy dostarczyć próbki', en: 'We can provide samples for reference' }
+        }
+      };
+
+      function setLanguage(lang) {
+        activeLang = lang;
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-lang-content]').forEach(function (el) {
+          var show = el.getAttribute('data-lang-content') === lang;
+          el.classList.toggle('lang-hidden', !show);
+        });
+        document.querySelectorAll('[data-lang-toggle]').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-lang-toggle') === lang);
+        });
+        document.querySelectorAll('[data-placeholder-pl]').forEach(function (el) {
+          el.setAttribute('placeholder', el.getAttribute('data-placeholder-' + lang) || '');
+        });
+        document.querySelectorAll('option[data-label-pl]').forEach(function (option) {
+          option.textContent = option.getAttribute('data-label-' + lang) || '';
+        });
+        document.querySelectorAll('[data-href-pl]').forEach(function (el) {
+          el.setAttribute('href', el.getAttribute('data-href-' + lang));
+        });
+      }
+
+      function slugify(value) {
+        return String(value || '')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '') || 'client';
+      }
+
+      function todayStamp() {
+        var now = new Date();
+        return [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+      }
+
+      function displayDate(lang) {
+        return new Intl.DateTimeFormat(lang === 'pl' ? 'pl-PL' : 'en-GB', {
+          year: 'numeric', month: 'long', day: 'numeric'
+        }).format(new Date());
+      }
+
+      function emailValid(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+      }
+
+      function selectedValues(name) {
+        return Array.prototype.slice.call(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (input) {
+          return input.value;
+        });
+      }
+
+      function mapValue(group, value, lang) {
+        if (!value) return '';
+        return valueLabels[group] && valueLabels[group][value] ? valueLabels[group][value][lang] : value;
+      }
+
+      function mapValues(group, values, lang, otherText) {
+        return (values || []).map(function (value) {
+          if (value === 'other' && otherText) return mapValue(group, value, lang) + ': ' + otherText;
+          return mapValue(group, value, lang);
+        });
+      }
+
+      function clearErrors() {
+        form.querySelectorAll('.brief-input, .brief-select, .brief-textarea, .brief-file-control, .brief-choice').forEach(function (el) {
+          el.classList.remove('is-error');
+        });
+        form.querySelectorAll('.brief-error').forEach(function (el) {
+          el.textContent = '';
+        });
+      }
+
+      function setFieldError(id, message) {
+        var field = document.getElementById(id);
+        var error = document.getElementById('error-' + id);
+        if (field) field.classList.add('is-error');
+        if (error) error.textContent = message;
+      }
+
+      function setGroupError(name, message) {
+        var error = document.getElementById('error-' + name);
+        document.querySelectorAll('input[name="' + name + '"]').forEach(function (input) {
+          var choice = input.closest('.brief-choice');
+          if (choice) choice.classList.add('is-error');
+        });
+        if (error) error.textContent = message;
+      }
+
+      function setFileError(message) {
+        var control = document.getElementById('moodboardControl');
+        var error = document.getElementById('error-moodboard_files');
+        if (control) control.classList.add('is-error');
+        if (error) error.textContent = message;
+      }
+
+      function updateFiles() {
+        var files = Array.prototype.slice.call(fileInput.files || []);
+        fileList.innerHTML = '';
+        if (!files.length) return true;
+        var ok = true;
+        if (files.length > MAX_FILES) {
+          setFileError(copy[activeLang].errors.filesCount);
+          return false;
+        }
+        files.forEach(function (file) {
+          var ext = String(file.name.split('.').pop() || '').toLowerCase();
+          var allowed = ['jpg', 'jpeg', 'png', 'webp', 'pdf'];
+          if (file.size > MAX_FILE_SIZE) ok = false;
+          if (allowed.indexOf(ext) === -1) ok = false;
+          var item = document.createElement('div');
+          item.textContent = file.name;
+          fileList.appendChild(item);
+        });
+        if (!ok) {
+          setFileError(copy[activeLang].errors.filesSize + ' ' + copy[activeLang].errors.filesType);
+        }
+        return ok;
+      }
+
+      function collectData(lang) {
+        var files = Array.prototype.slice.call(fileInput.files || []).map(function (file) { return file.name; });
+        var productionTypes = selectedValues('production_type');
+        var usage = selectedValues('usage');
+        var aspectRatios = selectedValues('aspect_ratios');
+        var payload = {
+          company_name: form.company_name.value.trim(),
+          contact_name: form.contact_name.value.trim(),
+          contact_email: form.contact_email.value.trim(),
+          industry: form.industry.value,
+          website: form.website.value.trim(),
+          production_type: productionTypes,
+          production_type_other: form.production_type_other.value.trim(),
+          image_count: form.image_count.value,
+          deadline: form.deadline.value.trim(),
+          usage: usage,
+          project_description: form.project_description.value.trim(),
+          brand_aesthetic: form.brand_aesthetic.value,
+          moodboard_files: files,
+          reference_links: form.reference_links.value.trim(),
+          brands_you_admire: form.brands_you_admire.value.trim(),
+          model_preferences: form.model_preferences.value.trim(),
+          styling_notes: form.styling_notes.value.trim(),
+          product_to_feature: form.product_to_feature.value.trim(),
+          mood_keywords: form.mood_keywords.value.trim(),
+          color_palette: form.color_palette.value.trim(),
+          setting_preference: form.setting_preference.value,
+          light_preference: form.light_preference.value,
+          existing_materials: form.existing_materials.value,
+          aspect_ratios: aspectRatios,
+          notes: form.notes.value.trim(),
+          lang: lang
+        };
+        payload.display = {
+          industry: mapValue('industry', payload.industry, lang),
+          production_type: mapValues('production_type', productionTypes, lang, payload.production_type_other),
+          image_count: mapValue('image_count', payload.image_count, lang),
+          usage: mapValues('usage', usage, lang),
+          brand_aesthetic: mapValue('brand_aesthetic', payload.brand_aesthetic, lang),
+          setting_preference: mapValue('setting_preference', payload.setting_preference, lang),
+          light_preference: mapValue('light_preference', payload.light_preference, lang),
+          existing_materials: mapValue('existing_materials', payload.existing_materials, lang),
+          aspect_ratios: aspectRatios.slice(),
+          date: displayDate(lang)
+        };
+        return payload;
+      }
+
+      function validate() {
+        clearErrors();
+        var ok = true;
+        if (!form.company_name.value.trim()) { setFieldError('company_name', copy[activeLang].errors.required); ok = false; }
+        if (!form.contact_name.value.trim()) { setFieldError('contact_name', copy[activeLang].errors.required); ok = false; }
+        if (!form.contact_email.value.trim()) { setFieldError('contact_email', copy[activeLang].errors.required); ok = false; }
+        else if (!emailValid(form.contact_email.value.trim())) { setFieldError('contact_email', copy[activeLang].errors.email); ok = false; }
+        if (!form.industry.value) { setFieldError('industry', copy[activeLang].errors.required); ok = false; }
+        if (!selectedValues('production_type').length) { setGroupError('production_type', copy[activeLang].errors.minCheck); ok = false; }
+        if (productionOtherToggle.checked && !form.production_type_other.value.trim()) { setFieldError('production_type_other', copy[activeLang].errors.required); ok = false; }
+        if (!form.image_count.value) { setFieldError('image_count', copy[activeLang].errors.required); ok = false; }
+        if (!selectedValues('usage').length) { setGroupError('usage', copy[activeLang].errors.minCheck); ok = false; }
+        if (!form.project_description.value.trim()) { setFieldError('project_description', copy[activeLang].errors.required); ok = false; }
+        if (!form.brand_aesthetic.value) { setFieldError('brand_aesthetic', copy[activeLang].errors.required); ok = false; }
+        if (!updateFiles()) ok = false;
+        return ok;
+      }
+
+      function addPdfRow(doc, label, value, y, maxWidth, pageWidth, ensureSpace) {
+        if (!value) return y;
+        ensureSpace(18);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor('#7E828A');
+        doc.setFontSize(10);
+        doc.text(label, 20, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor('#1A1A1A');
+        doc.setFontSize(11);
+        var lines = doc.splitTextToSize(String(value), maxWidth - 44);
+        doc.text(lines, 64, y);
+        return y + (lines.length * 6) + 2;
+      }
+
+      function buildPdf(payload) {
+        var jsPDF = window.jspdf && window.jspdf.jsPDF;
+        if (!jsPDF) return;
+        var doc = new jsPDF({ unit: 'mm', format: 'a4' });
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var maxWidth = pageWidth - 40;
+        var y = 20;
+
+        function ensureSpace(height) {
+          if (y + height > pageHeight - 24) {
+            doc.addPage();
+            y = 20;
+          }
+        }
+
+        function divider() {
+          ensureSpace(8);
+          doc.setDrawColor('#D7D7D7');
+          doc.line(20, y, pageWidth - 20, y);
+          y += 8;
+        }
+
+        function heading(text) {
+          ensureSpace(14);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor('#1A1A1A');
+          doc.setFontSize(18);
+          doc.text(text, 20, y);
+          y += 10;
+        }
+
+        function blockTitle(text) {
+          ensureSpace(10);
+          doc.setFont('helvetica', 'bold');
+          doc.setFontSize(11);
+          doc.setTextColor('#1A1A1A');
+          doc.text(text, 20, y);
+          y += 7;
+        }
+
+        function paragraph(text) {
+          if (!text) return;
+          ensureSpace(10);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(11);
+          doc.setTextColor('#1A1A1A');
+          var lines = doc.splitTextToSize(String(text), maxWidth);
+          doc.text(lines, 20, y);
+          y += lines.length * 6 + 2;
+        }
+
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor('#7E828A');
+        doc.setFontSize(10);
+        doc.text('SENNS.STUDIO', 20, y);
+        doc.text(payload.display.date, pageWidth - 20, y, { align: 'right' });
+        y += 8;
+        divider();
+        heading(copy[payload.lang].pdf.title);
+        paragraph(payload.company_name);
+        paragraph(payload.contact_name + ' | ' + payload.contact_email);
+        paragraph([payload.display.industry, payload.website].filter(Boolean).join(' | '));
+        divider();
+        blockTitle(copy[payload.lang].pdf.overview);
+        y = addPdfRow(doc, payload.lang === 'pl' ? 'Typ produkcji:' : 'Production type:', payload.display.production_type.join(', '), y, maxWidth, pageWidth, ensureSpace);
+        y = addPdfRow(doc, payload.lang === 'pl' ? 'Szacunkowa liczba zdjęć:' : 'Estimated deliverables:', payload.display.image_count, y, maxWidth, pageWidth, ensureSpace);
+        y = addPdfRow(doc, payload.lang === 'pl' ? 'Termin:' : 'Timeline:', payload.deadline, y, maxWidth, pageWidth, ensureSpace);
+        y = addPdfRow(doc, payload.lang === 'pl' ? 'Użycie:' : 'Usage:', payload.display.usage.join(', '), y, maxWidth, pageWidth, ensureSpace);
+        divider();
+        blockTitle(copy[payload.lang].pdf.vision);
+        paragraph(payload.project_description);
+        y = addPdfRow(doc, payload.lang === 'pl' ? 'Estetyka marki:' : 'Brand aesthetic:', payload.display.brand_aesthetic, y, maxWidth, pageWidth, ensureSpace);
+
+        var hasVisual = payload.mood_keywords || payload.color_palette || payload.display.setting_preference || payload.display.light_preference || payload.reference_links || payload.brands_you_admire || payload.moodboard_files.length;
+        if (hasVisual) {
+          divider();
+          blockTitle(copy[payload.lang].pdf.visual);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Nastrój:' : 'Mood:', payload.mood_keywords, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Kolory:' : 'Colors:', payload.color_palette, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Sceneria:' : 'Setting:', payload.display.setting_preference, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Światło:' : 'Light:', payload.display.light_preference, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Pliki:' : 'Files:', payload.moodboard_files.join(', '), y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Referencje:' : 'References:', payload.reference_links, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Podziwiane marki:' : 'Admired brands:', payload.brands_you_admire, y, maxWidth, pageWidth, ensureSpace);
+        }
+
+        var hasCasting = payload.model_preferences || payload.styling_notes || payload.product_to_feature;
+        if (hasCasting) {
+          divider();
+          blockTitle(copy[payload.lang].pdf.casting);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Modele:' : 'Model preferences:', payload.model_preferences, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Stylizacja:' : 'Styling:', payload.styling_notes, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Produkty:' : 'Products to feature:', payload.product_to_feature, y, maxWidth, pageWidth, ensureSpace);
+        }
+
+        var hasTechnical = payload.display.existing_materials || payload.display.aspect_ratios.length || payload.notes;
+        if (hasTechnical) {
+          divider();
+          blockTitle(copy[payload.lang].pdf.technical);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Materiały:' : 'Existing materials:', payload.display.existing_materials, y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Formaty:' : 'Aspect ratios:', payload.display.aspect_ratios.join(', '), y, maxWidth, pageWidth, ensureSpace);
+          y = addPdfRow(doc, payload.lang === 'pl' ? 'Dodatkowe notatki:' : 'Additional notes:', payload.notes, y, maxWidth, pageWidth, ensureSpace);
+        }
+
+        var total = doc.getNumberOfPages();
+        for (var i = 1; i <= total; i += 1) {
+          doc.setPage(i);
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor('#7E828A');
+          doc.text(copy[payload.lang].pdf.footer, pageWidth / 2, pageHeight - 10, { align: 'center' });
+          if (total > 1) {
+            doc.text(String(i), pageWidth - 20, pageHeight - 10, { align: 'right' });
+          }
+        }
+
+        doc.save('brief_' + slugify(payload.company_name) + '_' + todayStamp() + '.pdf');
+      }
+
+      function buildMarkdown(payload) {
+        var md = [
+          '# SENNS.STUDIO - Production Brief',
+          '',
+          '## Client',
+          '- Company: ' + payload.company_name,
+          '- Contact: ' + payload.contact_name + ', ' + payload.contact_email,
+          '- Industry: ' + (payload.display.industry || 'not provided'),
+          '- Website: ' + (payload.website || 'not provided'),
+          '',
+          '## Project Scope',
+          '- Production types: ' + (payload.display.production_type.join(', ') || 'not specified'),
+          '- Estimated deliverables: ' + (payload.display.image_count || 'not specified'),
+          '- Timeline: ' + (payload.deadline || 'not specified'),
+          '- Usage channels: ' + (payload.display.usage.join(', ') || 'not specified'),
+          '',
+          '## Vision',
+          '### Project Description',
+          payload.project_description,
+          '',
+          '### Brand Aesthetic Status',
+          payload.display.brand_aesthetic || 'not specified',
+          '',
+          '## Visual Direction',
+          '- Mood keywords: ' + (payload.mood_keywords || 'not provided'),
+          '- Color palette: ' + (payload.color_palette || 'not provided'),
+          '- Setting: ' + (payload.display.setting_preference || 'not provided'),
+          '- Light: ' + (payload.display.light_preference || 'not provided'),
+          '- Uploaded files: ' + (payload.moodboard_files.join(', ') || 'none'),
+          '- Reference links: ' + (payload.reference_links || 'none'),
+          '- Admired brands: ' + (payload.brands_you_admire || 'not provided'),
+          '',
+          '## Casting & Styling',
+          '- Model preferences: ' + (payload.model_preferences || 'not provided'),
+          '- Styling direction: ' + (payload.styling_notes || 'not provided'),
+          '- Products to feature: ' + (payload.product_to_feature || 'not provided'),
+          '',
+          '## Technical',
+          '- Existing materials: ' + (payload.display.existing_materials || 'not specified'),
+          '- Required aspect ratios: ' + (payload.display.aspect_ratios.join(', ') || 'not specified'),
+          '',
+          '## Additional Notes',
+          payload.notes || 'none',
+          '',
+          '---',
+          '',
+          '## SENNS STUDIO ANALYSIS PROMPT',
+          '',
+          'Analyze this production brief and provide:',
+          '',
+          '1. **Brief Summary** - 3-4 sentences capturing the core of what the client needs.',
+          '',
+          '2. **Key Observations** - What stands out? What\'s clear, what\'s ambiguous, what\'s missing?',
+          '',
+          '3. **Recommended Production Approach**:',
+          '   - Which SENNS production format fits best (Campaign, Lookbook, E-commerce, Editorial, Performance, Post-production)?',
+          '   - Suggested session structure: how many hero frames, what categories of shots',
+          '   - Recommended image roles: hero, detail, lifestyle, campaign, e-commerce variants',
+          '',
+          '4. **Session Planning Notes**:',
+          '   - THE WORLD - suggest environment/setting direction based on brief',
+          '   - THE CHARACTER - casting direction based on brief',
+          '   - THE LIGHT - lighting approach based on mood and references',
+          '   - COLOR DIRECTION - palette recommendation',
+          '',
+          '5. **Questions to Clarify Before Starting** - What should we ask the client before production?',
+          '',
+          '6. **3 Sample MJ V7 Prompts** - Based on the brief, write 3 production-ready Midjourney V7 prompts following SENNS 5-pillar structure (Subject, Framing, Light, Camera/Rendering, Color/Mood). Include --style raw --v 7 and appropriate --ar, negative prompts, and film stock references.',
+          '',
+          'Context: SENNS.STUDIO uses Midjourney V7 for hero frame generation, Nano Banana Pro (NB2) for cleanup and variant generation. Production follows the one-hero principle: one hero frame sets the session, everything else is built from it. Quality standard is photorealistic, editorial, film-like. Never generic. Never cold. Always warm, cinematic, natural skin texture with visible pores.'
+        ].join('\n');
+
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'brief_' + slugify(payload.company_name) + '_' + todayStamp() + '.md';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }
+
+      function toggleOptional() {
+        var isOpen = optionalToggle.getAttribute('aria-expanded') === 'true';
+        optionalToggle.setAttribute('aria-expanded', String(!isOpen));
+        optionalContent.hidden = false;
+        optionalContent.classList.toggle('is-open', !isOpen);
+        if (!isOpen) {
+          optionalContent.style.maxHeight = optionalContent.scrollHeight + 'px';
+        } else {
+          optionalContent.style.maxHeight = optionalContent.scrollHeight + 'px';
+          requestAnimationFrame(function () {
+            optionalContent.style.maxHeight = '0px';
+          });
+          setTimeout(function () { optionalContent.hidden = true; }, 450);
+        }
+      }
+
+      function handleGenerate(event) {
+        event.preventDefault();
+        if (!validate()) {
+          output.hidden = true;
+          return;
+        }
+        generatedPayload = collectData(activeLang);
+        output.hidden = false;
+      }
+
+      optionalToggle.addEventListener('click', toggleOptional);
+      fileInput.addEventListener('change', function () {
+        clearErrors();
+        updateFiles();
+      });
+      productionOtherToggle.addEventListener('change', function () {
+        productionOtherWrap.hidden = !productionOtherToggle.checked;
+      });
+      document.querySelectorAll('[data-lang-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setLanguage(btn.getAttribute('data-lang-toggle'));
+        });
+      });
+      form.addEventListener('submit', handleGenerate);
+      document.getElementById('downloadPdf').addEventListener('click', function () {
+        if (!generatedPayload) generatedPayload = collectData(activeLang);
+        buildPdf(generatedPayload);
+      });
+      document.getElementById('downloadMd').addEventListener('click', function () {
+        if (!generatedPayload) generatedPayload = collectData(activeLang);
+        buildMarkdown(generatedPayload);
+      });
+
+      if (burger && mobileMenu) {
+        burger.addEventListener('click', function () {
+          var isOpen = mobileMenu.classList.toggle('is-open');
+          burger.setAttribute('aria-expanded', String(isOpen));
+          var spans = burger.querySelectorAll('span');
+          if (isOpen) {
+            spans[0].style.transform = 'translateY(3px) rotate(45deg)';
+            spans[1].style.transform = 'translateY(-3px) rotate(-45deg)';
+            document.body.style.overflow = 'hidden';
+          } else {
+            spans[0].style.transform = '';
+            spans[1].style.transform = '';
+            document.body.style.overflow = '';
+          }
+        });
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            mobileMenu.classList.remove('is-open');
+            burger.setAttribute('aria-expanded', 'false');
+            burger.querySelectorAll('span').forEach(function (span) { span.style.transform = ''; });
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+      setLanguage(activeLang);
+      optionalContent.style.maxHeight = '0px';
+    })();
+  </script>
+</body>
+</html>
