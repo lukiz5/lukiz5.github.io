@@ -774,6 +774,34 @@
     @media (max-width: 768px) {
       .brief-main {
         padding-top: calc(var(--nav-height) + 24px);
+        padding-bottom: 72px;
+      }
+
+      .brief-header {
+        padding: 24px 0 40px;
+      }
+
+      .brief-meta {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .brief-meta__item {
+        font-size: 11px;
+      }
+
+      .brief-progress {
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .brief-progress__item {
+        padding: 12px 14px;
+      }
+
+      .brief-progress__label {
+        font-size: 13px;
       }
 
       .brief-checkbox-group,
@@ -794,6 +822,40 @@
 
       .brief-output__buttons .btn {
         width: 100%;
+      }
+
+      .brief-input,
+      .brief-select,
+      .brief-textarea {
+        font-size: 16px;
+      }
+
+      .brief-choice {
+        min-height: 0;
+        padding: 13px 14px;
+      }
+
+      .brief-toggle {
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 18px;
+      }
+
+      .brief-toggle__icon {
+        margin-top: 2px;
+      }
+
+      .brief-collapsible__content.is-open {
+        margin-top: 28px;
+      }
+
+      .brief-file-control {
+        min-height: 108px;
+      }
+
+      .brief-output {
+        margin-top: 28px;
+        padding: 20px;
       }
 
       .mobile-menu__footer {
@@ -832,6 +894,41 @@
       .btn,
       .nav__cta {
         width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brief-main {
+        padding-top: calc(var(--nav-height) + 20px);
+      }
+
+      .brief-header {
+        padding-bottom: 32px;
+      }
+
+      .brief-form-wrap {
+        padding-top: 40px;
+      }
+
+      .brief-group + .brief-group {
+        margin-top: 32px;
+      }
+
+      .brief-group__title {
+        margin-bottom: 18px;
+      }
+
+      .brief-hint {
+        margin-top: -2px;
+        line-height: 1.55;
+      }
+
+      .brief-toggle {
+        padding: 16px;
+      }
+
+      .brief-output {
+        padding: 18px;
       }
     }
   </style>
