@@ -53,6 +53,7 @@
     }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
     [hidden] { display: none !important; }
@@ -111,10 +112,16 @@
       height: var(--nav-height);
       display: flex;
       align-items: center;
-      background: rgba(14, 14, 16, 0.92);
+      background-color: rgba(14, 14, 16, 0.7);
       backdrop-filter: blur(24px) saturate(180%);
       -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-bottom: 1px solid var(--border-strong);
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease);
+    }
+
+    .nav.is-scrolled {
+      background-color: rgba(14, 14, 16, 0.92);
+      border-bottom-color: var(--border-strong);
     }
 
     .nav__inner {
@@ -129,11 +136,17 @@
     }
 
     .nav__logo {
+      font-family: var(--font-body);
       font-size: 0.8125rem;
       font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--text);
+      transition: opacity 0.3s var(--ease);
+    }
+
+    .nav__logo:hover {
+      opacity: 0.75;
     }
 
     .logo__suffix { color: var(--text-dim); }
@@ -177,20 +190,20 @@
     }
 
     .nav__lang {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-dim);
       font-size: 0.75rem;
+      font-weight: 300;
       letter-spacing: 0.08em;
+      color: var(--text-dim);
+      display: flex;
+      gap: 6px;
+      align-items: center;
     }
 
     .nav__lang-btn {
-      border: none;
-      background: none;
-      color: var(--text-dim);
       font-size: 0.75rem;
+      font-weight: 300;
       letter-spacing: 0.08em;
+      color: var(--text-dim);
       padding: 4px 2px;
       transition: color 0.3s var(--ease);
     }
@@ -200,23 +213,38 @@
 
     .nav__lang-sep { color: var(--border-strong); }
 
-    .nav__cta,
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border-strong);
-      background: transparent;
-      color: var(--text);
-      padding: 16px 48px;
+      display: inline-block;
       font-size: 0.8125rem;
       font-weight: 300;
       letter-spacing: 0.08em;
+      padding: 16px 48px;
       transition: opacity 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
       text-align: center;
     }
 
-    .nav__cta { padding: 10px 18px; }
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      padding: 10px 18px;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text);
+      transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease), opacity 0.3s var(--ease);
+      text-align: center;
+    }
+
+    .nav__cta:hover,
+    .nav__cta:focus-visible {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
 
     .btn--primary {
       background: var(--text);
@@ -228,9 +256,7 @@
     .btn--primary:focus-visible { opacity: 0.85; }
 
     .btn--secondary:hover,
-    .btn--secondary:focus-visible,
-    .nav__cta:hover,
-    .nav__cta:focus-visible { border-color: var(--text-muted); }
+    .btn--secondary:focus-visible { border-color: var(--text-muted); }
 
     .nav__burger {
       display: none;
@@ -571,47 +597,99 @@
     }
 
     .footer {
-      padding: 40px 0 48px;
-      border-top: 1px solid var(--border-subtle);
-      margin-top: 96px;
+      border-top: 1px solid var(--border);
+      padding: clamp(56px, 7vw, 96px) 0;
+      margin-top: auto;
+      background: var(--bg);
     }
 
     .footer__inner {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 28px;
+      grid-template-columns: 1fr auto auto;
+      gap: clamp(40px, 7vw, 100px);
+      align-items: start;
     }
 
     .footer__logo {
+      font-family: var(--font-body);
       font-size: 0.875rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .footer__tagline,
-    .footer__nav-list a,
-    .footer__bottom,
-    .footer-legal a,
-    .footer-legal__sep {
-      color: var(--text-muted);
+    .footer-legal a { color: var(--text-muted); }
+
+    .footer__tagline {
+      color: var(--text-dim);
       font-size: 0.875rem;
+      max-width: 300px;
+      line-height: 1.6;
     }
 
     .footer__nav-title {
-      margin: 0 0 12px;
-      font-size: 0.75rem;
+      margin: 0 0 20px;
+      font-size: 0.6875rem;
+      font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--text-dim);
     }
 
-    .footer__nav-list { display: grid; gap: 10px; }
-    .footer__bottom { margin-bottom: 16px; }
-    .footer-legal { display: flex; gap: 12px; flex-wrap: wrap; }
+    .footer__nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer__nav-list a {
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      transition: color 0.3s var(--ease);
+    }
+
+    .footer__nav-list a:hover {
+      color: var(--text);
+    }
+
+    .footer__bottom {
+      margin-top: clamp(40px, 5vw, 56px);
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .footer-legal {
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .footer-legal a {
+      transition: color 0.2s var(--ease);
+    }
+
+    .footer-legal a:hover {
+      color: var(--text);
+    }
+
+    .footer-legal__sep {
+      opacity: 0.5;
+    }
 
     .lang-hidden { display: none !important; }
 
@@ -625,8 +703,11 @@
         display: flex;
       }
 
-      .brief-grid,
       .footer__inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .brief-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -658,6 +739,22 @@
       .mobile-menu__footer {
         align-items: flex-start;
         gap: 24px;
+      }
+
+      .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .footer-legal {
+        gap: 8px;
+        padding: 0 16px;
       }
 
       .brief-header {
@@ -778,7 +875,7 @@
                     </div>
                     <div class="brief-field brief-field--full">
                       <label class="brief-label" for="website"><span data-lang-content="pl">Strona (jeśli jest)</span><span data-lang-content="en">Website (if available)</span></label>
-                      <input class="brief-input" id="website" name="website" type="url" data-placeholder-pl="https://..." data-placeholder-en="https://...">
+                      <input class="brief-input" id="website" name="website" type="url" data-placeholder-pl="https://twojamarka.com" data-placeholder-en="https://yourbrand.com">
                       <div class="brief-error" id="error-website"></div>
                     </div>
                   </div>
@@ -800,7 +897,7 @@
                       <label class="brief-choice"><input type="checkbox" name="production_type" value="other" id="production_type_other_toggle"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Inne</span><span data-lang-content="en">Other</span></span></label>
                     </div>
                     <div class="brief-other-wrap" id="production_type_other_wrap" hidden>
-                      <input class="brief-input" id="production_type_other" name="production_type_other" type="text" data-placeholder-pl="Doprecyzuj typ produkcji" data-placeholder-en="Specify production type">
+                      <input class="brief-input" id="production_type_other" name="production_type_other" type="text" data-placeholder-pl="Np. landing page hero do kampanii SS26" data-placeholder-en="E.g. landing page hero for SS26 campaign">
                     </div>
                     <div class="brief-error" id="error-production_type"></div>
                   </div>
@@ -846,7 +943,7 @@
                   <div class="brief-field brief-field--full">
                     <label class="brief-label" for="project_description"><span data-lang-content="pl">Opisz swój projekt w kilku zdaniach</span><span data-lang-content="en">Describe your project in a few sentences</span></label>
                     <p class="brief-hint"><span data-lang-content="pl">Co wprowadzasz? Jaką historię mają opowiedzieć wizuale? Jaki nastrój powinny budować?</span><span data-lang-content="en">What are you launching? What story should the visuals tell? What feeling should they evoke?</span></p>
-                    <textarea class="brief-textarea" id="project_description" name="project_description" aria-required="true"></textarea>
+                    <textarea class="brief-textarea" id="project_description" name="project_description" aria-required="true" data-placeholder-pl="Wprowadzamy nową kolekcję okularów i potrzebujemy obrazów do kampanii, social mediów i sklepu." data-placeholder-en="We are launching a new eyewear collection and need imagery for the campaign, social media and the store."></textarea>
                     <div class="brief-error" id="error-project_description"></div>
                   </div>
                   <div class="brief-field brief-field--full">
@@ -894,14 +991,14 @@
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="reference_links"><span data-lang-content="pl">Linki do referencji wizualnych</span><span data-lang-content="en">Links to visual references</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Tablice Pinterest, posty na Instagramie, strony - cokolwiek, co pokazuje kierunek.</span><span data-lang-content="en">Pinterest boards, Instagram posts, websites - anything that shows the direction you want.</span></p>
-                        <textarea class="brief-textarea" id="reference_links" name="reference_links"></textarea>
+                        <textarea class="brief-textarea" id="reference_links" name="reference_links" data-placeholder-pl="Np. https://pinterest.com/... i https://instagram.com/p/..." data-placeholder-en="E.g. https://pinterest.com/... and https://instagram.com/p/..."></textarea>
                         <div class="brief-error" id="error-reference_links"></div>
                       </div>
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="brands_you_admire"><span data-lang-content="pl">Marki, których wizuale podziwiasz</span><span data-lang-content="en">Brands whose visuals you admire</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Które marki robią to dobrze? Co konkretnie podoba Ci się w ich obrazach lub komunikacji wizualnej?</span><span data-lang-content="en">Which brands do this well? What specifically do you like about their imagery or visual communication?</span></p>
-                        <textarea class="brief-textarea" id="brands_you_admire" name="brands_you_admire"></textarea>
+                        <textarea class="brief-textarea" id="brands_you_admire" name="brands_you_admire" data-placeholder-pl="Np. Jacquemus za światło i kadrowanie, Toteme za minimalizm." data-placeholder-en="E.g. Jacquemus for lighting and framing, Toteme for minimalism."></textarea>
                         <div class="brief-error" id="error-brands_you_admire"></div>
                       </div>
                     </div>
@@ -911,21 +1008,21 @@
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="model_preferences"><span data-lang-content="pl">Preferencje modeli / castingu</span><span data-lang-content="en">Model / casting preferences</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Wiek, płeć, pochodzenie, look, charakter. Bądź tak precyzyjny lub otwarty, jak chcesz.</span><span data-lang-content="en">Age range, gender, ethnicity, look, attitude. Be as specific or as open as you want.</span></p>
-                        <textarea class="brief-textarea" id="model_preferences" name="model_preferences"></textarea>
+                        <textarea class="brief-textarea" id="model_preferences" name="model_preferences" data-placeholder-pl="Np. kobieta 25-35, naturalny look, wyraziste kości policzkowe, spokojna energia." data-placeholder-en="E.g. woman, 25-35, natural look, defined cheekbones, calm energy."></textarea>
                         <div class="brief-error" id="error-model_preferences"></div>
                       </div>
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="styling_notes"><span data-lang-content="pl">Kierunek stylizacji</span><span data-lang-content="en">Styling direction</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Kolory, tkaniny, klimat. Minimalizm? Warstwy? Sportowy? Elegancki?</span><span data-lang-content="en">Colors, fabrics, vibe. Minimalist? Layered? Sporty? Elegant?</span></p>
-                        <textarea class="brief-textarea" id="styling_notes" name="styling_notes"></textarea>
+                        <textarea class="brief-textarea" id="styling_notes" name="styling_notes" data-placeholder-pl="Np. czerń, grafit, surowe tkaniny, czysta nowoczesna sylwetka." data-placeholder-en="E.g. black, charcoal, raw fabrics, clean modern silhouette."></textarea>
                         <div class="brief-error" id="error-styling_notes"></div>
                       </div>
 
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="product_to_feature"><span data-lang-content="pl">Konkretne produkty do sfotografowania</span><span data-lang-content="en">Specific products to feature</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Nazwy produktów, SKU lub opis tego, co ma być w kadrze.</span><span data-lang-content="en">Product names, SKUs, or describe what needs to be in the shots.</span></p>
-                        <textarea class="brief-textarea" id="product_to_feature" name="product_to_feature"></textarea>
+                        <textarea class="brief-textarea" id="product_to_feature" name="product_to_feature" data-placeholder-pl="Np. model Aurora / kolor tortoise / SKU AUR-02." data-placeholder-en="E.g. Aurora frame / tortoise color / SKU AUR-02."></textarea>
                         <div class="brief-error" id="error-product_to_feature"></div>
                       </div>
                     </div>
@@ -999,7 +1096,7 @@
                       <div class="brief-field brief-field--full">
                         <label class="brief-label" for="notes"><span data-lang-content="pl">Cokolwiek jeszcze powinniśmy wiedzieć</span><span data-lang-content="en">Anything else we should know</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Specjalne wymagania, ograniczenia, wcześniejsze doświadczenia, czego unikać...</span><span data-lang-content="en">Special requirements, constraints, past experiences, things to avoid...</span></p>
-                        <textarea class="brief-textarea" id="notes" name="notes"></textarea>
+                        <textarea class="brief-textarea" id="notes" name="notes" data-placeholder-pl="Np. zależy nam na ciepłym świetle i unikaniu zbyt luksusowego, chłodnego klimatu." data-placeholder-en="E.g. we want warm light and want to avoid an overly luxury, cold mood."></textarea>
                         <div class="brief-error" id="error-notes"></div>
                       </div>
                     </div>
@@ -1031,7 +1128,7 @@
       </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" id="kontakt">
       <div class="container">
         <div class="footer__inner">
           <div>
@@ -1086,6 +1183,23 @@
       var generatedPayload = null;
       var MAX_FILES = 10;
       var MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+      if (burger && !document.getElementById('nav').classList.contains('is-scrolled')) {
+        var ticking = false;
+        window.addEventListener('scroll', function () {
+          if (!ticking) {
+            window.requestAnimationFrame(function () {
+              if (window.scrollY > 60) {
+                document.getElementById('nav').classList.add('is-scrolled');
+              } else {
+                document.getElementById('nav').classList.remove('is-scrolled');
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+      }
 
       var copy = {
         pl: {
