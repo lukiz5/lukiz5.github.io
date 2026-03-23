@@ -321,6 +321,46 @@
       padding-top: 56px;
     }
 
+    .brief-progress {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .brief-progress__item {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      color: var(--text-dim);
+      transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
+    }
+
+    .brief-progress__eyebrow {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: inherit;
+    }
+
+    .brief-progress__label {
+      display: block;
+      font-size: 14px;
+      color: inherit;
+    }
+
+    .brief-progress__item.is-active {
+      border-color: var(--text-dim);
+      background: var(--bg-card);
+      color: var(--text);
+    }
+
+    .brief-progress__item.is-complete {
+      color: var(--text-muted);
+    }
+
     .brief-section {
       padding: 0 0 64px;
     }
@@ -720,7 +760,8 @@
       .brief-checkbox-group,
       .brief-output__buttons,
       .mobile-menu__footer,
-      .brief-grid {
+      .brief-grid,
+      .brief-progress {
         grid-template-columns: 1fr;
       }
 
@@ -836,6 +877,20 @@
       <section class="brief-form-wrap">
         <div class="container">
           <div class="stage--narrow">
+            <div class="brief-progress" aria-label="Brief progress">
+              <div class="brief-progress__item is-active" data-progress-step="essential">
+                <span class="brief-progress__eyebrow">01</span>
+                <span class="brief-progress__label"><span data-lang-content="pl">Podstawy</span><span data-lang-content="en">Essential</span></span>
+              </div>
+              <div class="brief-progress__item" data-progress-step="optional">
+                <span class="brief-progress__eyebrow">02</span>
+                <span class="brief-progress__label"><span data-lang-content="pl">Dodatki</span><span data-lang-content="en">Optional</span></span>
+              </div>
+              <div class="brief-progress__item" data-progress-step="output">
+                <span class="brief-progress__eyebrow">03</span>
+                <span class="brief-progress__label"><span data-lang-content="pl">Pliki</span><span data-lang-content="en">Output</span></span>
+              </div>
+            </div>
             <form id="briefForm" novalidate>
               <section class="brief-section" aria-labelledby="essential-heading">
                 <p class="text-label" id="essential-heading"><span data-lang-content="pl">Informacje podstawowe</span><span data-lang-content="en">Essential information</span></p>
@@ -941,13 +996,13 @@
                 <div class="brief-group">
                   <h2 class="brief-group__title"><span data-lang-content="pl">Twoja wizja</span><span data-lang-content="en">Your Vision</span></h2>
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label" for="project_description"><span data-lang-content="pl">Opisz swój projekt w kilku zdaniach</span><span data-lang-content="en">Describe your project in a few sentences</span></label>
-                    <p class="brief-hint"><span data-lang-content="pl">Co wprowadzasz? Jaką historię mają opowiedzieć wizuale? Jaki nastrój powinny budować?</span><span data-lang-content="en">What are you launching? What story should the visuals tell? What feeling should they evoke?</span></p>
+                    <label class="brief-label" for="project_description"><span data-lang-content="pl">O czym jest projekt?</span><span data-lang-content="en">What is the project?</span></label>
+                    <p class="brief-hint"><span data-lang-content="pl">Co startuje i jaki efekt mają dać obrazy?</span><span data-lang-content="en">What is launching and what should the visuals achieve?</span></p>
                     <textarea class="brief-textarea" id="project_description" name="project_description" aria-required="true" data-placeholder-pl="Wprowadzamy nową kolekcję okularów i potrzebujemy obrazów do kampanii, social mediów i sklepu." data-placeholder-en="We are launching a new eyewear collection and need imagery for the campaign, social media and the store."></textarea>
                     <div class="brief-error" id="error-project_description"></div>
                   </div>
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label" for="brand_aesthetic"><span data-lang-content="pl">Czy macie zdefiniowaną estetykę marki?</span><span data-lang-content="en">Do you have a defined brand aesthetic?</span></label>
+                    <label class="brief-label" for="brand_aesthetic"><span data-lang-content="pl">Na ile określona jest estetyka marki?</span><span data-lang-content="en">How defined is your brand aesthetic?</span></label>
                     <select class="brief-select" id="brand_aesthetic" name="brand_aesthetic" aria-required="true">
                       <option value="" data-label-pl="Wybierz odpowiedź" data-label-en="Select an option"></option>
                       <option value="strict" data-label-pl="Tak, ściśle zdefiniowana - potrzebujemy dokładnego odwzorowania" data-label-en="Yes, strictly defined - we need exact match"></option>
@@ -1067,7 +1122,7 @@
                           <div class="brief-error" id="error-light_preference"></div>
                         </div>
                         <div class="brief-field">
-                          <label class="brief-label" for="existing_materials"><span data-lang-content="pl">Czy macie istniejące zdjęcia produktu, z którymi możemy pracować?</span><span data-lang-content="en">Do you have existing product photos we can work with?</span></label>
+                          <label class="brief-label" for="existing_materials"><span data-lang-content="pl">Jakie materiały już macie?</span><span data-lang-content="en">What existing assets do you have?</span></label>
                           <select class="brief-select" id="existing_materials" name="existing_materials">
                             <option value="" data-label-pl="Wybierz opcję" data-label-en="Select an option"></option>
                             <option value="high-quality" data-label-pl="Tak, zdjęcia produktu w wysokiej jakości" data-label-en="Yes, high-quality product photos"></option>
@@ -1094,7 +1149,7 @@
                       </div>
 
                       <div class="brief-field brief-field--full">
-                        <label class="brief-label" for="notes"><span data-lang-content="pl">Cokolwiek jeszcze powinniśmy wiedzieć</span><span data-lang-content="en">Anything else we should know</span></label>
+                        <label class="brief-label" for="notes"><span data-lang-content="pl">Co jeszcze warto wiedzieć?</span><span data-lang-content="en">Anything else worth knowing?</span></label>
                         <p class="brief-hint"><span data-lang-content="pl">Specjalne wymagania, ograniczenia, wcześniejsze doświadczenia, czego unikać...</span><span data-lang-content="en">Special requirements, constraints, past experiences, things to avoid...</span></p>
                         <textarea class="brief-textarea" id="notes" name="notes" data-placeholder-pl="Np. zależy nam na ciepłym świetle i unikaniu zbyt luksusowego, chłodnego klimatu." data-placeholder-en="E.g. we want warm light and want to avoid an overly luxury, cold mood."></textarea>
                         <div class="brief-error" id="error-notes"></div>
@@ -1173,6 +1228,7 @@
       var output = document.getElementById('briefOutput');
       var optionalToggle = document.getElementById('optionalToggle');
       var optionalContent = document.getElementById('optionalContent');
+      var progressItems = Array.prototype.slice.call(document.querySelectorAll('[data-progress-step]'));
       var fileInput = document.getElementById('moodboard_files');
       var fileList = document.getElementById('fileList');
       var burger = document.getElementById('burger');
@@ -1727,16 +1783,32 @@
           });
           setTimeout(function () { optionalContent.hidden = true; }, 450);
         }
+        updateProgress();
+      }
+
+      function updateProgress() {
+        var current = 'essential';
+        if (!output.hidden) current = 'output';
+        else if (optionalToggle.getAttribute('aria-expanded') === 'true') current = 'optional';
+
+        var order = { essential: 0, optional: 1, output: 2 };
+        progressItems.forEach(function (item) {
+          var step = item.getAttribute('data-progress-step');
+          item.classList.toggle('is-active', step === current);
+          item.classList.toggle('is-complete', order[step] < order[current]);
+        });
       }
 
       function handleGenerate(event) {
         event.preventDefault();
         if (!validate()) {
           output.hidden = true;
+          updateProgress();
           return;
         }
         generatedPayload = collectData(activeLang);
         output.hidden = false;
+        updateProgress();
       }
 
       optionalToggle.addEventListener('click', toggleOptional);
@@ -1789,6 +1861,7 @@
 
       setLanguage(activeLang);
       optionalContent.style.maxHeight = '0px';
+      updateProgress();
     })();
   </script>
 </body>
