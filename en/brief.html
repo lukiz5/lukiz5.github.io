@@ -1439,6 +1439,13 @@
         document.querySelectorAll('[data-href-pl]').forEach(function (el) {
           el.setAttribute('href', el.getAttribute('data-href-' + lang));
         });
+        var alternate = document.querySelector('link[rel="alternate"][hreflang="' + lang + '"]');
+        var canonical = document.querySelector('link[rel="canonical"]');
+        if (alternate && alternate.href) {
+          var targetUrl = new URL(alternate.href, window.location.origin);
+          window.history.replaceState({}, '', targetUrl.pathname + targetUrl.search + targetUrl.hash);
+          if (canonical) canonical.setAttribute('href', targetUrl.href);
+        }
       }
 
       function slugify(value) {
