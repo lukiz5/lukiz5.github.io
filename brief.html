@@ -321,6 +321,20 @@
       padding-top: 56px;
     }
 
+    .brief-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-top: 20px;
+    }
+
+    .brief-meta__item {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
     .brief-progress {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -408,6 +422,11 @@
       font-weight: 400;
       color: var(--text);
       letter-spacing: 0.02em;
+    }
+
+    .brief-label.is-required::after {
+      content: ' *';
+      color: var(--text-dim);
     }
 
     .brief-hint {
@@ -870,6 +889,10 @@
               <h1 class="section__title">Tell us about your project.</h1>
               <p class="section__subtitle">The more context we have, the better we can shape the direction. Start with the essentials, then open the second section if you want to add more detail.</p>
             </div>
+            <div class="brief-meta">
+              <span class="brief-meta__item"><span data-lang-content="pl">czas wypełnienia: około 2-3 min</span><span data-lang-content="en">estimated time: about 2-3 min</span></span>
+              <span class="brief-meta__item"><span data-lang-content="pl">* pola obowiązkowe</span><span data-lang-content="en">* required fields</span></span>
+            </div>
           </div>
         </div>
       </section>
@@ -899,22 +922,22 @@
                   <h2 class="brief-group__title"><span data-lang-content="pl">O Tobie</span><span data-lang-content="en">About You</span></h2>
                   <div class="brief-grid">
                     <div class="brief-field">
-                      <label class="brief-label" for="company_name"><span data-lang-content="pl">Nazwa firmy / marki</span><span data-lang-content="en">Company / Brand name</span></label>
+                      <label class="brief-label is-required" for="company_name"><span data-lang-content="pl">Nazwa firmy / marki</span><span data-lang-content="en">Company / Brand name</span></label>
                       <input class="brief-input" id="company_name" name="company_name" type="text" aria-required="true" data-placeholder-pl="np. Maison Noir" data-placeholder-en="e.g. Maison Noir">
                       <div class="brief-error" id="error-company_name"></div>
                     </div>
                     <div class="brief-field">
-                      <label class="brief-label" for="contact_name"><span data-lang-content="pl">Twoje imię</span><span data-lang-content="en">Your name</span></label>
+                      <label class="brief-label is-required" for="contact_name"><span data-lang-content="pl">Twoje imię</span><span data-lang-content="en">Your name</span></label>
                       <input class="brief-input" id="contact_name" name="contact_name" type="text" aria-required="true" data-placeholder-pl="Np. Aleksandra" data-placeholder-en="e.g. Alex">
                       <div class="brief-error" id="error-contact_name"></div>
                     </div>
                     <div class="brief-field">
-                      <label class="brief-label" for="contact_email"><span data-lang-content="pl">Email</span><span data-lang-content="en">Email</span></label>
+                      <label class="brief-label is-required" for="contact_email"><span data-lang-content="pl">Email</span><span data-lang-content="en">Email</span></label>
                       <input class="brief-input" id="contact_email" name="contact_email" type="email" aria-required="true" data-placeholder-pl="name@company.com" data-placeholder-en="name@company.com">
                       <div class="brief-error" id="error-contact_email"></div>
                     </div>
                     <div class="brief-field">
-                      <label class="brief-label" for="industry"><span data-lang-content="pl">Branża</span><span data-lang-content="en">Industry</span></label>
+                      <label class="brief-label is-required" for="industry"><span data-lang-content="pl">Branża</span><span data-lang-content="en">Industry</span></label>
                       <select class="brief-select" id="industry" name="industry" aria-required="true">
                         <option value="" data-label-pl="Wybierz branżę" data-label-en="Select industry"></option>
                         <option value="fashion" data-label-pl="Moda" data-label-en="Fashion"></option>
@@ -939,7 +962,7 @@
                 <div class="brief-group">
                   <h2 class="brief-group__title"><span data-lang-content="pl">Czego potrzebujesz</span><span data-lang-content="en">What Do You Need</span></h2>
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label"><span data-lang-content="pl">Typ produkcji</span><span data-lang-content="en">Production type</span></label>
+                    <label class="brief-label is-required"><span data-lang-content="pl">Typ produkcji</span><span data-lang-content="en">Production type</span></label>
                     <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące</span><span data-lang-content="en">Select all that apply</span></p>
                     <div class="brief-checkbox-group" id="production_type_group">
                       <label class="brief-choice"><input type="checkbox" name="production_type" value="campaign"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Kampania wizerunkowa</span><span data-lang-content="en">Campaign imagery</span></span></label>
@@ -959,7 +982,7 @@
 
                   <div class="brief-grid">
                     <div class="brief-field">
-                      <label class="brief-label" for="image_count"><span data-lang-content="pl">Szacunkowa liczba finalnych zdjęć</span><span data-lang-content="en">Estimated number of final images</span></label>
+                      <label class="brief-label is-required" for="image_count"><span data-lang-content="pl">Szacunkowa liczba finalnych zdjęć</span><span data-lang-content="en">Estimated number of final images</span></label>
                       <select class="brief-select" id="image_count" name="image_count" aria-required="true">
                         <option value="" data-label-pl="Wybierz zakres" data-label-en="Select range"></option>
                         <option value="5-10" data-label-pl="5-10 zdjęć" data-label-en="5-10 images"></option>
@@ -978,7 +1001,7 @@
                   </div>
 
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label"><span data-lang-content="pl">Gdzie będą użyte?</span><span data-lang-content="en">Where will these be used?</span></label>
+                    <label class="brief-label is-required"><span data-lang-content="pl">Gdzie będą użyte?</span><span data-lang-content="en">Where will these be used?</span></label>
                     <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące</span><span data-lang-content="en">Select all that apply</span></p>
                     <div class="brief-checkbox-group" id="usage_group">
                       <label class="brief-choice"><input type="checkbox" name="usage" value="website"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Strona / karty produktu</span><span data-lang-content="en">Website / product pages</span></span></label>
@@ -996,13 +1019,13 @@
                 <div class="brief-group">
                   <h2 class="brief-group__title"><span data-lang-content="pl">Twoja wizja</span><span data-lang-content="en">Your Vision</span></h2>
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label" for="project_description"><span data-lang-content="pl">O czym jest projekt?</span><span data-lang-content="en">What is the project?</span></label>
+                    <label class="brief-label is-required" for="project_description"><span data-lang-content="pl">O czym jest projekt?</span><span data-lang-content="en">What is the project?</span></label>
                     <p class="brief-hint"><span data-lang-content="pl">Co startuje i jaki efekt mają dać obrazy?</span><span data-lang-content="en">What is launching and what should the visuals achieve?</span></p>
                     <textarea class="brief-textarea" id="project_description" name="project_description" aria-required="true" data-placeholder-pl="Wprowadzamy nową kolekcję okularów i potrzebujemy obrazów do kampanii, social mediów i sklepu." data-placeholder-en="We are launching a new eyewear collection and need imagery for the campaign, social media and the store."></textarea>
                     <div class="brief-error" id="error-project_description"></div>
                   </div>
                   <div class="brief-field brief-field--full">
-                    <label class="brief-label" for="brand_aesthetic"><span data-lang-content="pl">Na ile określona jest estetyka marki?</span><span data-lang-content="en">How defined is your brand aesthetic?</span></label>
+                    <label class="brief-label is-required" for="brand_aesthetic"><span data-lang-content="pl">Na ile określona jest estetyka marki?</span><span data-lang-content="en">How defined is your brand aesthetic?</span></label>
                     <select class="brief-select" id="brand_aesthetic" name="brand_aesthetic" aria-required="true">
                       <option value="" data-label-pl="Wybierz odpowiedź" data-label-en="Select an option"></option>
                       <option value="strict" data-label-pl="Tak, ściśle zdefiniowana - potrzebujemy dokładnego odwzorowania" data-label-en="Yes, strictly defined - we need exact match"></option>
