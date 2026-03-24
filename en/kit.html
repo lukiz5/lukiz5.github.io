@@ -238,6 +238,7 @@
       color: var(--text-muted);
       font-size: 15px;
       margin-bottom: 24px;
+      text-align: center;
     }
 
     .kit-showcase {
@@ -559,7 +560,7 @@
                   <span>Camera setups, light direction, film stocks. What makes AI output look like a real photograph.</span>
                 </div>
               </div>
-              <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST" novalidate>
+              <form class="kit-form" method="POST" novalidate data-mailerlite-proxy="true">
                 <input type="hidden" name="source" value="kit-en">
                 <input type="email" name="email" class="kit-form__input" placeholder="Your email address" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Get the free kit</button>
@@ -568,7 +569,7 @@
               <div class="kit-form__success" style="display:none;">
                 <p class="kit-form__success-title">SENNS Production Kit is ready!</p>
                 <p class="kit-form__success-subtitle">Download the PDF below.</p>
-                <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">Download SENNS Production Kit</a>
+                <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary kit-form__download" download="SENNS_Production_Kit.pdf" data-download-url="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" rel="noopener noreferrer">Download SENNS Production Kit</a>
               </div>
               <div class="kit-mailerlite-embed" aria-hidden="true">
                 <div class="ml-embedded" data-form="2IePv5"></div>
@@ -743,6 +744,7 @@
     var checks = document.querySelector('.kit-hero__checks');
     var success = document.querySelector('.kit-form__success');
     var status = document.querySelector('.kit-form__status');
+    var downloadLink = document.querySelector('.kit-form__download');
     var mailerLiteEmbed = document.querySelector('.kit-mailerlite-embed');
     var submitButton = form.querySelector('.kit-form__button');
     var emailInput = form.querySelector('input[type="email"]');
@@ -904,6 +906,36 @@
     window.ml_webform_success_38938355 = function() {
       showSuccessState();
     };
+
+    if (downloadLink) {
+      downloadLink.addEventListener('click', function(event) {
+        var url = downloadLink.getAttribute('data-download-url');
+        if (!url) return;
+
+        event.preventDefault();
+
+        // Prefer a real file download. If the file host blocks fetch/CORS, fall back to opening the PDF.
+        fetch(url).then(function(response) {
+          if (!response.ok) {
+            throw new Error('download_failed');
+          }
+          return response.blob();
+        }).then(function(blob) {
+          var blobUrl = window.URL.createObjectURL(blob);
+          var temporaryLink = document.createElement('a');
+          temporaryLink.href = blobUrl;
+          temporaryLink.download = 'SENNS_Production_Kit.pdf';
+          document.body.appendChild(temporaryLink);
+          temporaryLink.click();
+          temporaryLink.remove();
+          window.setTimeout(function() {
+            window.URL.revokeObjectURL(blobUrl);
+          }, 1000);
+        }).catch(function() {
+          window.open(url, '_blank', 'noopener');
+        });
+      });
+    }
 
     window.addEventListener('message', function(event) {
       if (!event || !event.data) return;
