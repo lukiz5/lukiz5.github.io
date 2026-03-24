@@ -748,6 +748,7 @@
     var emailInput = form.querySelector('input[type="email"]');
     var currentSourceInput = form.querySelector('input[name="source"]');
     var submitTimeout;
+    var successPoll;
     var pendingMailerLiteSubmit = false;
 
     function setLoadingState(isLoading) {
@@ -769,6 +770,10 @@
       if (submitTimeout) {
         window.clearTimeout(submitTimeout);
         submitTimeout = null;
+      }
+      if (successPoll) {
+        window.clearInterval(successPoll);
+        successPoll = null;
       }
     }
 
@@ -812,6 +817,37 @@
       return mailerLiteEmbed.querySelector('[class*="success"], [class*="error"], [role="alert"], [aria-live="polite"]');
     }
 
+    function hasMailerLiteSuccessState() {
+      if (!mailerLiteEmbed) return false;
+
+      var successBody = mailerLiteEmbed.querySelector('.ml-form-successBody, .row-success');
+      if (successBody && window.getComputedStyle(successBody).display !== 'none') {
+        return true;
+      }
+
+      var rowForm = mailerLiteEmbed.querySelector('.row-form');
+      if (rowForm && window.getComputedStyle(rowForm).display === 'none') {
+        return true;
+      }
+
+      return false;
+    }
+
+    function startSuccessPolling() {
+      clearSubmitTimeout();
+      successPoll = window.setInterval(function() {
+        if (pendingMailerLiteSubmit && hasMailerLiteSuccessState()) {
+          showSuccessState();
+        }
+      }, 250);
+
+      submitTimeout = window.setTimeout(function() {
+        if (pendingMailerLiteSubmit) {
+          failSubmit('Nie udało się potwierdzić zapisu w MailerLite na czas. Spróbuj ponownie.');
+        }
+      }, 20000);
+    }
+
     function syncMailerLiteFields() {
       var mailerLiteEmailInput = getMailerLiteEmailInput();
       if (!mailerLiteEmailInput || !emailInput) return false;
@@ -844,12 +880,7 @@
       pendingMailerLiteSubmit = true;
       setStatus('');
       setLoadingState(true);
-      clearSubmitTimeout();
-      submitTimeout = window.setTimeout(function() {
-        if (pendingMailerLiteSubmit) {
-          failSubmit('Nie udało się potwierdzić zapisu w MailerLite. Spróbuj ponownie za chwilę.');
-        }
-      }, 12000);
+      startSuccessPolling();
 
       if (typeof mailerLiteForm.requestSubmit === 'function') {
         if (mailerLiteSubmitButton && mailerLiteSubmitButton.form === mailerLiteForm) {
@@ -870,6 +901,9 @@
 
     // Expose a manual hook so an external MailerLite callback can trigger the same inline success state.
     window.SENNSKitMailerLiteSuccess = showSuccessState;
+    window.ml_webform_success_38938355 = function() {
+      showSuccessState();
+    };
 
     window.addEventListener('message', function(event) {
       if (!event || !event.data) return;
@@ -887,7 +921,7 @@
         var successDetected = statusNode && /success|thank|confirmed|subscribed/i.test(statusNode.className + ' ' + statusText);
         var noEmailField = !getMailerLiteEmailInput();
 
-        if (successDetected || (noEmailField && statusText)) {
+        if (successDetected || hasMailerLiteSuccessState() || (noEmailField && statusText)) {
           showSuccessState();
           return;
         }
