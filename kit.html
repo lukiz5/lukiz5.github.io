@@ -124,12 +124,16 @@
       gap: 16px;
       margin-bottom: 36px;
       text-align: left;
+      align-items: stretch;
     }
 
     .kit-hero__value {
       padding: 20px 22px;
       border: 1px solid var(--border);
       background: var(--bg-alt);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .kit-hero__value strong {
@@ -140,6 +144,7 @@
       letter-spacing: 0.02em;
       margin-bottom: 8px;
       line-height: 1.35;
+      min-height: calc(1.35em * 2);
     }
 
     .kit-hero__value span {
