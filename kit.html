@@ -182,6 +182,20 @@
       justify-content: center;
     }
 
+    .kit-form__status {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 20px;
+      color: #d9b57a;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .kit-form.is-loading .kit-form__button {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
     .kit-form__success {
       text-align: center;
       padding: 24px 0;
@@ -521,15 +535,16 @@
                   <span>Ustawienia kamer, kierunek światła, film stocki. To, co sprawia, że AI wygląda jak prawdziwe zdjęcie.</span>
                 </div>
               </div>
-              <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST">
+              <form class="kit-form" action="YOUR_EMAIL_SERVICE_ENDPOINT" method="POST" novalidate>
                 <input type="hidden" name="source" value="kit-pl">
                 <input type="email" name="email" class="kit-form__input" placeholder="Twój adres e-mail" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Wyślijcie mi kit</button>
               </form>
+              <div class="kit-form__status" aria-live="polite"></div>
               <div class="kit-form__success" style="display:none;">
-                <p class="kit-form__success-title">Sprawdź skrzynkę.</p>
-                <p class="kit-form__success-subtitle">Kit jest w drodze. W międzyczasie:</p>
-                <a href="#system" class="btn btn--secondary">Zobacz, jak wygląda pełny system</a>
+                <p class="kit-form__success-title">SENNS Production Kit jest gotowy!</p>
+                <p class="kit-form__success-subtitle">Pobierz PDF poniżej.</p>
+                <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">Pobierz SENNS Production Kit</a>
               </div>
             </div>
           </div>
@@ -697,18 +712,69 @@
   (function() {
     var form = document.querySelector('.kit-form');
     if (!form) return;
+
+    var checks = document.querySelector('.kit-hero__checks');
+    var success = document.querySelector('.kit-form__success');
+    var status = document.querySelector('.kit-form__status');
+    var submitButton = form.querySelector('.kit-form__button');
+    var emailInput = form.querySelector('input[type="email"]');
+
+    function setStatus(message) {
+      if (status) status.textContent = message || '';
+    }
+
+    // Shared success trigger for MailerLite callbacks or fetch-based submit.
+    function showSuccessState() {
+      form.style.display = 'none';
+      if (checks) checks.style.display = 'none';
+      if (success) success.style.display = 'block';
+      setStatus('');
+    }
+
+    // Expose a manual hook so an external MailerLite embed callback can trigger the same inline success state.
+    window.SENNSKitMailerLiteSuccess = showSuccessState;
+
+    window.addEventListener('message', function(event) {
+      if (!event || !event.data) return;
+      if (typeof event.data === 'string' && event.data.indexOf('mailerlite') !== -1 && event.data.indexOf('success') !== -1) {
+        showSuccessState();
+      }
+    });
+
     form.addEventListener('submit', function(e) {
       var action = form.getAttribute('action');
-      if (action === 'YOUR_EMAIL_SERVICE_ENDPOINT') {
+      if (!action || action === 'YOUR_EMAIL_SERVICE_ENDPOINT') {
         e.preventDefault();
+        setStatus('Brakuje właściwego endpointu MailerLite dla tego formularza.');
+        return;
       }
-      form.style.display = 'none';
-      var checks = document.querySelector('.kit-hero__checks');
-      if (checks) checks.style.display = 'none';
-      var actions = document.querySelector('.kit-hero__actions');
-      if (actions) actions.style.display = 'none';
-      var success = document.querySelector('.kit-form__success');
-      if (success) success.style.display = 'block';
+
+      if (!emailInput || !emailInput.checkValidity()) {
+        return;
+      }
+
+      e.preventDefault();
+      setStatus('');
+      form.classList.add('is-loading');
+      if (submitButton) submitButton.setAttribute('aria-disabled', 'true');
+
+      fetch(action, {
+        method: form.getAttribute('method') || 'POST',
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(function(response) {
+        if (!response.ok) {
+          throw new Error('submit_failed');
+        }
+        showSuccessState();
+      }).catch(function() {
+        setStatus('Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.');
+      }).finally(function() {
+        form.classList.remove('is-loading');
+        if (submitButton) submitButton.removeAttribute('aria-disabled');
+      });
     });
   })();
   </script>
