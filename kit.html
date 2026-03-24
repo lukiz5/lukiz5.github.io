@@ -571,7 +571,7 @@
               </form>
               <div class="kit-form__status" aria-live="polite"></div>
               <div class="kit-form__success" style="display:none;">
-                <p class="kit-form__success-title">SENNS Production Kit jest gotowy!</p>
+                <p class="kit-form__success-title">SENNS Production Kit jest gotowy do pobrania.</p>
                 <p class="kit-form__success-subtitle">Pobierz PDF poniżej.</p>
                 <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary kit-form__download" download="SENNS_Production_Kit.pdf" data-download-url="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" rel="noopener noreferrer">Pobierz SENNS Production Kit</a>
               </div>
@@ -848,7 +848,7 @@
 
       submitTimeout = window.setTimeout(function() {
         if (pendingMailerLiteSubmit) {
-          failSubmit('Nie udało się potwierdzić zapisu w MailerLite na czas. Spróbuj ponownie.');
+          failSubmit('Zapis trwał zbyt długo. Spróbuj ponownie.');
         }
       }, 20000);
     }
@@ -869,7 +869,7 @@
       var mailerLiteSubmitButton = getMailerLiteSubmitButton();
 
       if (!mailerLiteForm || !syncMailerLiteFields()) {
-        failSubmit('Formularz MailerLite wciąż się ładuje. Spróbuj ponownie za chwilę.');
+        failSubmit('Formularz jeszcze się ładuje. Spróbuj za chwilę.');
         return;
       }
 
@@ -892,7 +892,7 @@
         return;
       }
 
-      failSubmit('Nie udało się uruchomić formularza MailerLite. Sprawdź konfigurację embedu.');
+      failSubmit('Nie udało się wysłać formularza. Spróbuj ponownie.');
     }
 
     // MailerLite HTML embeds call this function name after a successful submit.
@@ -945,7 +945,7 @@
         }
 
         if (statusNode && /error|invalid|required/i.test(statusNode.className + ' ' + statusText)) {
-          failSubmit(statusText || 'Nie udało się wysłać formularza. Sprawdź adres e-mail i spróbuj ponownie.');
+          failSubmit(statusText || 'Nie udało się wysłać formularza. Sprawdź adres e-mail.');
         }
       });
 

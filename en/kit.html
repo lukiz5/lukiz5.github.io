@@ -571,7 +571,7 @@
               </form>
               <div class="kit-form__status" aria-live="polite"></div>
               <div class="kit-form__success" style="display:none;">
-                <p class="kit-form__success-title">SENNS Production Kit is ready!</p>
+                <p class="kit-form__success-title">SENNS Production Kit is ready to download.</p>
                 <p class="kit-form__success-subtitle">Download the PDF below.</p>
                 <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary kit-form__download" download="SENNS_Production_Kit.pdf" data-download-url="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" rel="noopener noreferrer">Download SENNS Production Kit</a>
               </div>
@@ -848,7 +848,7 @@
 
       submitTimeout = window.setTimeout(function() {
         if (pendingMailerLiteSubmit) {
-          failSubmit('MailerLite did not confirm the signup in time. Please try again.');
+          failSubmit('Signup took too long. Please try again.');
         }
       }, 20000);
     }
@@ -869,7 +869,7 @@
       var mailerLiteSubmitButton = getMailerLiteSubmitButton();
 
       if (!mailerLiteForm || !syncMailerLiteFields()) {
-        failSubmit('The MailerLite form is still loading. Please try again in a moment.');
+        failSubmit('The form is still loading. Please try again in a moment.');
         return;
       }
 
@@ -892,7 +892,7 @@
         return;
       }
 
-      failSubmit('The MailerLite form could not be submitted. Please check the embed configuration.');
+      failSubmit('The form could not be submitted. Please try again.');
     }
 
     // MailerLite HTML embeds call this function name after a successful submit.
@@ -945,7 +945,7 @@
         }
 
         if (statusNode && /error|invalid|required/i.test(statusNode.className + ' ' + statusText)) {
-          failSubmit(statusText || 'The form could not be submitted. Please check the email address and try again.');
+          failSubmit(statusText || 'The form could not be submitted. Please check the email address.');
         }
       });
 
