@@ -201,6 +201,20 @@
       pointer-events: none;
     }
 
+    .kit-mailerlite-embed {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      border: 0;
+      white-space: nowrap;
+      visibility: hidden;
+    }
+
     .kit-form__success {
       text-align: center;
       padding: 24px 0;
@@ -551,6 +565,9 @@
                 <p class="kit-form__success-subtitle">Download the PDF below.</p>
                 <a href="https://media.senns.studio/senns-production-kit/SENNS_Production_Kit.pdf" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">Download SENNS Production Kit</a>
               </div>
+              <div class="kit-mailerlite-embed" aria-hidden="true">
+                <div class="ml-embedded" data-form="2IePv5"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -714,6 +731,13 @@
   </div>
   <script src="../script.js"></script>
   <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2218776');
+  </script>
+  <script>
   (function() {
     var form = document.querySelector('.kit-form');
     if (!form) return;
@@ -721,22 +745,132 @@
     var checks = document.querySelector('.kit-hero__checks');
     var success = document.querySelector('.kit-form__success');
     var status = document.querySelector('.kit-form__status');
+    var mailerLiteEmbed = document.querySelector('.kit-mailerlite-embed');
     var submitButton = form.querySelector('.kit-form__button');
     var emailInput = form.querySelector('input[type="email"]');
+    var currentSourceInput = form.querySelector('input[name="source"]');
+    var submitTimeout;
+    var pendingMailerLiteSubmit = false;
+
+    function setLoadingState(isLoading) {
+      form.classList.toggle('is-loading', isLoading);
+      if (submitButton) {
+        if (isLoading) {
+          submitButton.setAttribute('aria-disabled', 'true');
+        } else {
+          submitButton.removeAttribute('aria-disabled');
+        }
+      }
+    }
 
     function setStatus(message) {
       if (status) status.textContent = message || '';
     }
 
-    // Shared success trigger for MailerLite callbacks or fetch-based submit.
+    function clearSubmitTimeout() {
+      if (submitTimeout) {
+        window.clearTimeout(submitTimeout);
+        submitTimeout = null;
+      }
+    }
+
+    function failSubmit(message) {
+      pendingMailerLiteSubmit = false;
+      clearSubmitTimeout();
+      setLoadingState(false);
+      setStatus(message);
+    }
+
+    // Shared success trigger for MailerLite callbacks or embed-based submit.
     function showSuccessState() {
+      pendingMailerLiteSubmit = false;
+      clearSubmitTimeout();
+      setLoadingState(false);
       form.style.display = 'none';
       if (checks) checks.style.display = 'none';
       if (success) success.style.display = 'block';
       setStatus('');
+      var successTitle = success ? success.querySelector('.kit-form__success-title') : null;
+      if (successTitle && typeof successTitle.focus === 'function') {
+        successTitle.setAttribute('tabindex', '-1');
+        successTitle.focus();
+      }
     }
 
-    // Expose a manual hook so an external MailerLite embed callback can trigger the same inline success state.
+    function getMailerLiteForm() {
+      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('form') : null;
+    }
+
+    function getMailerLiteEmailInput() {
+      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('input[type="email"], input[name="email"]') : null;
+    }
+
+    function getMailerLiteSubmitButton() {
+      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('button[type="submit"], input[type="submit"]') : null;
+    }
+
+    function getMailerLiteStatusNode() {
+      if (!mailerLiteEmbed) return null;
+      return mailerLiteEmbed.querySelector('[class*="success"], [class*="error"], [role="alert"], [aria-live="polite"]');
+    }
+
+    function syncMailerLiteFields() {
+      var mailerLiteEmailInput = getMailerLiteEmailInput();
+      if (!mailerLiteEmailInput || !emailInput) return false;
+
+      mailerLiteEmailInput.value = emailInput.value.trim();
+      mailerLiteEmailInput.dispatchEvent(new Event('input', { bubbles: true }));
+      mailerLiteEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+      if (currentSourceInput) {
+        var mailerLiteSourceInput = mailerLiteEmbed.querySelector('input[name="source"]');
+        if (mailerLiteSourceInput) {
+          mailerLiteSourceInput.value = currentSourceInput.value;
+          mailerLiteSourceInput.dispatchEvent(new Event('input', { bubbles: true }));
+          mailerLiteSourceInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      return true;
+    }
+
+    function trySubmitMailerLiteForm() {
+      var mailerLiteForm = getMailerLiteForm();
+      var mailerLiteSubmitButton = getMailerLiteSubmitButton();
+
+      if (!mailerLiteForm || !syncMailerLiteFields()) {
+        failSubmit('The MailerLite form is still loading. Please try again in a moment.');
+        return;
+      }
+
+      pendingMailerLiteSubmit = true;
+      setStatus('');
+      setLoadingState(true);
+      clearSubmitTimeout();
+      submitTimeout = window.setTimeout(function() {
+        if (pendingMailerLiteSubmit) {
+          failSubmit('MailerLite did not confirm the signup in time. Please try again.');
+        }
+      }, 12000);
+
+      if (typeof mailerLiteForm.requestSubmit === 'function') {
+        if (mailerLiteSubmitButton && mailerLiteSubmitButton.form === mailerLiteForm) {
+          mailerLiteForm.requestSubmit(mailerLiteSubmitButton);
+        } else {
+          mailerLiteForm.requestSubmit();
+        }
+        return;
+      }
+
+      if (mailerLiteSubmitButton && typeof mailerLiteSubmitButton.click === 'function') {
+        mailerLiteSubmitButton.click();
+        return;
+      }
+
+      failSubmit('The MailerLite form could not be submitted. Please check the embed configuration.');
+    }
+
+    // Expose a manual hook so an external MailerLite callback can trigger the same inline success state.
     window.SENNSKitMailerLiteSuccess = showSuccessState;
 
     window.addEventListener('message', function(event) {
@@ -746,40 +880,38 @@
       }
     });
 
-    form.addEventListener('submit', function(e) {
-      var action = form.getAttribute('action');
-      if (!action || action === 'YOUR_EMAIL_SERVICE_ENDPOINT') {
-        e.preventDefault();
-        setStatus('The MailerLite endpoint is still missing for this form.');
-        return;
-      }
+    if (mailerLiteEmbed) {
+      var observer = new MutationObserver(function() {
+        if (!pendingMailerLiteSubmit) return;
 
+        var statusNode = getMailerLiteStatusNode();
+        var statusText = statusNode ? statusNode.textContent.trim() : '';
+        var successDetected = statusNode && /success|thank|confirmed|subscribed/i.test(statusNode.className + ' ' + statusText);
+        var noEmailField = !getMailerLiteEmailInput();
+
+        if (successDetected || (noEmailField && statusText)) {
+          showSuccessState();
+          return;
+        }
+
+        if (statusNode && /error|invalid|required/i.test(statusNode.className + ' ' + statusText)) {
+          failSubmit(statusText || 'The form could not be submitted. Please check the email address and try again.');
+        }
+      });
+
+      observer.observe(mailerLiteEmbed, { childList: true, subtree: true, characterData: true });
+    }
+
+    form.addEventListener('submit', function(e) {
       if (!emailInput || !emailInput.checkValidity()) {
+        if (emailInput && typeof emailInput.reportValidity === 'function') {
+          emailInput.reportValidity();
+        }
         return;
       }
 
       e.preventDefault();
-      setStatus('');
-      form.classList.add('is-loading');
-      if (submitButton) submitButton.setAttribute('aria-disabled', 'true');
-
-      fetch(action, {
-        method: form.getAttribute('method') || 'POST',
-        body: new FormData(form),
-        headers: {
-          'Accept': 'application/json'
-        }
-      }).then(function(response) {
-        if (!response.ok) {
-          throw new Error('submit_failed');
-        }
-        showSuccessState();
-      }).catch(function() {
-        setStatus('The form could not be submitted. Please try again in a moment.');
-      }).finally(function() {
-        form.classList.remove('is-loading');
-        if (submitButton) submitButton.removeAttribute('aria-disabled');
-      });
+      trySubmitMailerLiteForm();
     });
   })();
   </script>
