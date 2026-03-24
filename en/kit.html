@@ -565,8 +565,7 @@
                   <span>Camera setups, light direction, film stocks. What makes AI output look like a real photograph.</span>
                 </div>
               </div>
-              <form class="kit-form" method="POST" novalidate data-mailerlite-proxy="true">
-                <input type="hidden" name="source" value="kit-en">
+              <form class="kit-form" method="POST" novalidate>
                 <input type="email" name="email" class="kit-form__input" placeholder="Your email address" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Get the free kit</button>
               </form>
@@ -753,7 +752,6 @@
     var mailerLiteEmbed = document.querySelector('.kit-mailerlite-embed');
     var submitButton = form.querySelector('.kit-form__button');
     var emailInput = form.querySelector('input[type="email"]');
-    var currentSourceInput = form.querySelector('input[name="source"]');
     var submitTimeout;
     var successPoll;
     var pendingMailerLiteSubmit = false;
@@ -863,15 +861,6 @@
       mailerLiteEmailInput.dispatchEvent(new Event('input', { bubbles: true }));
       mailerLiteEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
 
-      if (currentSourceInput) {
-        var mailerLiteSourceInput = mailerLiteEmbed.querySelector('input[name="source"]');
-        if (mailerLiteSourceInput) {
-          mailerLiteSourceInput.value = currentSourceInput.value;
-          mailerLiteSourceInput.dispatchEvent(new Event('input', { bubbles: true }));
-          mailerLiteSourceInput.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-      }
-
       return true;
     }
 
@@ -906,8 +895,7 @@
       failSubmit('The MailerLite form could not be submitted. Please check the embed configuration.');
     }
 
-    // Expose a manual hook so an external MailerLite callback can trigger the same inline success state.
-    window.SENNSKitMailerLiteSuccess = showSuccessState;
+    // MailerLite HTML embeds call this function name after a successful submit.
     window.ml_webform_success_38938355 = function() {
       showSuccessState();
     };
@@ -941,13 +929,6 @@
         });
       });
     }
-
-    window.addEventListener('message', function(event) {
-      if (!event || !event.data) return;
-      if (typeof event.data === 'string' && event.data.indexOf('mailerlite') !== -1 && event.data.indexOf('success') !== -1) {
-        showSuccessState();
-      }
-    });
 
     if (mailerLiteEmbed) {
       var observer = new MutationObserver(function() {
