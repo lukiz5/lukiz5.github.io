@@ -34,6 +34,13 @@
     gtag('js', new Date());
     gtag('config', 'G-3VP39KQRSG');
   </script>
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2218776');
+  </script>
   <style>
     .kit-page {
       position: relative;
@@ -202,17 +209,15 @@
     }
 
     .kit-mailerlite-embed {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      padding: 0;
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      height: 0;
+      max-height: 0;
+      margin: 0 auto;
+      opacity: 0.01;
       overflow: hidden;
-      clip: rect(0 0 0 0);
-      clip-path: inset(50%);
-      border: 0;
-      white-space: nowrap;
-      visibility: hidden;
+      pointer-events: none;
     }
 
     .kit-form__success {
@@ -731,13 +736,6 @@
   </div>
   <script src="../script.js"></script>
   <script>
-    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '2218776');
-  </script>
-  <script>
   (function() {
     var form = document.querySelector('.kit-form');
     if (!form) return;
@@ -802,11 +800,11 @@
     }
 
     function getMailerLiteEmailInput() {
-      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('input[type="email"], input[name="email"]') : null;
+      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('input[type="email"], input[name="email"], input[name="fields[email]"], input[name*="[email]"]') : null;
     }
 
     function getMailerLiteSubmitButton() {
-      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('button[type="submit"], input[type="submit"]') : null;
+      return mailerLiteEmbed ? mailerLiteEmbed.querySelector('button[type="submit"], input[type="submit"], button:not([type])') : null;
     }
 
     function getMailerLiteStatusNode() {
