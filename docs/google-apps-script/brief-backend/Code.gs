@@ -214,36 +214,20 @@ function appendBrandedHeader_(body, labels, payload) {
     cell.setBackgroundColor('#0E0E10');
   });
 
-  var labelParagraph = left.appendParagraph(labels.headerLabel);
-  labelParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
-  labelParagraph.editAsText()
-    .setFontFamily('Arial')
-    .setFontSize(9)
-    .setBold(false)
-    .setForegroundColor('#B7BBC2');
-
   var titleParagraph = left.appendParagraph(labels.title);
   titleParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
   titleParagraph.editAsText()
     .setFontFamily('Arial')
-    .setFontSize(18)
-    .setBold(true)
-    .setForegroundColor('#FFFFFF');
-
-  var metaParagraph = left.appendParagraph(payload.company_name + ' | ' + submittedAt);
-  metaParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
-  metaParagraph.editAsText()
-    .setFontFamily('Arial')
-    .setFontSize(9)
+    .setFontSize(17)
     .setBold(false)
-    .setForegroundColor('#7E828A');
+    .setForegroundColor('#FFFFFF');
 
   var logoBlob = getLogoBlob_();
   if (logoBlob) {
     var image = right.appendImage(logoBlob);
-    if (image.getWidth() > 170) {
-      var ratio = 170 / image.getWidth();
-      image.setWidth(170);
+    if (image.getWidth() > 160) {
+      var ratio = 160 / image.getWidth();
+      image.setWidth(160);
       image.setHeight(Math.round(image.getHeight() * ratio));
     }
   } else {
@@ -251,12 +235,17 @@ function appendBrandedHeader_(body, labels, payload) {
     logoParagraph.setAlignment(DocumentApp.HorizontalAlignment.RIGHT);
     logoParagraph.editAsText()
       .setFontFamily('Arial')
-      .setFontSize(16)
+      .setFontSize(15)
       .setBold(false)
       .setForegroundColor('#F2F2F2');
   }
 
-  right.appendParagraph('');
+  body.appendParagraph(submittedAt)
+    .editAsText()
+    .setFontFamily('Arial')
+    .setFontSize(9)
+    .setBold(false)
+    .setForegroundColor('#7E828A');
   body.appendParagraph('');
 }
 
@@ -403,7 +392,6 @@ function appendSection_(body, title, rows) {
 
 function getLabels_(lang) {
   return lang === 'pl' ? {
-    headerLabel: 'SENNS.STUDIO',
     title: 'Brief Projektowy',
     date: 'Data:',
     industry: 'Branża:',
@@ -434,7 +422,6 @@ function getLabels_(lang) {
     notes: 'Notatki:',
     footer: 'senns.studio | hello@senns.studio'
   } : {
-    headerLabel: 'SENNS.STUDIO',
     title: 'Project Brief',
     date: 'Date:',
     industry: 'Industry:',
