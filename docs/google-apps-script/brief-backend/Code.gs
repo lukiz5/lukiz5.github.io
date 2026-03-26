@@ -65,14 +65,7 @@ function processBriefSubmission_(payload) {
   return {
     briefId: ids.briefId,
     pdfDownloadUrl: pdfArtifact.downloadUrl,
-    pdfViewUrl: pdfArtifact.viewUrl,
-    uploadedFiles: uploadedFiles.map(function (file) {
-      return {
-        name: file.name,
-        viewUrl: file.viewUrl,
-        downloadUrl: file.downloadUrl
-      };
-    })
+    pdfViewUrl: pdfArtifact.viewUrl
   };
 }
 
@@ -119,12 +112,10 @@ function saveUploadedFiles_(submissionFolder, uploadedFiles) {
       sanitizeFileName_(file.name, index + 1)
     );
     var created = uploadsFolder.createFile(blob);
-    created.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     return {
       id: created.getId(),
       name: created.getName(),
-      viewUrl: created.getUrl(),
-      downloadUrl: 'https://drive.google.com/uc?export=download&id=' + created.getId()
+      viewUrl: created.getUrl()
     };
   });
 }
@@ -166,8 +157,7 @@ function buildClientPdf_(payload, uploadedFiles, submissionFolder, ids) {
   if (uploadedFiles.length) {
     body.appendParagraph(labels.attachments).setHeading(DocumentApp.ParagraphHeading.HEADING2);
     uploadedFiles.forEach(function (file) {
-      var p = body.appendParagraph(file.name + ' - ');
-      p.appendText(file.viewUrl).setLinkUrl(file.viewUrl);
+      body.appendParagraph(file.name);
     });
   }
 

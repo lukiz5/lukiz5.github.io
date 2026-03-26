@@ -9,7 +9,7 @@ Final flow:
 3. Client can optionally upload files directly in the form.
 4. The page sends the form payload to a deployed Google Apps Script Web App.
 5. Apps Script saves uploaded files to Google Drive.
-6. Apps Script generates a client PDF brief with file links.
+6. Apps Script generates a client PDF brief.
 7. Apps Script emails the client PDF to the client.
 8. Apps Script generates an internal `.md` brief for the studio.
 9. Apps Script emails the `.md` file directly to `hello@senns.studio`.
@@ -52,7 +52,6 @@ What the Apps Script backend does:
 - accepts the posted brief payload
 - validates required fields and upload limits
 - stores uploaded files in Google Drive
-- creates public view/download links for uploaded files
 - builds the client PDF in Google Docs and exports it as PDF
 - emails the PDF to the client
 - builds the internal Markdown brief for the studio
@@ -75,7 +74,9 @@ Google Apps Script gives us the backend pieces we need:
 ## Important implementation notes
 - The client does not get access to the internal `.md` file in the UI.
 - The `.md` is generated only on the Apps Script side and sent directly to `hello@senns.studio`.
-- File links inside the PDF point to Google Drive shared links.
+- Uploaded source files stay private in Google Drive.
+- The client PDF does not expose raw Drive links to uploaded source files.
+- Internal studio email / Markdown can still contain Drive links for studio access.
 - Current upload limits are intentionally conservative because files are sent as base64 from the browser.
 - If later you want larger uploads, the next step would be direct-to-storage upload instead of posting files through Apps Script.
 
@@ -106,7 +107,7 @@ These are the only manual steps left because they require access to your Google 
    - `https://senns.studio/en/brief.html`
 8. Confirm:
    - client receives PDF by email
-   - PDF includes file links
+   - PDF reaches the client
    - studio receives `.md` at `hello@senns.studio`
 
 ## Suggested Google Drive structure
