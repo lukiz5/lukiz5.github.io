@@ -1,6 +1,7 @@
 var BRIEF_CONFIG = {
   studioEmail: 'hello@senns.studio',
   rootFolderName: 'SENNS Brief Intake',
+  logoDriveFileId: '',
   maxFiles: 10,
   maxFileSizeBytes: 10 * 1024 * 1024,
   maxTotalUploadBytes: 20 * 1024 * 1024,
@@ -134,12 +135,7 @@ function buildClientPdf_(payload, uploadedFiles, submissionFolder, ids) {
   var doc = DocumentApp.create(ids.docName);
   var body = doc.getBody();
 
-  body.appendParagraph(labels.title).setHeading(DocumentApp.ParagraphHeading.TITLE);
-  body.appendParagraph(payload.company_name).setHeading(DocumentApp.ParagraphHeading.HEADING2);
-  body.appendParagraph(payload.contact_name + ' | ' + payload.contact_email);
-  if (payload.display && payload.display.industry) body.appendParagraph(labels.industry + ' ' + payload.display.industry);
-  if (payload.website) body.appendParagraph(labels.website + ' ' + payload.website);
-  body.appendParagraph(labels.date + ' ' + formatDisplayDate_(payload.submitted_at || new Date(), payload.lang));
+  appendBrandedHeader_(body, labels, payload);
   body.appendHorizontalRule();
 
   appendSection_(body, labels.projectOverview, [
@@ -198,6 +194,79 @@ function buildClientPdf_(payload, uploadedFiles, submissionFolder, ids) {
     downloadUrl: 'https://drive.google.com/uc?export=download&id=' + pdfFile.getId(),
     blob: pdfFile.getBlob()
   };
+}
+
+function appendBrandedHeader_(body, labels, payload) {
+  var submittedAt = formatDisplayDate_(payload.submitted_at || new Date(), payload.lang);
+  var table = body.appendTable([['', '']]);
+  var row = table.getRow(0);
+  var left = row.getCell(0);
+  var right = row.getCell(1);
+
+  try {
+    table.setBorderWidth(0);
+  } catch (error) {}
+
+  [left, right].forEach(function (cell) {
+    try {
+      cell.clear();
+    } catch (error) {}
+    cell.setBackgroundColor('#0E0E10');
+  });
+
+  var labelParagraph = left.appendParagraph(labels.headerLabel);
+  labelParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
+  labelParagraph.editAsText()
+    .setFontFamily('Arial')
+    .setFontSize(9)
+    .setBold(false)
+    .setForegroundColor('#B7BBC2');
+
+  var titleParagraph = left.appendParagraph(labels.title);
+  titleParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
+  titleParagraph.editAsText()
+    .setFontFamily('Arial')
+    .setFontSize(18)
+    .setBold(true)
+    .setForegroundColor('#FFFFFF');
+
+  var metaParagraph = left.appendParagraph(payload.company_name + ' | ' + submittedAt);
+  metaParagraph.setAlignment(DocumentApp.HorizontalAlignment.LEFT);
+  metaParagraph.editAsText()
+    .setFontFamily('Arial')
+    .setFontSize(9)
+    .setBold(false)
+    .setForegroundColor('#7E828A');
+
+  var logoBlob = getLogoBlob_();
+  if (logoBlob) {
+    var image = right.appendImage(logoBlob);
+    if (image.getWidth() > 170) {
+      var ratio = 170 / image.getWidth();
+      image.setWidth(170);
+      image.setHeight(Math.round(image.getHeight() * ratio));
+    }
+  } else {
+    var logoParagraph = right.appendParagraph('SENNS.STUDIO');
+    logoParagraph.setAlignment(DocumentApp.HorizontalAlignment.RIGHT);
+    logoParagraph.editAsText()
+      .setFontFamily('Arial')
+      .setFontSize(16)
+      .setBold(false)
+      .setForegroundColor('#F2F2F2');
+  }
+
+  right.appendParagraph('');
+  body.appendParagraph('');
+}
+
+function getLogoBlob_() {
+  if (!BRIEF_CONFIG.logoDriveFileId) return null;
+  try {
+    return DriveApp.getFileById(BRIEF_CONFIG.logoDriveFileId).getBlob();
+  } catch (error) {
+    return null;
+  }
 }
 
 function buildStudioMarkdown_(payload, uploadedFiles, pdfArtifact) {
@@ -334,6 +403,7 @@ function appendSection_(body, title, rows) {
 
 function getLabels_(lang) {
   return lang === 'pl' ? {
+    headerLabel: 'SENNS.STUDIO',
     title: 'Brief Projektowy',
     date: 'Data:',
     industry: 'Branża:',
@@ -364,6 +434,7 @@ function getLabels_(lang) {
     notes: 'Notatki:',
     footer: 'senns.studio | hello@senns.studio'
   } : {
+    headerLabel: 'SENNS.STUDIO',
     title: 'Project Brief',
     date: 'Date:',
     industry: 'Industry:',
