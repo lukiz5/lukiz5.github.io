@@ -604,6 +604,30 @@
       background: var(--bg-card);
     }
 
+    .brief-output__title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 10px;
+    }
+
+    .brief-output__lead {
+      max-width: 56ch;
+    }
+
+    .brief-output__note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .brief-file-note a,
+    .brief-output__note a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+    }
+
     .brief-output__buttons {
       display: flex;
       flex-wrap: wrap;
@@ -1092,7 +1116,7 @@
                           <span data-lang-content="pl">Kliknij, aby wybrać pliki</span>
                           <span data-lang-content="en">Click to choose files</span>
                         </label>
-                        <div class="brief-file-note"><span data-lang-content="pl">Wgrane pliki nie zostaną dołączone do briefu. Wyślij je osobno na hello@senns.studio.</span><span data-lang-content="en">Uploaded files will not be included in the downloaded brief. Please send them separately to hello@senns.studio.</span></div>
+                        <div class="brief-file-note"><span data-lang-content="pl">Nazwy wybranych plików pojawią się w briefie, ale same pliki nie zostaną do niego dołączone. Jeśli chcesz, żebyśmy je przejrzeli, wyślij je osobno na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</span><span data-lang-content="en">The selected filenames will appear in the brief, but the files themselves will not be attached. If you want us to review them, please send them separately to <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</span></div>
                         <div class="brief-file-list" id="fileList"></div>
                         <div class="brief-error" id="error-moodboard_files"></div>
                       </div>
@@ -1215,19 +1239,21 @@
 
               <div class="brief-actions">
                 <button type="submit" class="btn btn--primary" id="generateButton"><span data-lang-content="pl">Wygeneruj brief</span><span data-lang-content="en">Generate brief</span></button>
-                <div class="brief-output" id="briefOutput" hidden>
+                <div class="brief-output" id="briefOutput" hidden tabindex="-1" aria-live="polite">
                   <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
                   <div data-lang-content="pl">
-                    <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief gotowy.</h2>
-                    <p class="section__subtitle">Pobierz PDF dla klienta oraz plik roboczy dla studia.</p>
+                    <h2 class="section__title brief-output__title">Dziękujemy. Brief jest gotowy.</h2>
+                    <p class="section__subtitle brief-output__lead">Poniżej pobierzesz PDF dla klienta oraz plik <code>.md</code> dla studia, gotowy do dalszej pracy i użycia w Claude.</p>
+                    <p class="brief-output__note">Jeśli dodałeś pliki, ich nazwy pojawią się w briefie, ale same załączniki trzeba wysłać osobno na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div data-lang-content="en">
-                    <h2 class="section__title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 10px;">Brief ready.</h2>
-                    <p class="section__subtitle">Download the client PDF and the studio working file.</p>
+                    <h2 class="section__title brief-output__title">Thank you. Your brief is ready.</h2>
+                    <p class="section__subtitle brief-output__lead">Download the client PDF below, plus the <code>.md</code> file for the studio, ready for internal work and Claude.</p>
+                    <p class="brief-output__note">If you selected files, their filenames will appear in the brief, but the files themselves still need to be sent separately to <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div class="brief-output__buttons">
                     <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz PDF dla klienta</span><span data-lang-content="en">Download client PDF</span></button>
-                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik dla studia</span><span data-lang-content="en">Download studio file</span></button>
+                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik .md dla studia</span><span data-lang-content="en">Download .md file for studio</span></button>
                   </div>
                 </div>
               </div>
@@ -1853,6 +1879,10 @@
         }
         generatedPayload = collectData(activeLang);
         output.hidden = false;
+        requestAnimationFrame(function () {
+          output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          output.focus({ preventScroll: true });
+        });
       }
 
       optionalToggle.addEventListener('click', toggleOptional);
