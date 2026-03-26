@@ -1570,6 +1570,15 @@
         });
       }
 
+      function toggleOptional() {
+        if (!optionalToggle || !optionalContent) return;
+        var isOpen = optionalToggle.getAttribute('aria-expanded') === 'true';
+        optionalToggle.setAttribute('aria-expanded', String(!isOpen));
+        optionalContent.style.maxHeight = isOpen ? '0px' : optionalContent.scrollHeight + 'px';
+        var icon = optionalToggle.querySelector('.brief-toggle__icon');
+        if (icon) icon.textContent = isOpen ? '+' : '-';
+      }
+
       function clearErrors() {
         form.querySelectorAll('.brief-input, .brief-select, .brief-textarea, .brief-file-control, .brief-choice').forEach(function (el) {
           el.classList.remove('is-error');
@@ -1917,6 +1926,7 @@
       }
 
       setLanguage(activeLang);
+      productionOtherWrap.hidden = !productionOtherToggle.checked;
       optionalContent.style.maxHeight = '0px';
     })();
   </script>
