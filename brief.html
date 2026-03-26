@@ -1018,7 +1018,7 @@
                   <h2 class="brief-group__title"><span data-lang-content="pl">Czego potrzebujesz</span><span data-lang-content="en">What Do You Need</span></h2>
                   <div class="brief-field brief-field--full">
                     <label class="brief-label is-required"><span data-lang-content="pl">Typ produkcji</span><span data-lang-content="en">Production type</span></label>
-                    <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące</span><span data-lang-content="en">Select all that apply</span></p>
+                    <p class="brief-hint"><span data-lang-content="pl">Zaznacz wszystkie pasujące. Jeśli chcesz, możesz też dopisać własny typ w polu „Inne”.</span><span data-lang-content="en">Select all that apply. If needed, you can also add your own type in the “Other” field.</span></p>
                     <div class="brief-checkbox-group" id="production_type_group">
                       <label class="brief-choice"><input type="checkbox" name="production_type" value="campaign"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Kampania wizerunkowa</span><span data-lang-content="en">Campaign imagery</span></span></label>
                       <label class="brief-choice"><input type="checkbox" name="production_type" value="lookbook"><span class="brief-choice__box"></span><span class="brief-choice__text"><span data-lang-content="pl">Lookbook</span><span data-lang-content="en">Lookbook</span></span></label>
@@ -1629,7 +1629,6 @@
         else if (!emailValid(form.contact_email.value.trim())) { setFieldError('contact_email', copy[activeLang].errors.email); ok = false; }
         if (!form.industry.value) { setFieldError('industry', copy[activeLang].errors.required); ok = false; }
         if (!selectedValues('production_type').length) { setGroupError('production_type', copy[activeLang].errors.minCheck); ok = false; }
-        if (productionOtherToggle.checked && !form.production_type_other.value.trim()) { setFieldError('production_type_other', copy[activeLang].errors.required); ok = false; }
         if (!form.image_count.value) { setFieldError('image_count', copy[activeLang].errors.required); ok = false; }
         if (!selectedValues('usage').length) { setGroupError('usage', copy[activeLang].errors.minCheck); ok = false; }
         if (!form.project_description.value.trim()) { setFieldError('project_description', copy[activeLang].errors.required); ok = false; }
