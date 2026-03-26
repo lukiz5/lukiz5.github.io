@@ -15,7 +15,6 @@
   <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg:             #0E0E10;
@@ -597,6 +596,25 @@
       max-width: 680px;
     }
 
+    .brief-status {
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+
+    .brief-status[hidden] {
+      display: none;
+    }
+
+    .brief-status.is-error {
+      color: var(--danger);
+    }
+
+    .brief-status.is-success {
+      color: var(--text-dim);
+    }
+
     .brief-output {
       margin-top: 40px;
       padding: 28px;
@@ -626,6 +644,15 @@
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 0.14em;
+    }
+
+    .brief-submit-frame {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      border: 0;
     }
 
     .brief-output__buttons {
@@ -1110,13 +1137,13 @@
                       <h2 class="brief-group__title"><span data-lang-content="pl">Referencje wizualne</span><span data-lang-content="en">Visual References</span></h2>
                       <div class="brief-field brief-field--full brief-upload-wrap">
                         <label class="brief-label" for="moodboard_files"><span data-lang-content="pl">Dodaj moodboard lub referencje</span><span data-lang-content="en">Add a moodboard or references</span></label>
-                        <p class="brief-hint"><span data-lang-content="pl">JPG, PNG, PDF. Maks. 10 plików, 10MB każdy.</span><span data-lang-content="en">JPG, PNG, PDF. Max 10 files, 10MB each.</span></p>
+                        <p class="brief-hint"><span data-lang-content="pl">JPG, PNG, PDF. Maks. 10 plików, 10MB każdy, 20MB łącznie.</span><span data-lang-content="en">JPG, PNG, PDF. Max 10 files, 10MB each, 20MB total.</span></p>
                         <input class="brief-file-input" id="moodboard_files" name="moodboard_files" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" multiple>
                         <label for="moodboard_files" class="brief-file-control" id="moodboardControl">
                           <span data-lang-content="pl">Kliknij, aby wybrać pliki</span>
                           <span data-lang-content="en">Click to choose files</span>
                         </label>
-                        <div class="brief-file-note"><span data-lang-content="pl">Nazwy wybranych plików pojawią się w briefie, ale same pliki nie zostaną do niego dołączone. Jeśli chcesz, żebyśmy je przejrzeli, wyślij je osobno na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</span><span data-lang-content="en">The selected filenames will appear in the brief, but the files themselves will not be attached. If you want us to review them, please send them separately to <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</span></div>
+                        <div class="brief-file-note"><span data-lang-content="pl">Wybrane pliki zostaną zapisane i podlinkowane w briefie PDF. Jeśli pack jest większy, najlepiej podać dodatkowy link do folderu w polu referencji.</span><span data-lang-content="en">Selected files will be uploaded and linked inside the PDF brief. If the asset pack is larger, it is best to add a separate folder link in the references field.</span></div>
                         <div class="brief-file-list" id="fileList"></div>
                         <div class="brief-error" id="error-moodboard_files"></div>
                       </div>
@@ -1239,21 +1266,21 @@
 
               <div class="brief-actions">
                 <button type="submit" class="btn btn--primary" id="generateButton"><span data-lang-content="pl">Wygeneruj brief</span><span data-lang-content="en">Generate brief</span></button>
+                <div class="brief-status" id="briefStatus" hidden></div>
                 <div class="brief-output" id="briefOutput" hidden tabindex="-1" aria-live="polite">
                   <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
                   <div data-lang-content="pl">
-                    <h2 class="section__title brief-output__title">Dziękujemy. Brief jest gotowy.</h2>
-                    <p class="section__subtitle brief-output__lead">Poniżej pobierzesz PDF dla klienta oraz plik <code>.md</code> dla studia, gotowy do dalszej pracy i użycia w Claude.</p>
-                    <p class="brief-output__note">Jeśli dodałeś pliki, ich nazwy pojawią się w briefie, ale same załączniki trzeba wysłać osobno na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
+                    <h2 class="section__title brief-output__title">Dziękujemy. Brief został wysłany.</h2>
+                    <p class="section__subtitle brief-output__lead">PDF dla klienta jest gotowy do pobrania poniżej. Wersja robocza <code>.md</code> została wysłana bezpośrednio do studia.</p>
+                    <p class="brief-output__note">Jeśli dodałeś pliki, zostały zapisane i podlinkowane w briefie. W razie większego pakietu możesz później dosłać dodatkowy folder na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div data-lang-content="en">
-                    <h2 class="section__title brief-output__title">Thank you. Your brief is ready.</h2>
-                    <p class="section__subtitle brief-output__lead">Download the client PDF below, plus the <code>.md</code> file for the studio, ready for internal work and Claude.</p>
-                    <p class="brief-output__note">If you selected files, their filenames will appear in the brief, but the files themselves still need to be sent separately to <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
+                    <h2 class="section__title brief-output__title">Thank you. Your brief has been sent.</h2>
+                    <p class="section__subtitle brief-output__lead">The client PDF is ready to download below. The internal <code>.md</code> version has been sent directly to the studio.</p>
+                    <p class="brief-output__note">If you added files, they were uploaded and linked inside the brief. If the asset pack is larger, you can always send an extra folder to <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div class="brief-output__buttons">
-                    <button type="button" class="btn btn--secondary" id="downloadPdf"><span data-lang-content="pl">Pobierz PDF dla klienta</span><span data-lang-content="en">Download client PDF</span></button>
-                    <button type="button" class="btn btn--secondary" id="downloadMd"><span data-lang-content="pl">Pobierz plik .md dla studia</span><span data-lang-content="en">Download .md file for studio</span></button>
+                    <a href="#" class="btn btn--secondary" id="downloadPdfLink" hidden><span data-lang-content="pl">Pobierz PDF dla klienta</span><span data-lang-content="en">Download client PDF</span></a>
                   </div>
                 </div>
               </div>
@@ -1300,24 +1327,35 @@
     </footer>
   </div>
 
+  <iframe class="brief-submit-frame" id="briefSubmitFrame" name="briefSubmitFrame" title="Brief submission"></iframe>
+
+  <script src="/brief-config.js"></script>
   <script>
     (function () {
       'use strict';
 
       var form = document.getElementById('briefForm');
       var output = document.getElementById('briefOutput');
+      var outputDownloadLink = document.getElementById('downloadPdfLink');
       var optionalToggle = document.getElementById('optionalToggle');
       var optionalContent = document.getElementById('optionalContent');
       var fileInput = document.getElementById('moodboard_files');
       var fileList = document.getElementById('fileList');
+      var briefStatus = document.getElementById('briefStatus');
+      var generateButton = document.getElementById('generateButton');
+      var submitFrame = document.getElementById('briefSubmitFrame');
       var burger = document.getElementById('burger');
       var mobileMenu = document.getElementById('mobileMenu');
       var productionOtherToggle = document.getElementById('production_type_other_toggle');
       var productionOtherWrap = document.getElementById('production_type_other_wrap');
       var activeLang = document.body.getAttribute('data-default-lang') || 'pl';
       var generatedPayload = null;
+      var pendingSubmission = null;
       var MAX_FILES = 10;
       var MAX_FILE_SIZE = 10 * 1024 * 1024;
+      var MAX_TOTAL_FILE_SIZE = 20 * 1024 * 1024;
+      var briefConfig = window.SENNS_BRIEF_CONFIG || {};
+      var briefWebAppUrl = String(briefConfig.WEB_APP_URL || '').trim();
 
       if (burger && !document.getElementById('nav').classList.contains('is-scrolled')) {
         var ticking = false;
@@ -1344,7 +1382,15 @@
             minCheck: 'Wybierz przynajmniej jedną opcję.',
             filesCount: 'Możesz dodać maksymalnie 10 plików.',
             filesSize: 'Każdy plik musi mieć mniej niż 10MB.',
+            filesTotal: 'Łączny rozmiar plików musi być mniejszy niż 20MB.',
             filesType: 'Dozwolone są tylko JPG, PNG, WEBP i PDF.'
+          },
+          status: {
+            config: 'Backend briefu nie jest jeszcze skonfigurowany.',
+            submitting: 'Wysyłamy brief, zapisujemy pliki i przygotowujemy PDF...',
+            uploadRead: 'Nie udało się odczytać jednego z plików. Spróbuj ponownie.',
+            submitError: 'Nie udało się wysłać briefu. Spróbuj ponownie lub napisz na hello@senns.studio.',
+            timeout: 'Wysyłka trwała zbyt długo. Spróbuj ponownie za chwilę.'
           },
           pdf: {
             title: 'Brief Projektowy',
@@ -1363,7 +1409,15 @@
             minCheck: 'Select at least one option.',
             filesCount: 'You can upload up to 10 files.',
             filesSize: 'Each file must be smaller than 10MB.',
+            filesTotal: 'The total upload size must stay under 20MB.',
             filesType: 'Only JPG, PNG, WEBP and PDF files are allowed.'
+          },
+          status: {
+            config: 'The brief backend is not configured yet.',
+            submitting: 'Sending the brief, uploading files and preparing the PDF...',
+            uploadRead: 'One of the files could not be read. Please try again.',
+            submitError: 'The brief could not be sent. Please try again or email hello@senns.studio.',
+            timeout: 'The submission took too long. Please try again in a moment.'
           },
           pdf: {
             title: 'Project Brief',
@@ -1548,13 +1602,48 @@
         if (error) error.textContent = message;
       }
 
+      function clearBriefStatus() {
+        if (!briefStatus) return;
+        briefStatus.hidden = true;
+        briefStatus.textContent = '';
+        briefStatus.classList.remove('is-error', 'is-success');
+      }
+
+      function setBriefStatus(message, type) {
+        if (!briefStatus) return;
+        briefStatus.hidden = false;
+        briefStatus.textContent = message;
+        briefStatus.classList.remove('is-error', 'is-success');
+        briefStatus.classList.add(type === 'error' ? 'is-error' : 'is-success');
+      }
+
+      function setSubmitState(isSubmitting) {
+        if (!generateButton) return;
+        generateButton.disabled = isSubmitting;
+        generateButton.setAttribute('aria-busy', isSubmitting ? 'true' : 'false');
+      }
+
+      function guessMimeType(fileName) {
+        var ext = String(fileName.split('.').pop() || '').toLowerCase();
+        if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+        if (ext === 'png') return 'image/png';
+        if (ext === 'webp') return 'image/webp';
+        if (ext === 'pdf') return 'application/pdf';
+        return 'application/octet-stream';
+      }
+
       function updateFiles() {
         var files = Array.prototype.slice.call(fileInput.files || []);
         fileList.innerHTML = '';
         if (!files.length) return true;
         var ok = true;
+        var totalSize = files.reduce(function (sum, file) { return sum + file.size; }, 0);
         if (files.length > MAX_FILES) {
           setFileError(copy[activeLang].errors.filesCount);
+          return false;
+        }
+        if (totalSize > MAX_TOTAL_FILE_SIZE) {
+          setFileError(copy[activeLang].errors.filesTotal);
           return false;
         }
         files.forEach(function (file) {
@@ -1570,6 +1659,125 @@
           setFileError(copy[activeLang].errors.filesSize + ' ' + copy[activeLang].errors.filesType);
         }
         return ok;
+      }
+
+      function readFileAsBase64(file) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () {
+            var raw = String(reader.result || '');
+            var comma = raw.indexOf(',');
+            resolve({
+              name: file.name,
+              mimeType: file.type || guessMimeType(file.name),
+              size: file.size,
+              base64: comma >= 0 ? raw.slice(comma + 1) : raw
+            });
+          };
+          reader.onerror = function () {
+            reject(new Error(copy[activeLang].status.uploadRead));
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function readFilesForSubmission() {
+        var files = Array.prototype.slice.call(fileInput.files || []);
+        return Promise.all(files.map(readFileAsBase64));
+      }
+
+      function buildSubmissionPayload(lang, uploadedFiles) {
+        var payload = collectData(lang);
+        payload.uploaded_files = uploadedFiles || [];
+        payload.page_url = window.location.href;
+        payload.origin = window.location.origin;
+        payload.submitted_at = new Date().toISOString();
+        return payload;
+      }
+
+      function updatePdfLink(url) {
+        if (!outputDownloadLink) return;
+        if (!url) {
+          outputDownloadLink.hidden = true;
+          outputDownloadLink.removeAttribute('href');
+          return;
+        }
+        outputDownloadLink.hidden = false;
+        outputDownloadLink.href = url;
+      }
+
+      function revealOutput() {
+        output.hidden = false;
+        requestAnimationFrame(function () {
+          output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          output.focus({ preventScroll: true });
+        });
+      }
+
+      function postToAppsScript(payload) {
+        return new Promise(function (resolve, reject) {
+          if (!briefWebAppUrl) {
+            reject(new Error(copy[activeLang].status.config));
+            return;
+          }
+          if (!submitFrame) {
+            reject(new Error(copy[activeLang].status.submitError));
+            return;
+          }
+
+          if (pendingSubmission && pendingSubmission.reject) {
+            pendingSubmission.reject(new Error(copy[activeLang].status.submitError));
+          }
+
+          var timeoutId = window.setTimeout(function () {
+            if (!pendingSubmission) return;
+            pendingSubmission = null;
+            reject(new Error(copy[activeLang].status.timeout));
+          }, 90000);
+
+          pendingSubmission = {
+            resolve: resolve,
+            reject: reject,
+            timeoutId: timeoutId
+          };
+
+          var bridgeForm = document.createElement('form');
+          bridgeForm.action = briefWebAppUrl;
+          bridgeForm.method = 'POST';
+          bridgeForm.target = 'briefSubmitFrame';
+          bridgeForm.acceptCharset = 'utf-8';
+          bridgeForm.style.display = 'none';
+
+          var payloadField = document.createElement('textarea');
+          payloadField.name = 'payload';
+          payloadField.value = JSON.stringify(payload);
+          bridgeForm.appendChild(payloadField);
+
+          document.body.appendChild(bridgeForm);
+          bridgeForm.submit();
+          window.setTimeout(function () {
+            if (bridgeForm.parentNode) bridgeForm.parentNode.removeChild(bridgeForm);
+          }, 0);
+        });
+      }
+
+      function handleBackendMessage(event) {
+        if (!pendingSubmission) return;
+        if (submitFrame && event.source !== submitFrame.contentWindow) return;
+
+        var data = event.data || {};
+        if (data.type !== 'senns-brief-result') return;
+
+        var current = pendingSubmission;
+        pendingSubmission = null;
+        window.clearTimeout(current.timeoutId);
+
+        if (data.ok) {
+          current.resolve(data.result || {});
+          return;
+        }
+
+        current.reject(new Error(data.message || copy[activeLang].status.submitError));
       }
 
       function collectData(lang) {
@@ -1637,251 +1845,34 @@
         return ok;
       }
 
-      function addPdfRow(doc, label, value, y, maxWidth, pageWidth, ensureSpace) {
-        if (!value) return y;
-        ensureSpace(18);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor('#7E828A');
-        doc.setFontSize(10);
-        doc.text(label, 20, y);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor('#1A1A1A');
-        doc.setFontSize(11);
-        var lines = doc.splitTextToSize(String(value), maxWidth - 44);
-        doc.text(lines, 64, y);
-        return y + (lines.length * 6) + 2;
-      }
-
-      function buildPdf(payload) {
-        var jsPDF = window.jspdf && window.jspdf.jsPDF;
-        if (!jsPDF) return;
-        var doc = new jsPDF({ unit: 'mm', format: 'a4' });
-        var pageHeight = doc.internal.pageSize.getHeight();
-        var pageWidth = doc.internal.pageSize.getWidth();
-        var maxWidth = pageWidth - 40;
-        var y = 20;
-
-        function ensureSpace(height) {
-          if (y + height > pageHeight - 24) {
-            doc.addPage();
-            y = 20;
-          }
-        }
-
-        function divider() {
-          ensureSpace(8);
-          doc.setDrawColor('#D7D7D7');
-          doc.line(20, y, pageWidth - 20, y);
-          y += 8;
-        }
-
-        function heading(text) {
-          ensureSpace(14);
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor('#1A1A1A');
-          doc.setFontSize(18);
-          doc.text(text, 20, y);
-          y += 10;
-        }
-
-        function blockTitle(text) {
-          ensureSpace(10);
-          doc.setFont('helvetica', 'bold');
-          doc.setFontSize(11);
-          doc.setTextColor('#1A1A1A');
-          doc.text(text, 20, y);
-          y += 7;
-        }
-
-        function paragraph(text) {
-          if (!text) return;
-          ensureSpace(10);
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(11);
-          doc.setTextColor('#1A1A1A');
-          var lines = doc.splitTextToSize(String(text), maxWidth);
-          doc.text(lines, 20, y);
-          y += lines.length * 6 + 2;
-        }
-
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor('#7E828A');
-        doc.setFontSize(10);
-        doc.text('SENNS.STUDIO', 20, y);
-        doc.text(payload.display.date, pageWidth - 20, y, { align: 'right' });
-        y += 8;
-        divider();
-        heading(copy[payload.lang].pdf.title);
-        paragraph(payload.company_name);
-        paragraph(payload.contact_name + ' | ' + payload.contact_email);
-        paragraph([payload.display.industry, payload.website].filter(Boolean).join(' | '));
-        divider();
-        blockTitle(copy[payload.lang].pdf.overview);
-        y = addPdfRow(doc, payload.lang === 'pl' ? 'Typ produkcji:' : 'Production type:', payload.display.production_type.join(', '), y, maxWidth, pageWidth, ensureSpace);
-        y = addPdfRow(doc, payload.lang === 'pl' ? 'Szacunkowa liczba zdjęć:' : 'Estimated deliverables:', payload.display.image_count, y, maxWidth, pageWidth, ensureSpace);
-        y = addPdfRow(doc, payload.lang === 'pl' ? 'Termin:' : 'Timeline:', payload.deadline, y, maxWidth, pageWidth, ensureSpace);
-        y = addPdfRow(doc, payload.lang === 'pl' ? 'Użycie:' : 'Usage:', payload.display.usage.join(', '), y, maxWidth, pageWidth, ensureSpace);
-        divider();
-        blockTitle(copy[payload.lang].pdf.vision);
-        paragraph(payload.project_description);
-        y = addPdfRow(doc, payload.lang === 'pl' ? 'Estetyka marki:' : 'Brand aesthetic:', payload.display.brand_aesthetic, y, maxWidth, pageWidth, ensureSpace);
-
-        var hasVisual = payload.mood_keywords || payload.color_palette || payload.display.setting_preference || payload.display.light_preference || payload.reference_links || payload.brands_you_admire || payload.moodboard_files.length;
-        if (hasVisual) {
-          divider();
-          blockTitle(copy[payload.lang].pdf.visual);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Nastrój:' : 'Mood:', payload.mood_keywords, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Kolory:' : 'Colors:', payload.color_palette, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Sceneria:' : 'Setting:', payload.display.setting_preference, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Światło:' : 'Light:', payload.display.light_preference, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Pliki:' : 'Files:', payload.moodboard_files.join(', '), y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Referencje:' : 'References:', payload.reference_links, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Podziwiane marki:' : 'Admired brands:', payload.brands_you_admire, y, maxWidth, pageWidth, ensureSpace);
-        }
-
-        var hasCasting = payload.model_preferences || payload.styling_notes || payload.product_to_feature;
-        if (hasCasting) {
-          divider();
-          blockTitle(copy[payload.lang].pdf.casting);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Modele:' : 'Model preferences:', payload.model_preferences, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Stylizacja:' : 'Styling:', payload.styling_notes, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Produkty:' : 'Products to feature:', payload.product_to_feature, y, maxWidth, pageWidth, ensureSpace);
-        }
-
-        var hasTechnical = payload.display.existing_materials || payload.display.aspect_ratios.length || payload.notes;
-        if (hasTechnical) {
-          divider();
-          blockTitle(copy[payload.lang].pdf.technical);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Materiały:' : 'Existing materials:', payload.display.existing_materials, y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Formaty:' : 'Aspect ratios:', payload.display.aspect_ratios.join(', '), y, maxWidth, pageWidth, ensureSpace);
-          y = addPdfRow(doc, payload.lang === 'pl' ? 'Dodatkowe notatki:' : 'Additional notes:', payload.notes, y, maxWidth, pageWidth, ensureSpace);
-        }
-
-        var total = doc.getNumberOfPages();
-        for (var i = 1; i <= total; i += 1) {
-          doc.setPage(i);
-          doc.setFont('helvetica', 'normal');
-          doc.setFontSize(9);
-          doc.setTextColor('#7E828A');
-          doc.text(copy[payload.lang].pdf.footer, pageWidth / 2, pageHeight - 10, { align: 'center' });
-          if (total > 1) {
-            doc.text(String(i), pageWidth - 20, pageHeight - 10, { align: 'right' });
-          }
-        }
-
-        doc.save('brief_' + slugify(payload.company_name) + '_' + todayStamp() + '.pdf');
-      }
-
-      function buildMarkdown(payload) {
-        var md = [
-          '# SENNS.STUDIO - Production Brief',
-          '',
-          '## Client',
-          '- Company: ' + payload.company_name,
-          '- Contact: ' + payload.contact_name + ', ' + payload.contact_email,
-          '- Industry: ' + (payload.display.industry || 'not provided'),
-          '- Website: ' + (payload.website || 'not provided'),
-          '',
-          '## Project Scope',
-          '- Production types: ' + (payload.display.production_type.join(', ') || 'not specified'),
-          '- Estimated deliverables: ' + (payload.display.image_count || 'not specified'),
-          '- Timeline: ' + (payload.deadline || 'not specified'),
-          '- Usage channels: ' + (payload.display.usage.join(', ') || 'not specified'),
-          '',
-          '## Vision',
-          '### Project Description',
-          payload.project_description,
-          '',
-          '### Brand Aesthetic Status',
-          payload.display.brand_aesthetic || 'not specified',
-          '',
-          '## Visual Direction',
-          '- Mood keywords: ' + (payload.mood_keywords || 'not provided'),
-          '- Color palette: ' + (payload.color_palette || 'not provided'),
-          '- Setting: ' + (payload.display.setting_preference || 'not provided'),
-          '- Light: ' + (payload.display.light_preference || 'not provided'),
-          '- Uploaded files: ' + (payload.moodboard_files.join(', ') || 'none'),
-          '- Reference links: ' + (payload.reference_links || 'none'),
-          '- Admired brands: ' + (payload.brands_you_admire || 'not provided'),
-          '',
-          '## Casting & Styling',
-          '- Model preferences: ' + (payload.model_preferences || 'not provided'),
-          '- Styling direction: ' + (payload.styling_notes || 'not provided'),
-          '- Products to feature: ' + (payload.product_to_feature || 'not provided'),
-          '',
-          '## Technical',
-          '- Existing materials: ' + (payload.display.existing_materials || 'not specified'),
-          '- Required aspect ratios: ' + (payload.display.aspect_ratios.join(', ') || 'not specified'),
-          '',
-          '## Additional Notes',
-          payload.notes || 'none',
-          '',
-          '---',
-          '',
-          '## SENNS STUDIO ANALYSIS PROMPT',
-          '',
-          'Analyze this production brief and provide:',
-          '',
-          '1. **Brief Summary** - 3-4 sentences capturing the core of what the client needs.',
-          '',
-          '2. **Key Observations** - What stands out? What\'s clear, what\'s ambiguous, what\'s missing?',
-          '',
-          '3. **Recommended Production Approach**:',
-          '   - Which SENNS production format fits best (Campaign, Lookbook, E-commerce, Editorial, Performance, Post-production)?',
-          '   - Suggested session structure: how many hero frames, what categories of shots',
-          '   - Recommended image roles: hero, detail, lifestyle, campaign, e-commerce variants',
-          '',
-          '4. **Session Planning Notes**:',
-          '   - THE WORLD - suggest environment/setting direction based on brief',
-          '   - THE CHARACTER - casting direction based on brief',
-          '   - THE LIGHT - lighting approach based on mood and references',
-          '   - COLOR DIRECTION - palette recommendation',
-          '',
-          '5. **Questions to Clarify Before Starting** - What should we ask the client before production?',
-          '',
-          '6. **3 Sample MJ V7 Prompts** - Based on the brief, write 3 production-ready Midjourney V7 prompts following SENNS 5-pillar structure (Subject, Framing, Light, Camera/Rendering, Color/Mood). Include --style raw --v 7 and appropriate --ar, negative prompts, and film stock references.',
-          '',
-          'Context: SENNS.STUDIO uses Midjourney V7 for hero frame generation, Nano Banana Pro (NB2) for cleanup and variant generation. Production follows the one-hero principle: one hero frame sets the session, everything else is built from it. Quality standard is photorealistic, editorial, film-like. Never generic. Never cold. Always warm, cinematic, natural skin texture with visible pores.'
-        ].join('\n');
-
-        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'brief_' + slugify(payload.company_name) + '_' + todayStamp() + '.md';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-      }
-
-      function toggleOptional() {
-        var isOpen = optionalToggle.getAttribute('aria-expanded') === 'true';
-        optionalToggle.setAttribute('aria-expanded', String(!isOpen));
-        optionalContent.hidden = false;
-        optionalContent.classList.toggle('is-open', !isOpen);
-        if (!isOpen) {
-          optionalContent.style.maxHeight = optionalContent.scrollHeight + 'px';
-        } else {
-          optionalContent.style.maxHeight = optionalContent.scrollHeight + 'px';
-          requestAnimationFrame(function () {
-            optionalContent.style.maxHeight = '0px';
-          });
-          setTimeout(function () { optionalContent.hidden = true; }, 450);
-        }
-      }
-
-      function handleGenerate(event) {
+      async function handleGenerate(event) {
         event.preventDefault();
+        clearBriefStatus();
+        output.hidden = true;
+        updatePdfLink('');
         if (!validate()) {
-          output.hidden = true;
           return;
         }
-        generatedPayload = collectData(activeLang);
-        output.hidden = false;
-        requestAnimationFrame(function () {
-          output.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          output.focus({ preventScroll: true });
-        });
+
+        setSubmitState(true);
+        setBriefStatus(copy[activeLang].status.submitting, 'success');
+
+        try {
+          var uploadedFiles = await readFilesForSubmission();
+          generatedPayload = buildSubmissionPayload(activeLang, uploadedFiles);
+          var result = await postToAppsScript(generatedPayload);
+          if (!result || !result.pdfDownloadUrl) {
+            throw new Error(copy[activeLang].status.submitError);
+          }
+          updatePdfLink(result.pdfDownloadUrl);
+          clearBriefStatus();
+          revealOutput();
+        } catch (error) {
+          setBriefStatus(error && error.message ? error.message : copy[activeLang].status.submitError, 'error');
+          output.hidden = true;
+        } finally {
+          setSubmitState(false);
+        }
       }
 
       optionalToggle.addEventListener('click', toggleOptional);
@@ -1897,15 +1888,8 @@
           setLanguage(btn.getAttribute('data-lang-toggle'));
         });
       });
+      window.addEventListener('message', handleBackendMessage);
       form.addEventListener('submit', handleGenerate);
-      document.getElementById('downloadPdf').addEventListener('click', function () {
-        if (!generatedPayload) generatedPayload = collectData(activeLang);
-        buildPdf(generatedPayload);
-      });
-      document.getElementById('downloadMd').addEventListener('click', function () {
-        if (!generatedPayload) generatedPayload = collectData(activeLang);
-        buildMarkdown(generatedPayload);
-      });
 
       if (burger && mobileMenu) {
         burger.addEventListener('click', function () {
