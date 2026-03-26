@@ -1,7 +1,7 @@
 var BRIEF_CONFIG = {
   studioEmail: 'hello@senns.studio',
   rootFolderName: 'SENNS Brief Intake',
-  logoDriveFileId: '1_5qqGF_NDQ907rIsGBPU5jjxwR-CNEqF',
+  logoDriveFileId: '1DcxiMRu9jHKDTlgdRahWHjHAqWxBOYtu',
   maxFiles: 10,
   maxFileSizeBytes: 10 * 1024 * 1024,
   maxTotalUploadBytes: 20 * 1024 * 1024,
@@ -225,11 +225,12 @@ function appendBrandedHeader_(body, labels, payload) {
   var logoBlob = getLogoBlob_();
   if (logoBlob) {
     var image = right.appendImage(logoBlob);
-    if (image.getWidth() > 160) {
-      var ratio = 160 / image.getWidth();
-      image.setWidth(160);
+    if (image.getWidth() > 120) {
+      var ratio = 120 / image.getWidth();
+      image.setWidth(120);
       image.setHeight(Math.round(image.getHeight() * ratio));
     }
+    image.getParent().setAlignment(DocumentApp.HorizontalAlignment.RIGHT);
   } else {
     var logoParagraph = right.appendParagraph('SENNS.STUDIO');
     logoParagraph.setAlignment(DocumentApp.HorizontalAlignment.RIGHT);
