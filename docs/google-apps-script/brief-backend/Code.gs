@@ -268,20 +268,31 @@ function sendClientEmail_(payload, pdfArtifact) {
   var subject = lang === 'pl'
     ? 'SENNS.STUDIO - Twój brief PDF'
     : 'SENNS.STUDIO - Your brief PDF';
+  var textBody = lang === 'pl'
+    ? 'Dziękujemy za wypełnienie briefu.\n\nW załączniku znajdziesz PDF z podsumowaniem.\n\nJeśli potrzebujesz pomocy, odpisz na tę wiadomość.\n\nSENNS.STUDIO'
+    : 'Thank you for filling out the brief.\n\nYour summary PDF is attached.\n\nIf you need anything else, just reply to this email.\n\nSENNS.STUDIO';
   var htmlBody = lang === 'pl'
-    ? '<p>Dziękujemy za wypełnienie briefu.</p><p>W załączniku znajdziesz PDF, a tutaj możesz pobrać go ponownie: <a href="' + pdfArtifact.downloadUrl + '">pobierz PDF</a>.</p><p>SENNS.STUDIO</p>'
-    : '<p>Thank you for filling out the brief.</p><p>Your PDF is attached, and you can also download it here: <a href="' + pdfArtifact.downloadUrl + '">download PDF</a>.</p><p>SENNS.STUDIO</p>';
+    ? '<p>Dziękujemy za wypełnienie briefu.</p><p>W załączniku znajdziesz PDF z podsumowaniem.</p><p>Jeśli potrzebujesz pomocy, odpisz na tę wiadomość.</p><p>SENNS.STUDIO</p>'
+    : '<p>Thank you for filling out the brief.</p><p>Your summary PDF is attached.</p><p>If you need anything else, just reply to this email.</p><p>SENNS.STUDIO</p>';
 
-  MailApp.sendEmail({
-    to: payload.contact_email,
-    subject: subject,
+  GmailApp.sendEmail(payload.contact_email, subject, textBody, {
     htmlBody: htmlBody,
-    attachments: [pdfArtifact.blob]
+    name: 'SENNS.STUDIO',
+    replyTo: BRIEF_CONFIG.studioEmail,
+    attachments: [pdfArtifact.blob.copyBlob().setName(pdfArtifact.fileName)]
   });
 }
 
 function sendStudioEmail_(payload, uploadedFiles, pdfArtifact, markdownBlob) {
   var subject = 'New SENNS brief - ' + payload.company_name;
+  var textBody = [
+    'A new brief has been submitted.',
+    '',
+    'Company: ' + payload.company_name,
+    'Contact: ' + payload.contact_name + ' (' + payload.contact_email + ')',
+    '',
+    'Client PDF: ' + pdfArtifact.downloadUrl
+  ].join('\n');
   var htmlBody = [
     '<p>A new brief has been submitted.</p>',
     '<p><strong>Company:</strong> ' + escapeHtml_(payload.company_name) + '<br>',
@@ -292,13 +303,14 @@ function sendStudioEmail_(payload, uploadedFiles, pdfArtifact, markdownBlob) {
     }).join('<br>') + '</p>' : ''
   ].join('');
 
-  MailApp.sendEmail({
-    to: BRIEF_CONFIG.studioEmail,
-    subject: subject,
+  GmailApp.sendEmail(BRIEF_CONFIG.studioEmail, subject, textBody, {
     htmlBody: htmlBody,
+    name: 'SENNS.STUDIO',
+    replyTo: BRIEF_CONFIG.studioEmail,
     attachments: [markdownBlob]
   });
 }
+
 
 function appendSection_(body, title, rows) {
   var filtered = rows.filter(function (row) {

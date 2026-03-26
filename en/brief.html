@@ -677,7 +677,7 @@
 
     .footer__inner {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: minmax(280px, 1fr) auto auto;
       gap: clamp(40px, 7vw, 100px);
       align-items: start;
     }
@@ -715,6 +715,8 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin: 0;
+      padding: 0;
     }
 
     .footer__nav-list a {
@@ -775,12 +777,14 @@
         display: flex;
       }
 
-      .footer__inner {
-        grid-template-columns: 1fr 1fr;
-      }
-
       .brief-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .footer__inner {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -1270,17 +1274,17 @@
                 <div class="brief-output" id="briefOutput" hidden tabindex="-1" aria-live="polite">
                   <p class="text-label"><span data-lang-content="pl">Output</span><span data-lang-content="en">Output</span></p>
                   <div data-lang-content="pl">
-                    <h2 class="section__title brief-output__title">Brief został przygotowany.</h2>
-                    <p class="section__subtitle brief-output__lead">Wysłaliśmy brief do studia. PDF dla klienta wysłaliśmy też na Twój email. Jeśli przycisk poniżej jest widoczny, możesz pobrać go również od razu.</p>
-                    <p class="brief-output__note">Jeśli dodałeś pliki, zostały zapisane i podlinkowane w briefie. Jeśli mail nie dotrze w ciągu kilku minut, napisz na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
+                    <h2 class="section__title brief-output__title">Dziękujemy. Brief został przygotowany.</h2>
+                    <p class="section__subtitle brief-output__lead">Brief został wysłany do studia oraz na podanego przez Ciebie maila. Możesz ściągnąć poniżej plik PDF z podsumowaniem.</p>
+                    <p class="brief-output__note">Jeśli mail nie dotrze w ciągu kilku minut, sprawdź spam lub napisz na <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div data-lang-content="en">
-                    <h2 class="section__title brief-output__title">Your brief is ready.</h2>
-                    <p class="section__subtitle brief-output__lead">The brief has been sent to the studio. We also sent the client PDF to your email. If the button below is visible, you can download it here as well.</p>
-                    <p class="brief-output__note">If you added files, they were uploaded and linked inside the brief. If the email does not arrive within a few minutes, contact <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
+                    <h2 class="section__title brief-output__title">Thank you! Brief completed.</h2>
+                    <p class="section__subtitle brief-output__lead">Sent to the studio and your inbox.</p>
+                    <p class="brief-output__note">If the email does not arrive within a few minutes, check spam or contact <a href="mailto:hello@senns.studio">hello@senns.studio</a>.</p>
                   </div>
                   <div class="brief-output__buttons">
-                    <a href="#" class="btn btn--secondary" id="downloadPdfLink" hidden><span data-lang-content="pl">Pobierz PDF dla klienta</span><span data-lang-content="en">Download client PDF</span></a>
+                    <a href="#" class="btn btn--primary" id="downloadPdfLink" hidden><span data-lang-content="pl">Pobierz PDF</span><span data-lang-content="en">Download PDF</span></a>
                   </div>
                 </div>
               </div>
@@ -1742,15 +1746,16 @@
           }
 
           var timeoutId = window.setTimeout(function () {
-            if (!pendingSubmission) return;
-            pendingSubmission = null;
+            if (!pendingSubmission || pendingSubmission.timedOut) return;
+            pendingSubmission.timedOut = true;
             reject(new Error(copy[activeLang].status.timeout));
           }, 180000);
 
           pendingSubmission = {
             resolve: resolve,
             reject: reject,
-            timeoutId: timeoutId
+            timeoutId: timeoutId,
+            timedOut: false
           };
 
           var bridgeForm = document.createElement('form');
@@ -1780,11 +1785,23 @@
         if (data.type !== 'senns-brief-result') return;
 
         var current = pendingSubmission;
-        pendingSubmission = null;
         window.clearTimeout(current.timeoutId);
 
         if (data.ok) {
+          pendingSubmission = null;
+          if (current.timedOut) {
+            updatePdfLink(data.result && data.result.pdfDownloadUrl ? data.result.pdfDownloadUrl : '');
+            clearBriefStatus();
+            revealOutput();
+            return;
+          }
           current.resolve(data.result || {});
+          return;
+        }
+
+        pendingSubmission = null;
+        if (current.timedOut) {
+          setBriefStatus(data.message || copy[activeLang].status.submitError, 'error');
           return;
         }
 
