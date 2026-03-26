@@ -278,11 +278,11 @@ function sendClientEmail_(payload, pdfArtifact) {
     ? 'SENNS.STUDIO - Twój brief PDF'
     : 'SENNS.STUDIO - Your brief PDF';
   var textBody = lang === 'pl'
-    ? 'Dziękujemy za wypełnienie briefu.\n\nW załączniku znajdziesz PDF z podsumowaniem.\n\nJeśli potrzebujesz pomocy, odpisz na tę wiadomość.\n\nSENNS.STUDIO'
-    : 'Thank you for filling out the brief.\n\nYour summary PDF is attached.\n\nIf you need anything else, just reply to this email.\n\nSENNS.STUDIO';
+    ? 'Cześć!\n\nDzięki wielkie za wypełnienie briefu - super, że mamy już obraz Twojej wizji!\n\nW załączniku podsyłam podsumowanie w PDF. Teraz my bierzemy się za analizę i wrócimy do Ciebie z konkretami w ciągu najbliższych 2 dni roboczych.\n\nGdyby coś się zmieniło - śmiało pisz!\n\nPozdrawiamy,\nZespół SENNS.STUDIO'
+    : 'Hi there,\n\nThank you so much for taking the time to fill out the brief. It is great to have a clear picture of your vision.\n\nYou will find the summary PDF attached to this email for your records. We are going to dive into the details now and will get back to you within the next 2 business days with some initial thoughts and next steps.\n\nIf anything else pops into your mind in the meantime, just hit reply!\n\nBest,\nThe SENNS.STUDIO Team';
   var htmlBody = lang === 'pl'
-    ? '<p>Dziękujemy za wypełnienie briefu.</p><p>W załączniku znajdziesz PDF z podsumowaniem.</p><p>Jeśli potrzebujesz pomocy, odpisz na tę wiadomość.</p><p>SENNS.STUDIO</p>'
-    : '<p>Thank you for filling out the brief.</p><p>Your summary PDF is attached.</p><p>If you need anything else, just reply to this email.</p><p>SENNS.STUDIO</p>';
+    ? '<p>Cześć!</p><p>Dzięki wielkie za wypełnienie briefu - super, że mamy już obraz Twojej wizji!</p><p>W załączniku podsyłam podsumowanie w PDF. Teraz my bierzemy się za analizę i wrócimy do Ciebie z konkretami w ciągu najbliższych 2 dni roboczych.</p><p>Gdyby coś się zmieniło - śmiało pisz!</p><p>Pozdrawiamy,<br>Zespół SENNS.STUDIO</p>'
+    : '<p>Hi there,</p><p>Thank you so much for taking the time to fill out the brief. It is great to have a clear picture of your vision.</p><p>You will find the summary PDF attached to this email for your records. We are going to dive into the details now and will get back to you within the next 2 business days with some initial thoughts and next steps.</p><p>If anything else pops into your mind in the meantime, just hit reply!</p><p>Best,<br>The SENNS.STUDIO Team</p>';
 
   GmailApp.sendEmail(payload.contact_email, subject, textBody, {
     htmlBody: htmlBody,
