@@ -18,6 +18,15 @@ function doGet() {
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
+function authorizeBriefBackend_() {
+  GmailApp.getAliases();
+  DriveApp.getRootFolder().getName();
+  var doc = DocumentApp.create('SENNS Brief Auth Check');
+  var file = DriveApp.getFileById(doc.getId());
+  file.setTrashed(true);
+  return 'Authorization complete.';
+}
+
 function doPost(e) {
   var origin = '*';
   try {
