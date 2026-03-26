@@ -1574,6 +1574,7 @@
         if (!optionalToggle || !optionalContent) return;
         var isOpen = optionalToggle.getAttribute('aria-expanded') === 'true';
         optionalToggle.setAttribute('aria-expanded', String(!isOpen));
+        optionalContent.classList.toggle('is-open', !isOpen);
         optionalContent.style.maxHeight = isOpen ? '0px' : optionalContent.scrollHeight + 'px';
         var icon = optionalToggle.querySelector('.brief-toggle__icon');
         if (icon) icon.textContent = isOpen ? '+' : '-';
@@ -1927,6 +1928,7 @@
 
       setLanguage(activeLang);
       productionOtherWrap.hidden = !productionOtherToggle.checked;
+      optionalContent.classList.remove('is-open');
       optionalContent.style.maxHeight = '0px';
     })();
   </script>
