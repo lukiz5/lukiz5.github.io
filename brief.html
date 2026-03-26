@@ -723,6 +723,7 @@
     .footer-legal a { color: var(--text-muted); }
 
     .footer__tagline {
+      margin: 0;
       color: var(--text-dim);
       font-size: 0.875rem;
       max-width: 300px;
@@ -735,6 +736,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.14em;
+      line-height: 1;
       color: var(--text-dim);
     }
 
@@ -744,6 +746,7 @@
       gap: 12px;
       margin: 0;
       padding: 0;
+      min-width: 0;
     }
 
     .footer__nav-list a {
@@ -1174,7 +1177,7 @@
                           <span data-lang-content="pl">Kliknij, aby wybrać pliki</span>
                           <span data-lang-content="en">Click to choose files</span>
                         </label>
-                        <div class="brief-file-note"><span data-lang-content="pl">Wybrane pliki zostaną zapisane i podlinkowane w briefie PDF. Jeśli pack jest większy, najlepiej podać dodatkowy link do folderu w polu referencji.</span><span data-lang-content="en">Selected files will be uploaded and linked inside the PDF brief. If the asset pack is larger, it is best to add a separate folder link in the references field.</span></div>
+                        <div class="brief-file-note"><span data-lang-content="pl">Wybrane pliki zostaną zapisane dla studia. Nie będą publicznie widoczne w PDF klienta. Jeśli pack jest większy, najlepiej podać dodatkowy link do folderu w polu referencji.</span><span data-lang-content="en">Selected files will be saved for the studio. They will not be public inside the client PDF. If the asset pack is larger, it is best to add a separate folder link in the references field.</span></div>
                         <div class="brief-file-list" id="fileList"></div>
                         <div class="brief-error" id="error-moodboard_files"></div>
                       </div>
@@ -1566,6 +1569,16 @@
         }
       }
 
+      function closeMobileMenu() {
+        if (!burger || !mobileMenu) return;
+        mobileMenu.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.querySelectorAll('span').forEach(function (span) {
+          span.style.transform = '';
+        });
+        document.body.style.overflow = '';
+      }
+
       function slugify(value) {
         return String(value || '')
           .normalize('NFD')
@@ -1951,6 +1964,7 @@
       });
       document.querySelectorAll('[data-lang-toggle]').forEach(function (btn) {
         btn.addEventListener('click', function () {
+          closeMobileMenu();
           setLanguage(btn.getAttribute('data-lang-toggle'));
         });
       });
@@ -1973,14 +1987,15 @@
           }
         });
         mobileMenu.querySelectorAll('a').forEach(function (link) {
-          link.addEventListener('click', function () {
-            mobileMenu.classList.remove('is-open');
-            burger.setAttribute('aria-expanded', 'false');
-            burger.querySelectorAll('span').forEach(function (span) { span.style.transform = ''; });
-            document.body.style.overflow = '';
-          });
+          link.addEventListener('click', closeMobileMenu);
         });
       }
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 980) {
+          closeMobileMenu();
+        }
+      });
 
       setLanguage(activeLang);
       productionOtherWrap.hidden = !productionOtherToggle.checked;
