@@ -1,7 +1,7 @@
 var BRIEF_CONFIG = {
   studioEmail: 'hello@senns.studio',
   rootFolderName: 'SENNS Brief Intake',
-  logoDriveFileId: '',
+  logoDriveFileId: '1_5qqGF_NDQ907rIsGBPU5jjxwR-CNEqF',
   maxFiles: 10,
   maxFileSizeBytes: 10 * 1024 * 1024,
   maxTotalUploadBytes: 20 * 1024 * 1024,
