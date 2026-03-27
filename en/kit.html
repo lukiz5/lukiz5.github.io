@@ -464,14 +464,91 @@
     }
 
     @media (max-width: 768px) {
+      .kit-hero {
+        padding: 108px 0 48px;
+      }
+
+      .kit-hero__grid {
+        gap: 22px;
+      }
+
+      .kit-hero__title {
+        font-size: clamp(2.8rem, 14vw, 4.4rem);
+        margin-bottom: 14px;
+      }
+
+      .kit-hero__subtitle {
+        max-width: 30ch;
+        font-size: 0.95rem;
+        line-height: 1.55;
+        margin-bottom: 20px;
+      }
+
       .kit-hero__values {
         grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .kit-hero__value {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 12px 16px;
+        background: rgba(26, 26, 33, 0.62);
+      }
+
+      .kit-hero__value::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        margin-top: 6px;
+        border-radius: 50%;
+        background: #d9b57a;
+        box-shadow: 0 0 0 6px rgba(217, 181, 122, 0.14);
+      }
+
+      .kit-hero__value strong {
+        min-height: 0;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .kit-hero__value span {
+        display: none;
       }
     }
 
     @media (max-width: 680px) {
       .kit-hero {
-        padding-top: 118px;
+        padding: 92px 0 32px;
+      }
+
+      .kit-hero__grid {
+        gap: 18px;
+      }
+
+      .kit-hero__title {
+        font-size: clamp(2.55rem, 13vw, 3.6rem);
+        line-height: 0.98;
+      }
+
+      .kit-hero__subtitle {
+        max-width: 28ch;
+        font-size: 0.9375rem;
+        line-height: 1.45;
+        margin-bottom: 14px;
+      }
+
+      .kit-hero__values {
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .kit-hero__value {
+        padding: 12px 14px 12px 16px;
       }
 
       .kit-showcase__grid,
@@ -481,10 +558,23 @@
 
       .kit-form {
         grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 12px;
+        max-width: 100%;
+      }
+
+      .kit-form__input {
+        height: 54px;
       }
 
       .kit-form__button {
         width: 100%;
+        min-width: 0;
+      }
+
+      .kit-form__status {
+        margin-top: 4px;
+        font-size: 12px;
       }
 
       .kit-product__card--with-cover {
