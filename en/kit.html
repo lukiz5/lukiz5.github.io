@@ -456,6 +456,14 @@
       justify-content: center;
     }
 
+    .kit-product__button-disabled,
+    .kit-product__button-disabled:hover,
+    .kit-product__button-disabled:focus {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+
     @media (max-width: 980px) {
       .kit-showcase__grid {
         grid-template-columns: 1fr 1fr;
@@ -749,7 +757,7 @@
                 <span class="kit-product__feature">Full hero-to-campaign workflow</span>
                 <span class="kit-product__feature">120+ pages of illustrated production knowledge</span>
               </div>
-              <a href="https://senns.lemonsqueezy.com/checkout/buy/a528ffc7-e2c3-4b1a-a28a-aec22bc6fd05?embed=1&media=0&logo=0" class="btn btn--primary lemonsqueezy-button">Get The SENNS System</a>
+              <a href="https://senns.lemonsqueezy.com/checkout/buy/a528ffc7-e2c3-4b1a-a28a-aec22bc6fd05?embed=1&media=0&logo=0" class="btn btn--primary kit-product__button-disabled" aria-disabled="true" tabindex="-1" onclick="return false;">COMING SOON!</a>
             </div>
           </div>
         </div>
