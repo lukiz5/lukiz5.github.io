@@ -117,6 +117,10 @@
       margin: 0 auto 30px;
     }
 
+    .kit-hero__subtitle-short {
+      display: none;
+    }
+
     .kit-hero__accent {
       display: inline-block;
       color: var(--text);
@@ -481,13 +485,13 @@
         max-width: 30ch;
         font-size: 0.95rem;
         line-height: 1.55;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
 
       .kit-hero__values {
         grid-template-columns: 1fr;
         gap: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
       }
 
       .kit-hero__value {
@@ -539,12 +543,20 @@
         max-width: 28ch;
         font-size: 0.9375rem;
         line-height: 1.45;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
+      }
+
+      .kit-hero__subtitle-long {
+        display: none;
+      }
+
+      .kit-hero__subtitle-short {
+        display: inline;
       }
 
       .kit-hero__values {
         gap: 8px;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
       }
 
       .kit-hero__value {
@@ -640,7 +652,7 @@
             <div class="kit-hero__content">
               <p class="text-label">Production Kit</p>
               <h1 class="kit-hero__title">Our production kit.</h1>
-              <p class="kit-hero__subtitle">The same references, briefs and workflows we use when building campaigns for brands. <span class="kit-hero__accent">Free.</span></p>
+              <p class="kit-hero__subtitle"><span class="kit-hero__subtitle-long">The same references, briefs and workflows we use when building campaigns for brands.</span><span class="kit-hero__subtitle-short">Leave your email and get the kit.</span> <span class="kit-hero__accent">Free.</span></p>
               <div class="kit-hero__values kit-hero__checks">
                 <div class="kit-hero__value">
                   <strong>10 campaign-ready prompts</strong>
