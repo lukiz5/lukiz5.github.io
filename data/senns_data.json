@@ -1,0 +1,44 @@
+{
+  "last_updated": "never",
+  "meta_ads": {
+    "campaigns": [],
+    "ad_sets": [],
+    "total_spend": 0,
+    "total_leads": 0,
+    "total_purchases": 0,
+    "avg_cpl": 0,
+    "avg_cpa": 0,
+    "blended_roas": 0
+  },
+  "instagram_organic": {
+    "followers": 0,
+    "posts_this_week": 0,
+    "avg_reach": 0,
+    "avg_engagement_rate": 0,
+    "top_posts": []
+  },
+  "lemonsqueezy": {
+    "total_revenue_usd": 0,
+    "orders_this_month": 0,
+    "orders_last_30_days": [],
+    "products": []
+  },
+  "mailerlite": {
+    "total_subscribers": 0,
+    "new_subscribers_7d": 0,
+    "avg_open_rate": 0,
+    "avg_click_rate": 0,
+    "sequences": []
+  },
+  "funnel": {
+    "impressions": 0,
+    "clicks": 0,
+    "lp_visits": 0,
+    "opt_ins": 0,
+    "purchases_l1": 0,
+    "consultations_l2": 0,
+    "ctr": 0,
+    "lp_cvr": 0,
+    "email_cvr": 0
+  }
+}
