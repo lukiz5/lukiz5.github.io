@@ -1,5 +1,20 @@
 {
   "last_updated": "never",
+  "data_freshness_hours": null,
+  "errors": [],
+  "warnings": [
+    "Meta Ads credentials missing; keeping previous or empty data.",
+    "Instagram credentials missing; keeping previous or empty data.",
+    "LemonSqueezy credentials missing; keeping previous or empty data.",
+    "MailerLite credentials missing; keeping previous or empty data."
+  ],
+  "sources_status": {
+    "meta_ads": "skipped",
+    "instagram_organic": "skipped",
+    "lemonsqueezy": "skipped",
+    "mailerlite": "skipped",
+    "overall": "failed"
+  },
   "meta_ads": {
     "campaigns": [],
     "ad_sets": [],
@@ -40,5 +55,12 @@
     "ctr": 0,
     "lp_cvr": 0,
     "email_cvr": 0
+  },
+  "analysis": {
+    "break_even_roas": 0,
+    "revenue_minus_spend": 0.0,
+    "top_problem_area": "",
+    "top_opportunity_area": "",
+    "claude_context_summary": "Not enough live data is available yet. The dashboard currently contains default or preserved values until the integrations return a successful refresh."
   }
 }
