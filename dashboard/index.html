@@ -50,7 +50,7 @@
     }
 
     .page-shell {
-      width: min(1480px, calc(100% - 40px));
+      width: min(1520px, calc(100% - 40px));
       margin: 0 auto;
       padding: 24px 0 40px;
     }
@@ -173,8 +173,8 @@
 
     .dashboard-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.82fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 1fr) minmax(330px, 380px);
+      gap: 28px;
       align-items: start;
     }
 
@@ -189,6 +189,9 @@
       position: sticky;
       top: 24px;
       align-self: start;
+      justify-self: end;
+      width: 100%;
+      max-width: 380px;
       overflow: hidden;
     }
 
@@ -222,7 +225,7 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      gap: 14px;
     }
 
     .kpi-card,
@@ -314,7 +317,7 @@
     .insight-grid,
     .current-state-grid {
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
 
     .funnel-grid,
@@ -389,6 +392,7 @@
       flex-direction: column;
       gap: 14px;
       overflow: hidden;
+      width: 100%;
     }
 
     .chat-description {
@@ -488,7 +492,7 @@
       display: grid;
       gap: 10px;
       align-content: start;
-      min-height: 0;
+      min-height: 220px;
       max-height: none;
       overflow-y: auto;
       padding-right: 4px;
@@ -503,6 +507,7 @@
       line-height: 1.55;
       font-size: 0.9rem;
       color: var(--muted-strong);
+      overflow-wrap: anywhere;
     }
 
     .chat-message.user {
