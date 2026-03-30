@@ -1,22 +1,14 @@
 {
-  "last_updated": "2026-03-30T18:52:41Z",
+  "last_updated": "2026-03-30T19:07:51Z",
   "data_freshness_hours": 0.0,
-  "errors": [
-    "Meta Ads campaigns fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/campaigns - OAuthException - code 190 - subcode 463 - Error validating access token: Session has expired on Monday, 30-Mar-26 07:00:00 PDT. The current time is Monday, 30-Mar-26 11:52:35 PDT.",
-    "Meta Ads ad sets fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/adsets - OAuthException - code 190 - subcode 463 - Error validating access token: Session has expired on Monday, 30-Mar-26 07:00:00 PDT. The current time is Monday, 30-Mar-26 11:52:36 PDT.",
-    "Meta Ads account insights fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/insights - OAuthException - code 190 - subcode 463 - Error validating access token: Session has expired on Monday, 30-Mar-26 07:00:00 PDT. The current time is Monday, 30-Mar-26 11:52:37 PDT.",
-    "Meta Ads integration failed completely; preserving previous data.",
-    "Instagram profile fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/17841476591964618 - OAuthException - code 190 - subcode 463 - Error validating access token: Session has expired on Monday, 30-Mar-26 07:00:00 PDT. The current time is Monday, 30-Mar-26 11:52:38 PDT.",
-    "Instagram media fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/17841476591964618/media - OAuthException - code 190 - subcode 463 - Error validating access token: Session has expired on Monday, 30-Mar-26 07:00:00 PDT. The current time is Monday, 30-Mar-26 11:52:39 PDT.",
-    "Instagram integration failed completely; preserving previous data."
-  ],
+  "errors": [],
   "warnings": [],
   "sources_status": {
-    "meta_ads": "failed",
-    "instagram_organic": "failed",
+    "meta_ads": "ok",
+    "instagram_organic": "ok",
     "lemonsqueezy": "ok",
     "mailerlite": "ok",
-    "overall": "partial"
+    "overall": "ok"
   },
   "meta_ads": {
     "campaigns": [],
@@ -31,8 +23,8 @@
   "instagram_organic": {
     "followers": 24,
     "posts_this_week": 4,
-    "avg_reach": 41.33,
-    "avg_engagement_rate": 25.69,
+    "avg_reach": 42.25,
+    "avg_engagement_rate": 26.04,
     "top_posts": [
       {
         "id": "17903003550224625",
