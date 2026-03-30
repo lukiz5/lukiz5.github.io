@@ -926,7 +926,6 @@
       setLoadingState(false);
       if (!hasTrackedLead && typeof window.fbq === 'function') {
         hasTrackedLead = true;
-        console.log('META_DEBUG Lead fired');
         fbq('track', 'Lead');
       }
       form.style.display = 'none';
@@ -1102,7 +1101,6 @@
     window.setTimeout(function() {
       if (hasTrackedViewContent || typeof window.fbq !== 'function') return;
       hasTrackedViewContent = true;
-      console.log('META_DEBUG ViewContent fired');
       fbq('track', 'ViewContent');
     }, 5000);
   })();
