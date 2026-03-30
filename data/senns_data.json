@@ -1,14 +1,22 @@
 {
-  "last_updated": "2026-03-30T13:20:58Z",
+  "last_updated": "2026-03-30T18:14:14Z",
   "data_freshness_hours": 0.0,
-  "errors": [],
+  "errors": [
+    "Meta Ads campaigns fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/campaigns",
+    "Meta Ads ad sets fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/adsets",
+    "Meta Ads account insights fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/act_1858820458110741/insights",
+    "Meta Ads integration failed completely; preserving previous data.",
+    "Instagram profile fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/17841476591964618",
+    "Instagram media fetch failed: HTTP 400 while calling https://graph.facebook.com/v19.0/17841476591964618/media",
+    "Instagram integration failed completely; preserving previous data."
+  ],
   "warnings": [],
   "sources_status": {
-    "meta_ads": "ok",
-    "instagram_organic": "ok",
+    "meta_ads": "failed",
+    "instagram_organic": "failed",
     "lemonsqueezy": "ok",
     "mailerlite": "ok",
-    "overall": "ok"
+    "overall": "partial"
   },
   "meta_ads": {
     "campaigns": [],
