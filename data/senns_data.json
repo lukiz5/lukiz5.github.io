@@ -1,24 +1,19 @@
 {
-  "last_updated": "never",
-  "data_freshness_hours": null,
+  "last_updated": "2026-03-30T13:02:39Z",
+  "data_freshness_hours": 0.0,
   "errors": [],
-  "warnings": [
-    "Meta Ads credentials missing; keeping previous or empty data.",
-    "Instagram credentials missing; keeping previous or empty data.",
-    "LemonSqueezy credentials missing; keeping previous or empty data.",
-    "MailerLite credentials missing; keeping previous or empty data."
-  ],
+  "warnings": [],
   "sources_status": {
-    "meta_ads": "skipped",
-    "instagram_organic": "skipped",
-    "lemonsqueezy": "skipped",
-    "mailerlite": "skipped",
-    "overall": "failed"
+    "meta_ads": "ok",
+    "instagram_organic": "ok",
+    "lemonsqueezy": "ok",
+    "mailerlite": "ok",
+    "overall": "ok"
   },
   "meta_ads": {
     "campaigns": [],
     "ad_sets": [],
-    "total_spend": 0,
+    "total_spend": 0.0,
     "total_leads": 0,
     "total_purchases": 0,
     "avg_cpl": 0,
@@ -26,24 +21,102 @@
     "blended_roas": 0
   },
   "instagram_organic": {
-    "followers": 0,
-    "posts_this_week": 0,
-    "avg_reach": 0,
-    "avg_engagement_rate": 0,
-    "top_posts": []
+    "followers": 24,
+    "posts_this_week": 4,
+    "avg_reach": 41.25,
+    "avg_engagement_rate": 25.69,
+    "top_posts": [
+      {
+        "id": "17903003550224625",
+        "caption": "Your brand doesn't need another photoshoot.\n\nIt needs a system that gives you full control over the outcome - without the logistics, without the surprises, without a 15-person crew on set.\n\nThis isn't the future. This is now.\n\nIf your produ",
+        "permalink": "https://www.instagram.com/reel/DVqNhXTCPBx/",
+        "timestamp": "2026-03-09T10:00:41+0000",
+        "reach": 214,
+        "engagement_rate": 45.83,
+        "likes": 11,
+        "comments": 0
+      },
+      {
+        "id": "18118593223538015",
+        "caption": "Your lookbook looks exactly like your competitor's lookbook.\n\nSame layout. Same poses. Same safe, predictable aesthetic.\n\nVisual consistency doesn't mean visual predictability. If your customer can't tell your brand apart from the next one ",
+        "permalink": "https://www.instagram.com/p/DVvVR2vDfmz/",
+        "timestamp": "2026-03-11T09:44:22+0000",
+        "reach": 18,
+        "engagement_rate": 41.67,
+        "likes": 10,
+        "comments": 0
+      },
+      {
+        "id": "18195664261350823",
+        "caption": "The client wrote on Monday. By Friday, the campaign was done.\n\n40 images. Full visual consistency. Zero photoshoots.\n\nThis is what visual production looks like when you strip away everything unnecessary - the logistics, the delays, the comp",
+        "permalink": "https://www.instagram.com/p/DV0UKTlDdxl/",
+        "timestamp": "2026-03-13T08:10:42+0000",
+        "reach": 17,
+        "engagement_rate": 37.5,
+        "likes": 9,
+        "comments": 0
+      },
+      {
+        "id": "18066937031304356",
+        "caption": "One product. Four worlds.\n\nAesthetic control isn't a matter of taste - it's a matter of system.\n\nWhen you have a system, you can adapt your visual narrative to every channel, season, and market. No compromises. No starting from scratch.\n\nTh",
+        "permalink": "https://www.instagram.com/reel/DV8PK14DxAr/",
+        "timestamp": "2026-03-16T10:01:24+0000",
+        "reach": 27,
+        "engagement_rate": 33.33,
+        "likes": 8,
+        "comments": 0
+      },
+      {
+        "id": "17851683249688576",
+        "caption": "You're a creative agency. You shouldn't be managing shoot logistics.\n\nYour job is strategy, concept, and creative direction. But somewhere along the way, you also became the ones booking studios, coordinating models, chasing retouchers, and",
+        "permalink": "https://www.instagram.com/p/DWBYv32DxyS/",
+        "timestamp": "2026-03-18T10:00:57+0000",
+        "reach": 19,
+        "engagement_rate": 33.33,
+        "likes": 8,
+        "comments": 0
+      }
+    ]
   },
   "lemonsqueezy": {
-    "total_revenue_usd": 0,
-    "orders_this_month": 0,
-    "orders_last_30_days": [],
-    "products": []
+    "total_revenue_usd": 9900.0,
+    "orders_this_month": 1,
+    "orders_last_30_days": [
+      {
+        "id": "7924535",
+        "identifier": "39e75eba-7b57-4e97-9f6f-d6ba3de97ee4",
+        "status": "paid",
+        "created_at": "2026-03-30T10:31:34.000000Z",
+        "revenue_usd": 9900.0,
+        "product_name": "The SENNS System",
+        "customer_name": "Łukasz Ziółkowski"
+      }
+    ],
+    "products": [
+      {
+        "id": "918055",
+        "name": "The SENNS System",
+        "status": "published",
+        "price_usd": 99.0,
+        "orders": 1,
+        "revenue_usd": 9900.0
+      }
+    ]
   },
   "mailerlite": {
-    "total_subscribers": 0,
-    "new_subscribers_7d": 0,
+    "total_subscribers": 3,
+    "new_subscribers_7d": 3,
     "avg_open_rate": 0,
     "avg_click_rate": 0,
-    "sequences": []
+    "sequences": [
+      {
+        "id": "182853570754774651",
+        "name": "SENNS - Kit Welcome",
+        "status": "",
+        "subscribers": 0,
+        "emails": 4
+      }
+    ]
   },
   "funnel": {
     "impressions": 0,
@@ -57,10 +130,10 @@
     "email_cvr": 0
   },
   "analysis": {
-    "break_even_roas": 0,
-    "revenue_minus_spend": 0.0,
+    "break_even_roas": 0.0,
+    "revenue_minus_spend": 9900.0,
     "top_problem_area": "",
     "top_opportunity_area": "",
-    "claude_context_summary": "Not enough live data is available yet. The dashboard currently contains default or preserved values until the integrations return a successful refresh."
+    "claude_context_summary": "Paid media spend is $0.0 with 0 leads, 0 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $9900.0, so revenue minus spend is $9900.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%. Main problem area: No acute issue detected. Main opportunity: Keep monitoring current data mix for stronger signals."
   }
 }
