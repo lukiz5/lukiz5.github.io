@@ -884,6 +884,7 @@
     var successPoll;
     var pendingMailerLiteSubmit = false;
     var hasTrackedViewContent = false;
+    var hasTrackedLead = false;
 
     function setLoadingState(isLoading) {
       form.classList.toggle('is-loading', isLoading);
@@ -923,6 +924,10 @@
       pendingMailerLiteSubmit = false;
       clearSubmitTimeout();
       setLoadingState(false);
+      if (!hasTrackedLead && typeof window.fbq === 'function') {
+        hasTrackedLead = true;
+        fbq('track', 'Lead');
+      }
       form.style.display = 'none';
       if (checks) checks.style.display = 'none';
       if (success) success.style.display = 'block';
