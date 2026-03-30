@@ -6,10 +6,12 @@ from __future__ import annotations
 import copy
 import json
 import os
+import re
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import requests
 from dateutil import parser as date_parser
@@ -192,6 +194,87 @@ def build_lemonsqueezy_amount_warning(
     return None
 
 
+SENSITIVE_QUERY_KEYS = {
+    "access_token",
+    "client_secret",
+    "client_id",
+    "api_key",
+    "authorization",
+}
+
+
+def mask_sensitive_value(value: str) -> str:
+    if not value:
+        return value
+    if len(value) <= 8:
+        return "***"
+    return f"{value[:4]}***{value[-4:]}"
+
+
+def mask_sensitive_text(text: str) -> str:
+    masked = text
+    for key in SENSITIVE_QUERY_KEYS:
+        masked = re.sub(
+            rf"({re.escape(key)}=)([^&\\s]+)",
+            lambda match: f"{match.group(1)}{mask_sensitive_value(match.group(2))}",
+            masked,
+            flags=re.IGNORECASE,
+        )
+    masked = re.sub(
+        r"(Bearer\s+)([A-Za-z0-9._-]+)",
+        lambda match: f"{match.group(1)}{mask_sensitive_value(match.group(2))}",
+        masked,
+        flags=re.IGNORECASE,
+    )
+    return masked
+
+
+def mask_sensitive_url(url: str) -> str:
+    try:
+        split = urlsplit(url)
+        query_items = []
+        for key, value in parse_qsl(split.query, keep_blank_values=True):
+            query_items.append((key, mask_sensitive_value(value) if key.lower() in SENSITIVE_QUERY_KEYS else value))
+        masked_query = urlencode(query_items)
+        return urlunsplit((split.scheme, split.netloc, split.path, masked_query, split.fragment))
+    except ValueError:
+        return mask_sensitive_text(url)
+
+
+def extract_error_details(payload: Any) -> str | None:
+    if isinstance(payload, dict):
+        error_payload = payload.get("error") if isinstance(payload.get("error"), dict) else payload
+        message = str(error_payload.get("message", "")).strip()
+        error_type = str(error_payload.get("type", "")).strip()
+        error_code = error_payload.get("code")
+        error_subcode = error_payload.get("error_subcode")
+
+        detail_parts = []
+        if error_type:
+            detail_parts.append(error_type)
+        if error_code not in (None, ""):
+            detail_parts.append(f"code {error_code}")
+        if error_subcode not in (None, ""):
+            detail_parts.append(f"subcode {error_subcode}")
+        if message:
+            detail_parts.append(message)
+
+        if detail_parts:
+            return " - ".join(str(part) for part in detail_parts)
+
+        compact_payload = mask_sensitive_text(json.dumps(payload, ensure_ascii=False))
+        return compact_payload[:400]
+
+    if isinstance(payload, list):
+        compact_payload = mask_sensitive_text(json.dumps(payload, ensure_ascii=False))
+        return compact_payload[:400]
+
+    if payload not in (None, ""):
+        return mask_sensitive_text(str(payload))[:400]
+
+    return None
+
+
 def default_meta_ads() -> dict[str, Any]:
     return {
         "campaigns": [],
@@ -348,11 +431,12 @@ class HttpClient:
         timeout: int = REQUEST_TIMEOUT,
     ) -> tuple[Any | None, str | None]:
         last_error: str | None = None
+        masked_url = mask_sensitive_url(url)
         for attempt in range(1, MAX_RETRIES + 1):
             try:
                 response = self.session.get(url, headers=headers, params=params, timeout=timeout)
                 if response.status_code in (429, 500, 502, 503, 504) and attempt < MAX_RETRIES:
-                    last_error = f"HTTP {response.status_code} from {url}"
+                    last_error = f"HTTP {response.status_code} from {masked_url}"
                     log("WARN", f"{last_error}; retry {attempt}/{MAX_RETRIES}")
                     time.sleep(1.0 * attempt)
                     continue
@@ -361,21 +445,32 @@ class HttpClient:
                     return {}, None
                 return response.json(), None
             except requests.Timeout:
-                last_error = f"Timeout while calling {url}"
+                last_error = f"Timeout while calling {masked_url}"
             except requests.RequestException as exc:
-                status_code = getattr(getattr(exc, "response", None), "status_code", None)
+                response = getattr(exc, "response", None)
+                status_code = getattr(response, "status_code", None)
                 if status_code:
-                    last_error = f"HTTP {status_code} while calling {url}"
+                    error_detail: str | None = None
+                    if response is not None:
+                        try:
+                            response_payload = response.json()
+                            error_detail = extract_error_details(response_payload)
+                        except ValueError:
+                            error_detail = extract_error_details(response.text)
+
+                    last_error = f"HTTP {status_code} while calling {masked_url}"
+                    if error_detail:
+                        last_error = f"{last_error} - {error_detail}"
                 else:
-                    last_error = f"Request failed for {url}: {exc}"
+                    last_error = f"Request failed for {masked_url}: {mask_sensitive_text(str(exc))}"
             except ValueError:
-                last_error = f"Invalid JSON returned by {url}"
+                last_error = f"Invalid JSON returned by {masked_url}"
 
             if attempt < MAX_RETRIES:
                 log("WARN", f"{last_error}; retry {attempt}/{MAX_RETRIES}")
                 time.sleep(1.0 * attempt)
 
-        return None, last_error or f"Unknown HTTP error for {url}"
+        return None, last_error or f"Unknown HTTP error for {masked_url}"
 
     def get_paginated(
         self,
