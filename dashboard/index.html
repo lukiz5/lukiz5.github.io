@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate">
+  <meta name="referrer" content="no-referrer">
   <title>SENNS Dashboard</title>
   <style>
     :root {
@@ -81,6 +83,7 @@
 
     .hero-top,
     .hero-meta,
+    .hero-actions,
     .toolbar,
     .chat-actions,
     .quick-prompts,
@@ -187,6 +190,14 @@
 
     .panel {
       padding: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
     }
 
     .panel-header {
@@ -483,6 +494,66 @@
       color: #f1c7c3;
     }
 
+    .logout-button {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted-strong);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding-inline: 14px;
+    }
+
+    .lock-screen-shell {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      place-items: center;
+    }
+
+    .lock-card {
+      width: min(460px, 100%);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lock-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(177, 138, 82, 0.12), transparent 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 38%);
+      pointer-events: none;
+    }
+
+    .lock-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .lock-header {
+      margin-bottom: 22px;
+    }
+
+    .lock-header h1 {
+      margin-bottom: 10px;
+    }
+
+    .lock-header p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .lock-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .lock-error {
+      min-height: 22px;
+      color: #d8b8b4;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
     .chat-meta {
       display: block;
       margin-bottom: 8px;
@@ -619,6 +690,10 @@
         flex-direction: column;
       }
 
+      .hero-actions {
+        justify-content: flex-start;
+      }
+
       .kpi-grid,
       .funnel-grid,
       .insight-grid,
@@ -635,166 +710,194 @@
 </head>
 <body>
   <div class="page-shell">
-    <div id="loadingState" class="loading-screen">
-      <div class="hero loading-card">
-        <h2>Loading dashboard...</h2>
-        <p>Pulling SENNS.STUDIO paid, organic, revenue, and funnel data.</p>
-      </div>
-    </div>
-
-    <div id="errorState" class="error-screen hidden">
-      <div class="hero error-card">
-        <h2>Could not load dashboard data</h2>
-        <p id="errorStateText">The dashboard JSON could not be loaded right now.</p>
-      </div>
-    </div>
-
-    <main id="app" class="hidden">
-      <section class="hero">
-        <div class="hero-top">
-          <div class="hero-copy">
-            <h1>SENNS Dashboard</h1>
-            <p>Paid + organic + revenue monitoring</p>
+    <section id="lockScreen" class="lock-screen-shell">
+      <div class="hero lock-card">
+        <div class="lock-header">
+          <h1>SENNS Dashboard</h1>
+          <p>Private access required</p>
+        </div>
+        <div class="lock-form">
+          <div class="field-group">
+            <label class="field-label" for="lockPasswordInput">Password</label>
+            <input id="lockPasswordInput" type="password" placeholder="Enter access password" autocomplete="current-password" spellcheck="false">
           </div>
-          <div id="overallStatusBadge" class="status-badge status-skipped">SKIPPED</div>
+          <div id="lockError" class="lock-error" aria-live="polite"></div>
+          <div class="chat-actions">
+            <button id="unlockButton" class="button-primary" type="button">Unlock</button>
+          </div>
         </div>
-        <div class="hero-meta">
-          <div class="meta-chip">Last updated <strong id="lastUpdatedValue">Never</strong></div>
-          <div class="meta-chip">Freshness <strong id="freshnessValue">n/a</strong></div>
-          <div class="meta-chip">Mode <strong>Operational snapshot</strong></div>
-        </div>
-      </section>
-
-      <div id="staleBanner" class="banner hidden">Data may be stale</div>
-
-      <div class="dashboard-layout">
-        <div class="main-column">
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>KPI Overview</h2>
-                <p class="panel-subtitle">Core spend, acquisition, and revenue numbers in one read.</p>
-              </div>
-            </div>
-            <div id="kpiGrid" class="kpi-grid"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Red Flags</h2>
-                <p class="panel-subtitle">Critical issues from sources, freshness, funnel, and ad set execution.</p>
-              </div>
-            </div>
-            <div id="redFlagsList" class="red-flag-list"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Funnel</h2>
-                <p class="panel-subtitle">Topline movement from impression to purchase and consultation.</p>
-              </div>
-            </div>
-            <div id="funnelGrid" class="funnel-grid"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Top Insights</h2>
-                <p class="panel-subtitle">Operator summary of what is broken, what is promising, and where margin sits.</p>
-              </div>
-            </div>
-            <div id="insightGrid" class="insight-grid"></div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Ad Sets</h2>
-                <p class="panel-subtitle">Decision framework aligned to SENNS paid strategy.</p>
-              </div>
-            </div>
-            <div class="table-scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Spend</th>
-                    <th>Impressions</th>
-                    <th>Clicks</th>
-                    <th>Leads</th>
-                    <th>Purchases</th>
-                    <th>CPL</th>
-                    <th>CPA</th>
-                    <th>Frequency</th>
-                    <th>Decision</th>
-                  </tr>
-                </thead>
-                <tbody id="adSetsBody"></tbody>
-              </table>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-header">
-              <div>
-                <h2>Data Sources Health</h2>
-                <p class="panel-subtitle">Source-level status across paid, organic, revenue, and email layers.</p>
-              </div>
-            </div>
-            <div id="sourceGrid" class="source-grid"></div>
-          </section>
-        </div>
-
-        <aside class="chat-column">
-          <section class="panel chat-panel">
-            <div>
-              <h2>Claude Chat</h2>
-              <p class="chat-description">Ask for next actions, bottlenecks, and campaign decisions using the current dashboard snapshot.</p>
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="apiKeyInput">Anthropic API key</label>
-              <input id="apiKeyInput" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
-            </div>
-
-            <div class="chat-actions">
-              <button id="saveSessionButton" class="button-secondary" type="button">Save for session</button>
-              <button id="clearSessionButton" class="button-secondary" type="button">Clear session</button>
-            </div>
-
-            <div class="field-group">
-              <label class="field-label" for="chatQuestionInput">Question</label>
-              <textarea id="chatQuestionInput" placeholder="Ask Claude what changed, what to do next, or where performance is leaking."></textarea>
-            </div>
-
-            <div class="quick-prompts" id="quickPrompts"></div>
-
-            <div class="chat-actions">
-              <button id="askClaudeButton" class="button-primary" type="button">Ask Claude</button>
-            </div>
-
-            <div id="chatMessages" class="chat-messages">
-              <div class="chat-message assistant">
-                <span class="chat-meta">Claude</span>
-                Add an Anthropic API key for this session, then ask about paid performance, funnel bottlenecks, or what to do next.
-              </div>
-            </div>
-          </section>
-        </aside>
       </div>
-    </main>
+    </section>
+
+    <div id="dashboardShell" class="hidden">
+      <div id="loadingState" class="loading-screen hidden">
+        <div class="hero loading-card">
+          <h2>Loading dashboard...</h2>
+          <p>Pulling SENNS.STUDIO paid, organic, revenue, and funnel data.</p>
+        </div>
+      </div>
+
+      <div id="errorState" class="error-screen hidden">
+        <div class="hero error-card">
+          <h2>Could not load dashboard data</h2>
+          <p id="errorStateText">The dashboard JSON could not be loaded right now.</p>
+        </div>
+      </div>
+
+      <main id="app" class="hidden">
+        <section class="hero">
+          <div class="hero-top">
+            <div class="hero-copy">
+              <h1>SENNS Dashboard</h1>
+              <p>Paid + organic + revenue monitoring</p>
+            </div>
+            <div class="hero-actions">
+              <div id="overallStatusBadge" class="status-badge status-skipped">SKIPPED</div>
+              <button id="logoutButton" class="logout-button" type="button">Logout</button>
+            </div>
+          </div>
+          <div class="hero-meta">
+            <div class="meta-chip">Last updated <strong id="lastUpdatedValue">Never</strong></div>
+            <div class="meta-chip">Freshness <strong id="freshnessValue">n/a</strong></div>
+            <div class="meta-chip">Mode <strong>Operational snapshot</strong></div>
+          </div>
+        </section>
+
+        <div id="staleBanner" class="banner hidden">Data may be stale</div>
+
+        <div class="dashboard-layout">
+          <div class="main-column">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>KPI Overview</h2>
+                  <p class="panel-subtitle">Core spend, acquisition, and revenue numbers in one read.</p>
+                </div>
+              </div>
+              <div id="kpiGrid" class="kpi-grid"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Red Flags</h2>
+                  <p class="panel-subtitle">Critical issues from sources, freshness, funnel, and ad set execution.</p>
+                </div>
+              </div>
+              <div id="redFlagsList" class="red-flag-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Funnel</h2>
+                  <p class="panel-subtitle">Topline movement from impression to purchase and consultation.</p>
+                </div>
+              </div>
+              <div id="funnelGrid" class="funnel-grid"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Top Insights</h2>
+                  <p class="panel-subtitle">Operator summary of what is broken, what is promising, and where margin sits.</p>
+                </div>
+              </div>
+              <div id="insightGrid" class="insight-grid"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Ad Sets</h2>
+                  <p class="panel-subtitle">Decision framework aligned to SENNS paid strategy.</p>
+                </div>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Status</th>
+                      <th>Spend</th>
+                      <th>Impressions</th>
+                      <th>Clicks</th>
+                      <th>Leads</th>
+                      <th>Purchases</th>
+                      <th>CPL</th>
+                      <th>CPA</th>
+                      <th>Frequency</th>
+                      <th>Decision</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adSetsBody"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Data Sources Health</h2>
+                  <p class="panel-subtitle">Source-level status across paid, organic, revenue, and email layers.</p>
+                </div>
+              </div>
+              <div id="sourceGrid" class="source-grid"></div>
+            </section>
+          </div>
+
+          <aside class="chat-column">
+            <section class="panel chat-panel">
+              <div>
+                <h2>Claude Chat</h2>
+                <p class="chat-description">Ask for next actions, bottlenecks, and campaign decisions using the current dashboard snapshot.</p>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="apiKeyInput">Anthropic API key</label>
+                <input id="apiKeyInput" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+              </div>
+
+              <div class="chat-actions">
+                <button id="saveSessionButton" class="button-secondary" type="button">Save for session</button>
+                <button id="clearSessionButton" class="button-secondary" type="button">Clear session</button>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="chatQuestionInput">Question</label>
+                <textarea id="chatQuestionInput" placeholder="Ask Claude what changed, what to do next, or where performance is leaking."></textarea>
+              </div>
+
+              <div class="quick-prompts" id="quickPrompts"></div>
+
+              <div class="chat-actions">
+                <button id="askClaudeButton" class="button-primary" type="button">Ask Claude</button>
+              </div>
+
+              <div id="chatMessages" class="chat-messages">
+                <div class="chat-message assistant">
+                  <span class="chat-meta">Claude</span>
+                  Add an Anthropic API key for this session, then ask about paid performance, funnel bottlenecks, or what to do next.
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
   </div>
 
   <script>
+    // This is a client-side access gate for a static site and is not equivalent to full server-side authentication.
     const DATA_URL = "/data/senns_data.json";
     const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
     const ANTHROPIC_API_VERSION = "2023-06-01";
     const ANTHROPIC_MODEL = "claude-sonnet-4-5";
     const SESSION_STORAGE_KEY = "senns_dashboard_anthropic_api_key";
+    const DASHBOARD_UNLOCK_KEY = "senns_dashboard_unlocked";
+    const PASSWORD_HASH = "bfe8c0a4a911ba332c8c53f0a985c106ae2c36c9c45c22e74e6fcb3f1ace1e2c";
+    const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000;
     const STALE_DATA_HOURS = 36;
     const MAX_CONTEXT_AD_SETS = 10;
     const CLAUDE_SYSTEM_PROMPT = [
@@ -818,10 +921,18 @@
     const state = {
       data: null,
       chatHistory: [],
-      isChatLoading: false
+      isChatLoading: false,
+      isUnlocked: false,
+      inactivityTimer: null,
+      dashboardAbortController: null
     };
 
     const ui = {
+      lockScreen: document.getElementById("lockScreen"),
+      lockPasswordInput: document.getElementById("lockPasswordInput"),
+      unlockButton: document.getElementById("unlockButton"),
+      lockError: document.getElementById("lockError"),
+      dashboardShell: document.getElementById("dashboardShell"),
       loadingState: document.getElementById("loadingState"),
       errorState: document.getElementById("errorState"),
       errorStateText: document.getElementById("errorStateText"),
@@ -842,7 +953,8 @@
       chatQuestionInput: document.getElementById("chatQuestionInput"),
       askClaudeButton: document.getElementById("askClaudeButton"),
       chatMessages: document.getElementById("chatMessages"),
-      quickPrompts: document.getElementById("quickPrompts")
+      quickPrompts: document.getElementById("quickPrompts"),
+      logoutButton: document.getElementById("logoutButton")
     };
 
     function escapeHtml(value) {
@@ -939,6 +1051,30 @@
       return data?.sources_status?.[sourceName] || "skipped";
     }
 
+    async function sha256(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const digest = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(digest))
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    async function checkPassword(password) {
+      const digest = await sha256(password);
+      return digest === PASSWORD_HASH;
+    }
+
+    function showLockMessage(message) {
+      ui.lockError.textContent = message || "";
+    }
+
+    function clearSessionSecrets() {
+      sessionStorage.removeItem(DASHBOARD_UNLOCK_KEY);
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      ui.apiKeyInput.value = "";
+    }
+
     function saveApiKeyForSession() {
       const apiKey = ui.apiKeyInput.value.trim();
       if (!apiKey) {
@@ -957,6 +1093,117 @@
       sessionStorage.removeItem(SESSION_STORAGE_KEY);
       ui.apiKeyInput.value = "";
       appendChatMessage("assistant", "Claude", "Session API key cleared.");
+    }
+
+    function getDefaultChatMarkup() {
+      return `
+        <div class="chat-message assistant">
+          <span class="chat-meta">Claude</span>
+          Add an Anthropic API key for this session, then ask about paid performance, funnel bottlenecks, or what to do next.
+        </div>
+      `;
+    }
+
+    function resetDashboardView() {
+      state.data = null;
+      state.chatHistory = [];
+      state.isChatLoading = false;
+      if (state.dashboardAbortController) {
+        state.dashboardAbortController.abort();
+        state.dashboardAbortController = null;
+      }
+
+      ui.loadingState.classList.add("hidden");
+      ui.errorState.classList.add("hidden");
+      ui.app.classList.add("hidden");
+      ui.dashboardShell.classList.add("hidden");
+      ui.staleBanner.classList.add("hidden");
+      ui.kpiGrid.innerHTML = "";
+      ui.redFlagsList.innerHTML = "";
+      ui.funnelGrid.innerHTML = "";
+      ui.insightGrid.innerHTML = "";
+      ui.adSetsBody.innerHTML = "";
+      ui.sourceGrid.innerHTML = "";
+      ui.chatMessages.innerHTML = getDefaultChatMarkup();
+      ui.chatQuestionInput.value = "";
+      ui.quickPrompts.innerHTML = "";
+      ui.askClaudeButton.disabled = false;
+      ui.askClaudeButton.textContent = "Ask Claude";
+      setText(ui.overallStatusBadge, "SKIPPED");
+      ui.overallStatusBadge.className = "status-badge status-skipped";
+      setText(ui.lastUpdatedValue, "Never");
+      setText(ui.freshnessValue, "n/a");
+    }
+
+    function stopInactivityTimer() {
+      if (state.inactivityTimer) {
+        clearTimeout(state.inactivityTimer);
+        state.inactivityTimer = null;
+      }
+    }
+
+    function startInactivityTimer() {
+      stopInactivityTimer();
+      if (!state.isUnlocked) return;
+      state.inactivityTimer = window.setTimeout(() => {
+        lockDashboard("Session locked after 15 minutes of inactivity.");
+      }, INACTIVITY_TIMEOUT_MS);
+    }
+
+    function resetInactivityTimer() {
+      if (!state.isUnlocked) return;
+      startInactivityTimer();
+    }
+
+    function focusLockInput() {
+      requestAnimationFrame(() => {
+        ui.lockPasswordInput.focus();
+        ui.lockPasswordInput.select();
+      });
+    }
+
+    function lockDashboard(message = "") {
+      state.isUnlocked = false;
+      stopInactivityTimer();
+      clearSessionSecrets();
+      resetDashboardView();
+      ui.lockPasswordInput.value = "";
+      showLockMessage(message);
+      ui.lockScreen.classList.remove("hidden");
+      focusLockInput();
+    }
+
+    async function unlockDashboard() {
+      const password = ui.lockPasswordInput.value;
+      ui.unlockButton.disabled = true;
+      ui.unlockButton.textContent = "Unlocking...";
+      showLockMessage("");
+
+      try {
+        const isValid = await checkPassword(password);
+        if (!isValid) {
+          ui.lockPasswordInput.value = "";
+          showLockMessage("Incorrect password. Try again.");
+          focusLockInput();
+          return;
+        }
+
+        state.isUnlocked = true;
+        sessionStorage.setItem(DASHBOARD_UNLOCK_KEY, "1");
+        ui.lockPasswordInput.value = "";
+        showLockMessage("");
+        ui.lockScreen.classList.add("hidden");
+        ui.dashboardShell.classList.remove("hidden");
+        ui.apiKeyInput.value = loadApiKeyFromSession();
+        renderQuickPrompts();
+        startInactivityTimer();
+        await loadDashboard();
+      } catch (error) {
+        showLockMessage("Could not verify password in this browser.");
+      } finally {
+        ui.unlockButton.disabled = false;
+        ui.unlockButton.textContent = "Unlock";
+      }
     }
 
     function getDataFreshnessHours(data) {
@@ -1351,7 +1598,7 @@
     }
 
     async function askClaude() {
-      if (state.isChatLoading || !state.data) return;
+      if (state.isChatLoading || !state.data || !state.isUnlocked) return;
 
       const question = ui.chatQuestionInput.value.trim();
       if (!question) {
@@ -1399,23 +1646,42 @@
     }
 
     async function loadDashboard() {
+      if (!state.isUnlocked) return;
+
+      resetDashboardView();
+      ui.dashboardShell.classList.remove("hidden");
+      ui.loadingState.classList.remove("hidden");
+      renderQuickPrompts();
+
+      const controller = new AbortController();
+      state.dashboardAbortController = controller;
+
       try {
-        const response = await fetch(DATA_URL, { cache: "no-store" });
+        const response = await fetch(DATA_URL, {
+          cache: "no-store",
+          signal: controller.signal
+        });
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
         }
         const data = await response.json();
+        if (!state.isUnlocked) return;
         renderDashboard(data);
         ui.loadingState.classList.add("hidden");
         ui.errorState.classList.add("hidden");
         ui.app.classList.remove("hidden");
       } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return;
+        }
         ui.loadingState.classList.add("hidden");
         ui.app.classList.add("hidden");
         ui.errorState.classList.remove("hidden");
         ui.errorStateText.textContent = error instanceof Error
           ? `The dashboard JSON could not be loaded right now. ${error.message}`
           : "The dashboard JSON could not be loaded right now.";
+      } finally {
+        state.dashboardAbortController = null;
       }
     }
 
@@ -1423,19 +1689,45 @@
       ui.saveSessionButton.addEventListener("click", saveApiKeyForSession);
       ui.clearSessionButton.addEventListener("click", clearApiKeySession);
       ui.askClaudeButton.addEventListener("click", askClaude);
+      ui.logoutButton.addEventListener("click", () => {
+        lockDashboard("Dashboard locked. Unlock again to continue.");
+      });
+      ui.unlockButton.addEventListener("click", unlockDashboard);
+      ui.lockPasswordInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          unlockDashboard();
+        }
+      });
       ui.chatQuestionInput.addEventListener("keydown", (event) => {
         if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
           event.preventDefault();
           askClaude();
         }
       });
+
+      ["click", "scroll", "keydown", "mousemove", "touchstart"].forEach((eventName) => {
+        window.addEventListener(eventName, resetInactivityTimer, { passive: true });
+      });
     }
 
-    function init() {
-      ui.apiKeyInput.value = loadApiKeyFromSession();
-      renderQuickPrompts();
+    async function init() {
+      resetDashboardView();
+      ui.lockScreen.classList.remove("hidden");
       attachEvents();
-      loadDashboard();
+      focusLockInput();
+
+      if (sessionStorage.getItem(DASHBOARD_UNLOCK_KEY) === "1") {
+        state.isUnlocked = true;
+        ui.lockScreen.classList.add("hidden");
+        ui.dashboardShell.classList.remove("hidden");
+        ui.apiKeyInput.value = loadApiKeyFromSession();
+        startInactivityTimer();
+        await loadDashboard();
+        return;
+      }
+
+      lockDashboard("");
     }
 
     init();
