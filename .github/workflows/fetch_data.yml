@@ -39,8 +39,24 @@ jobs:
             echo "No data changes to commit."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          tmp_json="$(mktemp)"
+          trap 'rm -f "$tmp_json"' EXIT
+          cp data/senns_data.json "$tmp_json"
+
+          git fetch origin main
+          git pull --rebase origin main
+
+          cp "$tmp_json" data/senns_data.json
           git add data/senns_data.json
+
+          if git diff --cached --quiet -- data/senns_data.json; then
+            echo "No data changes to commit after rebase."
+            exit 0
+          fi
+
           git commit -m "Update SENNS dashboard data"
-          git push
+          git push origin HEAD:main
