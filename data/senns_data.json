@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-30T13:02:39Z",
+  "last_updated": "2026-03-30T13:20:58Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,7 +23,7 @@
   "instagram_organic": {
     "followers": 24,
     "posts_this_week": 4,
-    "avg_reach": 41.25,
+    "avg_reach": 41.33,
     "avg_engagement_rate": 25.69,
     "top_posts": [
       {
@@ -79,7 +79,7 @@
     ]
   },
   "lemonsqueezy": {
-    "total_revenue_usd": 9900.0,
+    "total_revenue_usd": 99.0,
     "orders_this_month": 1,
     "orders_last_30_days": [
       {
@@ -87,9 +87,11 @@
         "identifier": "39e75eba-7b57-4e97-9f6f-d6ba3de97ee4",
         "status": "paid",
         "created_at": "2026-03-30T10:31:34.000000Z",
-        "revenue_usd": 9900.0,
+        "revenue_usd": 99.0,
         "product_name": "The SENNS System",
-        "customer_name": "Łukasz Ziółkowski"
+        "customer_name": "Łukasz Ziółkowski",
+        "quantity": 1,
+        "unit_price_usd": 99.0
       }
     ],
     "products": [
@@ -99,7 +101,7 @@
         "status": "published",
         "price_usd": 99.0,
         "orders": 1,
-        "revenue_usd": 9900.0
+        "revenue_usd": 99.0
       }
     ]
   },
@@ -123,7 +125,7 @@
     "clicks": 0,
     "lp_visits": 0,
     "opt_ins": 0,
-    "purchases_l1": 0,
+    "purchases_l1": 1,
     "consultations_l2": 0,
     "ctr": 0,
     "lp_cvr": 0,
@@ -131,9 +133,9 @@
   },
   "analysis": {
     "break_even_roas": 0.0,
-    "revenue_minus_spend": 9900.0,
+    "revenue_minus_spend": 99.0,
     "top_problem_area": "",
     "top_opportunity_area": "",
-    "claude_context_summary": "Paid media spend is $0.0 with 0 leads, 0 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $9900.0, so revenue minus spend is $9900.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%. Main problem area: No acute issue detected. Main opportunity: Keep monitoring current data mix for stronger signals."
+    "claude_context_summary": "Paid media spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%. Main problem area: No acute issue detected. Main opportunity: Keep monitoring current data mix for stronger signals."
   }
 }
