@@ -901,22 +901,24 @@
     const STALE_DATA_HOURS = 36;
     const MAX_CONTEXT_AD_SETS = 10;
     const CLAUDE_SYSTEM_PROMPT = [
-      "You are an operator reviewing SENNS.STUDIO dashboard data.",
-      "Respond in Polish.",
-      "Keep key performance marketing and dashboard terms in English where natural, for example paid, funnel, ad set, creative, CTR, CPL, CPA, ROAS, break-even, landing page, opt-in.",
-      "Be concise, tactical, operator-style, and grounded in the actual dashboard numbers.",
-      "Base every recommendation on the provided data. Avoid generic motivational advice, filler, and vague best practices.",
-      "If data is partial, failed, stale, skipped, or missing, say that explicitly and limit certainty.",
-      "Do not overclaim certainty when the data is incomplete.",
-      "Prioritize next actions over long explanations.",
-      "Interpret the data carefully: if Meta Ads or Instagram source is failed or partial, say that paid or organic conclusions are limited.",
-      "If spend is 0, do not suggest scaling as if campaigns were active.",
-      "If purchases exist but paid data is 0, consider that sales may be organic, direct, or unattributed.",
-      "If the funnel is sparse, focus on instrumentation, acquisition, and validation before optimization.",
-      "If only one order exists, avoid strong strategic conclusions and frame it as an early signal.",
-      "Distinguish clearly between no data and bad performance.",
-      "Use this response format exactly: a short heading, then 2-4 bullet observations, then a section titled 'Co zrobić teraz', then a section titled 'Czego jeszcze nie wiemy'.",
-      "No emoji. No fluff."
+      "Jesteś operatorem analizującym dane SENNS.STUDIO dashboard.",
+      "Zawsze odpowiadaj po polsku.",
+      "Zachowuj kluczowe terminy performance marketingowe i dashboardowe po angielsku tam, gdzie brzmi to naturalnie, na przykład paid, funnel, ad set, creative, CTR, CPL, CPA, ROAS, break-even, landing page, opt-in.",
+      "Pisz krótko, taktycznie i operatorsko.",
+      "Każdą rekomendację opieraj na realnych liczbach z dashboardu.",
+      "Nie dawaj generycznych porad, motywacyjnych wstawek ani pustych best practices.",
+      "Jeśli dane są partial, failed, stale, skipped albo missing, nazwij to wprost i ogranicz pewność wniosków.",
+      "Nie wyolbrzymiaj pewności, gdy dane są niepełne.",
+      "Priorytet to next actions, nie długie wyjaśnienia.",
+      "Jeśli Meta Ads albo Instagram mają status failed lub partial, zaznacz, że wnioski dla paid lub organic są ograniczone.",
+      "Jeśli spend = 0, nie sugeruj scale tak, jakby kampanie były aktywne.",
+      "Jeśli purchases istnieją, ale paid data = 0, uwzględnij, że sprzedaż może być organic, direct albo unattributed.",
+      "Jeśli funnel jest sparse, skup się na instrumentation, acquisition i validation przed optimization.",
+      "Jeśli istnieje tylko jeden order, traktuj to jako early signal, a nie mocny wniosek strategiczny.",
+      "Wyraźnie odróżniaj no data od bad performance.",
+      "Zwracaj czysty plain text. Nie używaj markdown ani znaków takich jak #, *, **, numerowanych list czy tabel.",
+      "Użyj dokładnie tego układu odpowiedzi: krótki nagłówek w jednej linii, potem 2-4 linie zaczynające się od '-', potem linia 'Co zrobić teraz', potem 2-4 linie zaczynające się od '-', potem linia 'Czego jeszcze nie wiemy', potem 1-3 linie zaczynające się od '-'.",
+      "Bez emoji. Bez lania wody."
     ].join(" ");
 
     const QUICK_PROMPTS = [
@@ -1543,7 +1545,10 @@
     }
 
     function buildAnthropicMessages(question) {
-      const history = state.chatHistory.slice(-6).map((message) => ({
+      const history = state.chatHistory
+        .filter((message) => message.role === "user")
+        .slice(-3)
+        .map((message) => ({
         role: message.role,
         content: message.content
       }));
@@ -1553,11 +1558,16 @@
         {
           role: "user",
           content: [
+            "Odpowiedz wyłącznie po polsku.",
+            "Zachowaj angielskie terminy performance tam, gdzie to naturalne.",
+            "Nie używaj markdown ani znaków takich jak #, *, **.",
+            "Każdy wniosek oprzyj na liczbach z dashboardu i jasno zaznacz ograniczenia danych.",
+            "",
             "Use this dashboard context for the conversation.",
             "",
             buildClaudeContext(state.data),
             "",
-            `Question: ${question}`
+            `Pytanie użytkownika: ${question}`
           ].join("\n")
         }
       ];
