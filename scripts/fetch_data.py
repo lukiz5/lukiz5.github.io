@@ -81,6 +81,22 @@ def safe_round(value: float, digits: int = 2) -> float:
     return round(float(value), digits)
 
 
+def parse_currency_string(value: Any) -> float | None:
+    if value in (None, ""):
+        return None
+    if isinstance(value, (int, float)):
+        return safe_float(value)
+
+    text = str(value).strip()
+    if not text:
+        return None
+
+    cleaned = "".join(char for char in text if char.isdigit() or char in {".", "-"})
+    if not cleaned or cleaned in {".", "-", "-."}:
+        return None
+    return safe_float(cleaned)
+
+
 def parse_datetime(value: Any) -> datetime | None:
     if not value or not isinstance(value, str):
         return None
@@ -116,6 +132,64 @@ def nested_dict_value(mapping: dict[str, Any], *keys: str) -> Any:
             return None
         current = current.get(key)
     return current
+
+
+def normalize_lemonsqueezy_amount(
+    raw_value: Any,
+    *,
+    formatted_value: Any = None,
+    assume_cents: bool = False,
+) -> float:
+    formatted_amount = parse_currency_string(formatted_value)
+    raw_text = str(raw_value).strip() if raw_value not in (None, "") else ""
+    raw_amount = parse_currency_string(raw_value)
+
+    if formatted_amount is not None and raw_amount is None:
+        return safe_round(formatted_amount)
+    if raw_amount is None:
+        return 0.0
+
+    raw_looks_decimal = "." in raw_text
+    direct_amount = safe_round(raw_amount)
+    cents_amount = safe_round(raw_amount / 100.0)
+
+    if formatted_amount is not None:
+        direct_diff = abs(direct_amount - formatted_amount)
+        cents_diff = abs(cents_amount - formatted_amount)
+        if cents_diff < direct_diff:
+            return cents_amount
+        if direct_diff < cents_diff:
+            return direct_amount
+
+    if assume_cents and not raw_looks_decimal:
+        return cents_amount
+    return direct_amount
+
+
+def build_lemonsqueezy_amount_warning(
+    *,
+    context: str,
+    normalized_amount: float,
+    formatted_amount: float | None,
+    unit_price: float,
+    quantity: int,
+) -> str | None:
+    if formatted_amount is not None and formatted_amount > 0:
+        ratio = normalized_amount / formatted_amount if formatted_amount else 1
+        if ratio >= 50:
+            return (
+                f"LemonSqueezy {context} looks suspiciously high after normalization "
+                f"(${safe_round(normalized_amount)} vs formatted ${safe_round(formatted_amount)})."
+            )
+
+    expected_total = unit_price * max(quantity, 1)
+    if expected_total > 0 and normalized_amount > expected_total * 20:
+        return (
+            f"LemonSqueezy {context} looks unusually high versus line price "
+            f"(${safe_round(normalized_amount)} vs expected about ${safe_round(expected_total)})."
+        )
+
+    return None
 
 
 def default_meta_ads() -> dict[str, Any]:
@@ -726,25 +800,48 @@ def fetch_instagram_organic(
     return section, status, errors, warnings, True
 
 
-def parse_lemonsqueezy_order(order: dict[str, Any]) -> dict[str, Any]:
+def parse_lemonsqueezy_order(order: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
     attributes = order.get("attributes", {}) if isinstance(order, dict) else {}
     first_item = attributes.get("first_order_item", {}) if isinstance(attributes.get("first_order_item"), dict) else {}
-    revenue = safe_float(
-        attributes.get("total_usd")
-        or attributes.get("subtotal_usd")
-        or first_item.get("price")
-        or 0
+    warnings: list[str] = []
+
+    unit_price = normalize_lemonsqueezy_amount(
+        first_item.get("price"),
+        formatted_value=first_item.get("price_formatted"),
+        assume_cents=True,
     )
+    quantity = safe_int(first_item.get("quantity"), 1) or 1
+    revenue = normalize_lemonsqueezy_amount(
+        attributes.get("total_usd") or attributes.get("subtotal_usd") or first_item.get("price") or 0,
+        formatted_value=attributes.get("total_formatted") or attributes.get("subtotal_formatted") or first_item.get("price_formatted"),
+        assume_cents=True,
+    )
+    formatted_total = parse_currency_string(attributes.get("total_formatted") or attributes.get("subtotal_formatted"))
+    sanity_warning = build_lemonsqueezy_amount_warning(
+        context=f"order {order.get('id', '') or attributes.get('identifier', '') or 'unknown'}",
+        normalized_amount=revenue,
+        formatted_amount=formatted_total,
+        unit_price=unit_price,
+        quantity=quantity,
+    )
+    if sanity_warning:
+        warnings.append(sanity_warning)
+
     created_at = attributes.get("created_at") or attributes.get("createdAt") or ""
-    return {
-        "id": order.get("id", ""),
-        "identifier": attributes.get("identifier", ""),
-        "status": attributes.get("status", ""),
-        "created_at": created_at,
-        "revenue_usd": safe_round(revenue),
-        "product_name": first_item.get("product_name") or attributes.get("product_name") or "",
-        "customer_name": attributes.get("user_name") or "",
-    }
+    return (
+        {
+            "id": order.get("id", ""),
+            "identifier": attributes.get("identifier", ""),
+            "status": attributes.get("status", ""),
+            "created_at": created_at,
+            "revenue_usd": safe_round(revenue),
+            "product_name": first_item.get("product_name") or attributes.get("product_name") or "",
+            "customer_name": attributes.get("user_name") or "",
+            "quantity": quantity,
+            "unit_price_usd": safe_round(unit_price),
+        },
+        warnings,
+    )
 
 
 def fetch_lemonsqueezy(
@@ -794,8 +891,9 @@ def fetch_lemonsqueezy(
         for order in orders:
             if not isinstance(order, dict):
                 continue
-            parsed = parse_lemonsqueezy_order(order)
+            parsed, order_warnings = parse_lemonsqueezy_order(order)
             parsed_orders.append(parsed)
+            warnings.extend(order_warnings)
             revenue_total += safe_float(parsed.get("revenue_usd"))
             created_at = parse_datetime(parsed.get("created_at"))
             if created_at and created_at >= month_start:
@@ -835,18 +933,33 @@ def fetch_lemonsqueezy(
                 continue
             attributes = product.get("attributes", {})
             name = attributes.get("name", "")
+            normalized_price = normalize_lemonsqueezy_amount(
+                attributes.get("price"),
+                formatted_value=attributes.get("price_formatted"),
+                assume_cents=True,
+            )
             parsed_products.append(
                 {
                     "id": product.get("id", ""),
                     "name": name,
                     "status": attributes.get("status", ""),
-                    "price_usd": safe_round(safe_float(attributes.get("price")) / 100.0),
+                    "price_usd": safe_round(normalized_price),
                     "orders": orders_by_product.get(name, 0),
                     "revenue_usd": safe_round(revenue_by_product.get(name, 0.0)),
                 }
             )
         section["products"] = parsed_products
         refreshed = True
+
+        for product in parsed_products:
+            price_usd = safe_float(product.get("price_usd"))
+            orders_count = safe_int(product.get("orders"))
+            revenue_usd = safe_float(product.get("revenue_usd"))
+            if price_usd > 0 and orders_count > 0 and revenue_usd > price_usd * orders_count * 20:
+                warnings.append(
+                    f"LemonSqueezy revenue for product '{product.get('name', 'Unknown')}' looks unusually high "
+                    f"(${safe_round(revenue_usd)} for {orders_count} orders at ${safe_round(price_usd)})."
+                )
 
     if not section.get("products") and parsed_orders:
         fallback_products: dict[str, dict[str, Any]] = {}
@@ -1053,29 +1166,44 @@ def fetch_mailerlite(
 
 def calculate_funnel(
     meta_ads: dict[str, Any],
+    lemonsqueezy: dict[str, Any],
     previous_funnel: dict[str, Any],
     meta_status: str,
+    lemonsqueezy_status: str,
 ) -> dict[str, Any]:
-    if meta_status in {"failed", "skipped"}:
-        return deep_copy_dict(previous_funnel)
+    funnel = deep_copy_dict(previous_funnel)
 
-    impressions = sum(safe_int(ad_set.get("impressions")) for ad_set in meta_ads.get("ad_sets", []))
-    clicks = sum(safe_int(ad_set.get("clicks")) for ad_set in meta_ads.get("ad_sets", []))
-    opt_ins = safe_int(meta_ads.get("total_leads"))
-    purchases = safe_int(meta_ads.get("total_purchases"))
+    if meta_status not in {"failed", "skipped"}:
+        impressions = sum(safe_int(ad_set.get("impressions")) for ad_set in meta_ads.get("ad_sets", []))
+        clicks = sum(safe_int(ad_set.get("clicks")) for ad_set in meta_ads.get("ad_sets", []))
+        opt_ins = safe_int(meta_ads.get("total_leads"))
+        funnel["impressions"] = impressions
+        funnel["clicks"] = clicks
+        funnel["lp_visits"] = clicks
+        funnel["opt_ins"] = opt_ins
+        funnel["ctr"] = safe_round((clicks / impressions) * 100, 2) if impressions > 0 else 0
+        funnel["lp_cvr"] = safe_round((opt_ins / clicks) * 100, 2) if clicks > 0 else 0
+
+    paid_purchases = safe_int(meta_ads.get("total_purchases")) if meta_status not in {"failed", "skipped"} else 0
+    revenue_purchases = 0
+    if lemonsqueezy_status not in {"failed", "skipped"}:
+        recent_orders = lemonsqueezy.get("orders_last_30_days", [])
+        revenue_purchases = len(recent_orders) if isinstance(recent_orders, list) and recent_orders else safe_int(
+            lemonsqueezy.get("orders_this_month")
+        )
+
+    if paid_purchases > 0 or revenue_purchases > 0:
+        funnel["purchases_l1"] = max(paid_purchases, revenue_purchases)
+    elif meta_status in {"failed", "skipped"} and lemonsqueezy_status in {"failed", "skipped"}:
+        funnel["purchases_l1"] = safe_int(previous_funnel.get("purchases_l1"))
+    else:
+        funnel["purchases_l1"] = 0
+
+    opt_ins = safe_int(funnel.get("opt_ins"))
+    purchases = safe_int(funnel.get("purchases_l1"))
     consultations = safe_int(previous_funnel.get("consultations_l2"))
-
-    funnel = {
-        "impressions": impressions,
-        "clicks": clicks,
-        "lp_visits": clicks,
-        "opt_ins": opt_ins,
-        "purchases_l1": purchases,
-        "consultations_l2": consultations,
-        "ctr": safe_round((clicks / impressions) * 100, 2) if impressions > 0 else 0,
-        "lp_cvr": safe_round((opt_ins / clicks) * 100, 2) if clicks > 0 else 0,
-        "email_cvr": safe_round((purchases / opt_ins) * 100, 2) if opt_ins > 0 else 0,
-    }
+    funnel["consultations_l2"] = consultations
+    funnel["email_cvr"] = safe_round((purchases / opt_ins) * 100, 2) if opt_ins > 0 else 0
     return funnel
 
 
@@ -1089,6 +1217,7 @@ def calculate_analysis(
     spend = safe_float(meta_ads.get("total_spend"))
     leads = safe_int(meta_ads.get("total_leads"))
     avg_cpl = safe_float(meta_ads.get("avg_cpl"))
+    level1_purchases = safe_int(funnel.get("purchases_l1"))
 
     revenue_minus_spend = safe_round(revenue - spend)
     break_even_roas = safe_round(spend / revenue, 4) if revenue > 0 else 0
@@ -1103,6 +1232,7 @@ def calculate_analysis(
             spend > 0,
             revenue > 0,
             leads > 0,
+            level1_purchases > 0,
             safe_int(mailerlite.get("total_subscribers")) > 0,
             safe_int(funnel.get("clicks")) > 0,
             safe_int(funnel.get("opt_ins")) > 0,
@@ -1136,7 +1266,7 @@ def calculate_analysis(
         top_problem_area = "Mailing list not growing"
 
     top_opportunity_area = ""
-    if safe_float(funnel.get("email_cvr")) >= 5 and safe_int(funnel.get("purchases_l1")) > 0:
+    if safe_float(funnel.get("email_cvr")) >= 5 and level1_purchases > 0:
         top_opportunity_area = "Strong email conversion"
     elif revenue > spend and spend > 0:
         top_opportunity_area = "Low spend with positive revenue"
@@ -1145,7 +1275,7 @@ def calculate_analysis(
 
     summary = (
         f"Paid media spend is ${safe_round(spend)} with {leads} leads, "
-        f"{safe_int(meta_ads.get('total_purchases'))} purchases, "
+        f"{level1_purchases} level-1 purchases, "
         f"and blended ROAS {safe_round(safe_float(meta_ads.get('blended_roas')), 2)}. "
         f"LemonSqueezy revenue is ${safe_round(revenue)}, so revenue minus spend is ${revenue_minus_spend}. "
         f"MailerLite has {safe_int(mailerlite.get('total_subscribers'))} subscribers and "
@@ -1195,7 +1325,13 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
     refreshed_sources += int(lemonsqueezy_refreshed)
     refreshed_sources += int(mailerlite_refreshed)
 
-    funnel = calculate_funnel(meta_ads, ensure_section(previous_data, "funnel", default_funnel), meta_status)
+    funnel = calculate_funnel(
+        meta_ads,
+        lemonsqueezy,
+        ensure_section(previous_data, "funnel", default_funnel),
+        meta_status,
+        lemonsqueezy_status,
+    )
     analysis = calculate_analysis(meta_ads, lemonsqueezy, mailerlite, funnel)
 
     sources_status = default_sources_status()
