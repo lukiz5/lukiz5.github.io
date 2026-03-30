@@ -126,4 +126,12 @@
     });
   });
 
+  // --- Meta Contact tracking for direct service-intent CTAs ---
+  document.addEventListener('click', function (event) {
+    var contactTrigger = event.target.closest('[data-meta-contact="true"]');
+    if (!contactTrigger || typeof window.fbq !== 'function') return;
+
+    fbq('track', 'Contact');
+  });
+
 })();
