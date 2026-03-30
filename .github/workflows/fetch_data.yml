@@ -47,6 +47,9 @@ jobs:
           trap 'rm -f "$tmp_json"' EXIT
           cp data/senns_data.json "$tmp_json"
 
+          # Rebase against the latest main without carrying the generated JSON
+          # as a local worktree change.
+          git restore --staged --worktree data/senns_data.json
           git fetch origin main
           git pull --rebase origin main
 
