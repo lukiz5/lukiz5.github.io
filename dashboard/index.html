@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENNS Dashboard</title>
+  <style>
+    :root {
+      --bg: #090a0b;
+      --bg-soft: #121416;
+      --panel: rgba(18, 20, 22, 0.92);
+      --panel-strong: rgba(14, 16, 18, 0.96);
+      --panel-border: rgba(177, 138, 82, 0.18);
+      --panel-muted: rgba(255, 255, 255, 0.04);
+      --text: #f4efe6;
+      --muted: #97a0a7;
+      --muted-strong: #c8c1b6;
+      --accent: #b18a52;
+      --accent-soft: rgba(177, 138, 82, 0.15);
+      --ok: #799771;
+      --warn: #c49d5c;
+      --danger: #c46e68;
+      --info: #6d8799;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at top left, rgba(177, 138, 82, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(109, 135, 153, 0.12), transparent 24%),
+        linear-gradient(180deg, #0c0d0e 0%, #090a0b 100%);
+      color: var(--text);
+    }
+
+    .page-shell {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero,
+    .panel {
+      background: linear-gradient(180deg, rgba(22, 24, 27, 0.96) 0%, rgba(14, 15, 17, 0.96) 100%);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(177, 138, 82, 0.08), transparent 40%),
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.06), transparent 22%);
+      pointer-events: none;
+    }
+
+    .hero-top,
+    .hero-meta,
+    .toolbar,
+    .chat-actions,
+    .quick-prompts,
+    .table-scroll,
+    .source-grid,
+    .funnel-grid,
+    .insight-grid,
+    .kpi-grid,
+    .red-flag-list,
+    .chat-messages {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.98;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--muted-strong);
+      margin-bottom: 16px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 560px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .meta-chip,
+    .status-badge,
+    .decision-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.85rem;
+      border: 1px solid transparent;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .meta-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
+      color: var(--muted-strong);
+    }
+
+    .meta-chip strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .main-column,
+    .chat-column {
+      display: grid;
+      gap: 22px;
+    }
+
+    .chat-column {
+      position: sticky;
+      top: 20px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .panel-subtitle {
+      color: var(--muted);
+      font-size: 0.94rem;
+      max-width: 560px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card,
+    .funnel-card,
+    .source-card,
+    .insight-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+
+    .kpi-label,
+    .funnel-label,
+    .source-label,
+    .insight-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value,
+    .funnel-value,
+    .insight-value {
+      font-size: clamp(1.15rem, 2vw, 1.7rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .kpi-footnote,
+    .funnel-footnote,
+    .insight-footnote {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .red-flag-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .red-flag-item,
+    .empty-state,
+    .banner {
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 16px;
+      color: var(--muted-strong);
+      line-height: 1.55;
+    }
+
+    .red-flag-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .red-flag-pill {
+      margin-top: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 18px rgba(196, 110, 104, 0.7);
+      flex: 0 0 auto;
+    }
+
+    .banner {
+      margin-bottom: 22px;
+      background: rgba(196, 157, 92, 0.12);
+      border-color: rgba(196, 157, 92, 0.35);
+      color: #eed8b1;
+    }
+
+    .funnel-grid,
+    .source-grid,
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .source-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: middle;
+      font-size: 0.92rem;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+      background: rgba(255, 255, 255, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td {
+      color: var(--muted-strong);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .name-cell {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .chat-panel {
+      padding: 22px;
+      min-height: 72vh;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chat-description {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.94rem;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field-label {
+      color: var(--muted-strong);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    input,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 120ms ease, background 120ms ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(177, 138, 82, 0.55);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    textarea {
+      min-height: 128px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: progress;
+    }
+
+    .button-primary {
+      background: linear-gradient(180deg, #c19a61 0%, #9a7543 100%);
+      color: #17120d;
+      font-weight: 700;
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chat-actions,
+    .quick-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quick-button {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted-strong);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding-inline: 14px;
+    }
+
+    .chat-messages {
+      flex: 1 1 auto;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      max-height: 48vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .chat-message {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: var(--muted-strong);
+    }
+
+    .chat-message.user {
+      background: rgba(177, 138, 82, 0.12);
+      border-color: rgba(177, 138, 82, 0.22);
+      color: var(--text);
+    }
+
+    .chat-message.assistant {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .chat-message.error {
+      background: rgba(196, 110, 104, 0.12);
+      border-color: rgba(196, 110, 104, 0.28);
+      color: #f1c7c3;
+    }
+
+    .chat-meta {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status-ok {
+      background: rgba(121, 151, 113, 0.12);
+      color: #cfe2cb;
+      border-color: rgba(121, 151, 113, 0.28);
+    }
+
+    .status-partial {
+      background: rgba(196, 157, 92, 0.14);
+      color: #efd7ad;
+      border-color: rgba(196, 157, 92, 0.34);
+    }
+
+    .status-failed {
+      background: rgba(196, 110, 104, 0.14);
+      color: #f2cbc7;
+      border-color: rgba(196, 110, 104, 0.32);
+    }
+
+    .status-skipped {
+      background: rgba(109, 135, 153, 0.14);
+      color: #d2dee6;
+      border-color: rgba(109, 135, 153, 0.28);
+    }
+
+    .decision-scale {
+      background: rgba(121, 151, 113, 0.12);
+      color: #d6ebd1;
+      border-color: rgba(121, 151, 113, 0.28);
+    }
+
+    .decision-optimize,
+    .decision-learning,
+    .decision-monitor,
+    .decision-new-creative {
+      background: rgba(109, 135, 153, 0.12);
+      color: #d5e2ea;
+      border-color: rgba(109, 135, 153, 0.28);
+    }
+
+    .decision-pause,
+    .decision-paused {
+      background: rgba(196, 110, 104, 0.12);
+      color: #f1cbc7;
+      border-color: rgba(196, 110, 104, 0.28);
+    }
+
+    .decision-no-data {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted-strong);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .loading-screen,
+    .error-screen {
+      min-height: 62vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 22px;
+    }
+
+    .loading-card,
+    .error-card {
+      max-width: 520px;
+      padding: 32px;
+    }
+
+    .loading-card h2,
+    .error-card h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      text-transform: none;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .loading-card p,
+    .error-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1180px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-column {
+        position: static;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .funnel-grid,
+      .insight-grid,
+      .source-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        width: min(100% - 20px, 100%);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .panel,
+      .chat-panel {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .hero-top,
+      .panel-header {
+        flex-direction: column;
+      }
+
+      .kpi-grid,
+      .funnel-grid,
+      .insight-grid,
+      .source-grid {
+        grid-template-columns: 1fr;
+      }
+
+      th,
+      td {
+        padding: 12px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div id="loadingState" class="loading-screen">
+      <div class="hero loading-card">
+        <h2>Loading dashboard...</h2>
+        <p>Pulling SENNS.STUDIO paid, organic, revenue, and funnel data.</p>
+      </div>
+    </div>
+
+    <div id="errorState" class="error-screen hidden">
+      <div class="hero error-card">
+        <h2>Could not load dashboard data</h2>
+        <p id="errorStateText">The dashboard JSON could not be loaded right now.</p>
+      </div>
+    </div>
+
+    <main id="app" class="hidden">
+      <section class="hero">
+        <div class="hero-top">
+          <div class="hero-copy">
+            <h1>SENNS Dashboard</h1>
+            <p>Paid + organic + revenue monitoring</p>
+          </div>
+          <div id="overallStatusBadge" class="status-badge status-skipped">SKIPPED</div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-chip">Last updated <strong id="lastUpdatedValue">Never</strong></div>
+          <div class="meta-chip">Freshness <strong id="freshnessValue">n/a</strong></div>
+          <div class="meta-chip">Mode <strong>Operational snapshot</strong></div>
+        </div>
+      </section>
+
+      <div id="staleBanner" class="banner hidden">Data may be stale</div>
+
+      <div class="dashboard-layout">
+        <div class="main-column">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>KPI Overview</h2>
+                <p class="panel-subtitle">Core spend, acquisition, and revenue numbers in one read.</p>
+              </div>
+            </div>
+            <div id="kpiGrid" class="kpi-grid"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Red Flags</h2>
+                <p class="panel-subtitle">Critical issues from sources, freshness, funnel, and ad set execution.</p>
+              </div>
+            </div>
+            <div id="redFlagsList" class="red-flag-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Funnel</h2>
+                <p class="panel-subtitle">Topline movement from impression to purchase and consultation.</p>
+              </div>
+            </div>
+            <div id="funnelGrid" class="funnel-grid"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Top Insights</h2>
+                <p class="panel-subtitle">Operator summary of what is broken, what is promising, and where margin sits.</p>
+              </div>
+            </div>
+            <div id="insightGrid" class="insight-grid"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Ad Sets</h2>
+                <p class="panel-subtitle">Decision framework aligned to SENNS paid strategy.</p>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Spend</th>
+                    <th>Impressions</th>
+                    <th>Clicks</th>
+                    <th>Leads</th>
+                    <th>Purchases</th>
+                    <th>CPL</th>
+                    <th>CPA</th>
+                    <th>Frequency</th>
+                    <th>Decision</th>
+                  </tr>
+                </thead>
+                <tbody id="adSetsBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Data Sources Health</h2>
+                <p class="panel-subtitle">Source-level status across paid, organic, revenue, and email layers.</p>
+              </div>
+            </div>
+            <div id="sourceGrid" class="source-grid"></div>
+          </section>
+        </div>
+
+        <aside class="chat-column">
+          <section class="panel chat-panel">
+            <div>
+              <h2>Claude Chat</h2>
+              <p class="chat-description">Ask for next actions, bottlenecks, and campaign decisions using the current dashboard snapshot.</p>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="apiKeyInput">Anthropic API key</label>
+              <input id="apiKeyInput" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="chat-actions">
+              <button id="saveSessionButton" class="button-secondary" type="button">Save for session</button>
+              <button id="clearSessionButton" class="button-secondary" type="button">Clear session</button>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="chatQuestionInput">Question</label>
+              <textarea id="chatQuestionInput" placeholder="Ask Claude what changed, what to do next, or where performance is leaking."></textarea>
+            </div>
+
+            <div class="quick-prompts" id="quickPrompts"></div>
+
+            <div class="chat-actions">
+              <button id="askClaudeButton" class="button-primary" type="button">Ask Claude</button>
+            </div>
+
+            <div id="chatMessages" class="chat-messages">
+              <div class="chat-message assistant">
+                <span class="chat-meta">Claude</span>
+                Add an Anthropic API key for this session, then ask about paid performance, funnel bottlenecks, or what to do next.
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const DATA_URL = "/data/senns_data.json";
+    const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
+    const ANTHROPIC_API_VERSION = "2023-06-01";
+    const ANTHROPIC_MODEL = "claude-sonnet-4-5";
+    const SESSION_STORAGE_KEY = "senns_dashboard_anthropic_api_key";
+    const STALE_DATA_HOURS = 36;
+    const MAX_CONTEXT_AD_SETS = 10;
+    const CLAUDE_SYSTEM_PROMPT = [
+      "You are an operator reviewing SENNS.STUDIO dashboard data.",
+      "Be concise, strategic, and action-oriented.",
+      "Use the dashboard numbers directly in your answer.",
+      "If the data is partial, failed, skipped, or stale, say so clearly.",
+      "Focus on what to do next across paid media, funnel, and revenue.",
+      "Avoid generic advice and avoid repeating the prompt.",
+      "Answer like an experienced operator auditing campaigns, funnel conversion, and revenue health."
+    ].join(" ");
+
+    const QUICK_PROMPTS = [
+      { label: "This week", prompt: "What happened this week and what should I focus on next?" },
+      { label: "Ad sets", prompt: "Which ad sets should I scale, optimize, pause, or refresh creatively?" },
+      { label: "Funnel", prompt: "Where is the biggest funnel bottleneck right now?" },
+      { label: "Break-even", prompt: "How close are we to break-even and what should improve first?" },
+      { label: "Next creative", prompt: "What creative or angle should I test next based on this data?" }
+    ];
+
+    const state = {
+      data: null,
+      chatHistory: [],
+      isChatLoading: false
+    };
+
+    const ui = {
+      loadingState: document.getElementById("loadingState"),
+      errorState: document.getElementById("errorState"),
+      errorStateText: document.getElementById("errorStateText"),
+      app: document.getElementById("app"),
+      overallStatusBadge: document.getElementById("overallStatusBadge"),
+      lastUpdatedValue: document.getElementById("lastUpdatedValue"),
+      freshnessValue: document.getElementById("freshnessValue"),
+      staleBanner: document.getElementById("staleBanner"),
+      kpiGrid: document.getElementById("kpiGrid"),
+      redFlagsList: document.getElementById("redFlagsList"),
+      funnelGrid: document.getElementById("funnelGrid"),
+      insightGrid: document.getElementById("insightGrid"),
+      adSetsBody: document.getElementById("adSetsBody"),
+      sourceGrid: document.getElementById("sourceGrid"),
+      apiKeyInput: document.getElementById("apiKeyInput"),
+      saveSessionButton: document.getElementById("saveSessionButton"),
+      clearSessionButton: document.getElementById("clearSessionButton"),
+      chatQuestionInput: document.getElementById("chatQuestionInput"),
+      askClaudeButton: document.getElementById("askClaudeButton"),
+      chatMessages: document.getElementById("chatMessages"),
+      quickPrompts: document.getElementById("quickPrompts")
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatCurrencyPLN(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return "n/a";
+      return new Intl.NumberFormat("pl-PL", {
+        style: "currency",
+        currency: "PLN",
+        maximumFractionDigits: 0
+      }).format(number);
+    }
+
+    function formatCurrencyUSD(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return "n/a";
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: number % 1 === 0 ? 0 : 2
+      }).format(number);
+    }
+
+    function formatNumber(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return "n/a";
+      return new Intl.NumberFormat("en-US", {
+        maximumFractionDigits: number % 1 === 0 ? 0 : 2
+      }).format(number);
+    }
+
+    function formatPercent(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return "n/a";
+      return `${number.toFixed(number >= 10 ? 1 : 2)}%`;
+    }
+
+    function formatDateTime(value) {
+      if (!value || value === "never") return "Never";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Unknown";
+      return new Intl.DateTimeFormat("en-GB", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }).format(date);
+    }
+
+    function getStatusClass(status) {
+      switch ((status || "").toLowerCase()) {
+        case "ok":
+        case "active":
+          return "status-ok";
+        case "partial":
+          return "status-partial";
+        case "failed":
+        case "paused":
+          return "status-failed";
+        case "skipped":
+        default:
+          return "status-skipped";
+      }
+    }
+
+    function getDecisionClass(decision) {
+      switch ((decision || "").toUpperCase()) {
+        case "SCALE":
+          return "decision-scale";
+        case "PAUSE":
+        case "PAUSED":
+          return "decision-pause";
+        case "OPTIMIZE":
+          return "decision-optimize";
+        case "NEW_CREATIVE":
+          return "decision-new-creative";
+        case "LEARNING":
+          return "decision-learning";
+        case "MONITOR":
+          return "decision-monitor";
+        case "NO_DATA":
+        default:
+          return "decision-no-data";
+      }
+    }
+
+    function getSourceStatus(data, sourceName) {
+      return data?.sources_status?.[sourceName] || "skipped";
+    }
+
+    function saveApiKeyForSession() {
+      const apiKey = ui.apiKeyInput.value.trim();
+      if (!apiKey) {
+        appendChatMessage("error", "System", "Enter an Anthropic API key before saving it for this session.");
+        return;
+      }
+      sessionStorage.setItem(SESSION_STORAGE_KEY, apiKey);
+      appendChatMessage("assistant", "Claude", "API key saved for this browser session only.");
+    }
+
+    function loadApiKeyFromSession() {
+      return sessionStorage.getItem(SESSION_STORAGE_KEY) || "";
+    }
+
+    function clearApiKeySession() {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      ui.apiKeyInput.value = "";
+      appendChatMessage("assistant", "Claude", "Session API key cleared.");
+    }
+
+    function getDataFreshnessHours(data) {
+      const freshness = Number(data?.data_freshness_hours);
+      return Number.isFinite(freshness) ? freshness : null;
+    }
+
+    function buildClaudeContext(data) {
+      const metaAds = data?.meta_ads || {};
+      const lemonsqueezy = data?.lemonsqueezy || {};
+      const funnel = data?.funnel || {};
+      const analysis = data?.analysis || {};
+      const sourceStatus = data?.sources_status || {};
+      const adSets = Array.isArray(metaAds.ad_sets) ? [...metaAds.ad_sets] : [];
+
+      const topAdSets = adSets
+        .sort((left, right) => (Number(right?.spend || 0) - Number(left?.spend || 0)))
+        .slice(0, MAX_CONTEXT_AD_SETS)
+        .map((adSet) => {
+          return [
+            `- ${adSet?.name || "Unnamed ad set"}`,
+            `status ${adSet?.status || "unknown"}`,
+            `spend ${formatCurrencyUSD(adSet?.spend || 0)}`,
+            `impressions ${formatNumber(adSet?.impressions || 0)}`,
+            `clicks ${formatNumber(adSet?.clicks || 0)}`,
+            `leads ${formatNumber(adSet?.leads || 0)}`,
+            `purchases ${formatNumber(adSet?.purchases || 0)}`,
+            `CPL ${formatCurrencyUSD(adSet?.cpl || 0)}`,
+            `CPA ${formatCurrencyUSD(adSet?.cpa || 0)}`,
+            `frequency ${formatNumber(adSet?.frequency || 0)}`,
+            `decision ${adSet?.decision || "NO_DATA"}`
+          ].join(" | ");
+        });
+
+      return [
+        "SENNS.STUDIO dashboard context",
+        `Last updated: ${data?.last_updated || "never"}`,
+        `Overall status: ${sourceStatus.overall || "unknown"}`,
+        `Data freshness hours: ${data?.data_freshness_hours ?? "n/a"}`,
+        "",
+        "Core KPI",
+        `- Spend: ${metaAds.total_spend ?? 0} USD`,
+        `- Leads: ${metaAds.total_leads ?? 0}`,
+        `- Purchases: ${metaAds.total_purchases ?? 0}`,
+        `- Revenue: ${lemonsqueezy.total_revenue_usd ?? 0} USD`,
+        `- Avg CPL: ${metaAds.avg_cpl ?? 0} USD`,
+        `- Avg CPA: ${metaAds.avg_cpa ?? 0} USD`,
+        `- Blended ROAS: ${metaAds.blended_roas ?? 0}`,
+        `- Revenue minus spend: ${analysis.revenue_minus_spend ?? 0} USD`,
+        "",
+        "Funnel",
+        `- Impressions: ${funnel.impressions ?? 0}`,
+        `- Clicks: ${funnel.clicks ?? 0}`,
+        `- Landing page visits: ${funnel.lp_visits ?? 0}`,
+        `- Opt-ins: ${funnel.opt_ins ?? 0}`,
+        `- Purchases L1: ${funnel.purchases_l1 ?? 0}`,
+        `- Consultations L2: ${funnel.consultations_l2 ?? 0}`,
+        `- CTR: ${funnel.ctr ?? 0}%`,
+        `- LP CVR: ${funnel.lp_cvr ?? 0}%`,
+        `- Email CVR: ${funnel.email_cvr ?? 0}%`,
+        "",
+        "Top insights",
+        `- Problem area: ${analysis.top_problem_area || "none"}`,
+        `- Opportunity area: ${analysis.top_opportunity_area || "none"}`,
+        `- Break-even ROAS: ${analysis.break_even_roas ?? 0}`,
+        analysis.claude_context_summary ? `- Summary: ${analysis.claude_context_summary}` : "",
+        "",
+        "Source health",
+        `- Meta Ads: ${sourceStatus.meta_ads || "unknown"}`,
+        `- Instagram Organic: ${sourceStatus.instagram_organic || "unknown"}`,
+        `- LemonSqueezy: ${sourceStatus.lemonsqueezy || "unknown"}`,
+        `- MailerLite: ${sourceStatus.mailerlite || "unknown"}`,
+        "",
+        `Errors: ${Array.isArray(data?.errors) && data.errors.length ? data.errors.join(" | ") : "none"}`,
+        `Warnings: ${Array.isArray(data?.warnings) && data.warnings.length ? data.warnings.join(" | ") : "none"}`,
+        "",
+        "Top ad sets",
+        topAdSets.length ? topAdSets.join("\n") : "- No ad set data available"
+      ].filter(Boolean).join("\n");
+    }
+
+    function buildRedFlags(data) {
+      const flags = [];
+      const seen = new Set();
+      const pushFlag = (message) => {
+        const normalized = String(message || "").trim();
+        if (!normalized || seen.has(normalized)) return;
+        seen.add(normalized);
+        flags.push(normalized);
+      };
+
+      const freshness = getDataFreshnessHours(data);
+      if (freshness !== null && freshness > STALE_DATA_HOURS) {
+        pushFlag(`Data may be stale (${formatNumber(freshness)}h old).`);
+      }
+
+      const sources = data?.sources_status || {};
+      Object.entries(sources).forEach(([source, status]) => {
+        if (source === "overall") return;
+        if (status === "failed") pushFlag(`${source.replace("_", " ")} source failed.`);
+        if (status === "partial") pushFlag(`${source.replace("_", " ")} source is partial.`);
+      });
+
+      (Array.isArray(data?.errors) ? data.errors : []).forEach(pushFlag);
+      (Array.isArray(data?.warnings) ? data.warnings : []).forEach(pushFlag);
+
+      const metaAds = data?.meta_ads || {};
+      const funnel = data?.funnel || {};
+      const adSets = Array.isArray(metaAds.ad_sets) ? metaAds.ad_sets : [];
+
+      if (Number(metaAds.total_spend || 0) > 0 && Number(metaAds.total_leads || 0) === 0) {
+        pushFlag("No leads from paid traffic.");
+      }
+
+      if (Number(funnel.lp_visits || 0) > 0 && Number(funnel.lp_cvr || 0) < 15) {
+        pushFlag("Low landing page conversion.");
+      }
+
+      adSets.forEach((adSet) => {
+        const isActive = String(adSet?.status || "").toUpperCase() === "ACTIVE";
+        const cpl = Number(adSet?.cpl || 0);
+        const frequency = Number(adSet?.frequency || 0);
+        if (isActive && cpl > 25) {
+          pushFlag(`High CPL on active ad set: ${adSet?.name || "Unnamed"}.`);
+        }
+        if (frequency > 3) {
+          pushFlag(`Frequency above 3.0 on ${adSet?.name || "Unnamed"}.`);
+        }
+        if (String(adSet?.decision || "").toUpperCase() === "PAUSE") {
+          pushFlag(`Decision framework recommends PAUSE for ${adSet?.name || "Unnamed"}.`);
+        }
+      });
+
+      return flags;
+    }
+
+    function setText(element, value) {
+      element.textContent = value;
+    }
+
+    function renderHeader(data) {
+      const overall = data?.sources_status?.overall || "skipped";
+      const freshness = getDataFreshnessHours(data);
+
+      ui.overallStatusBadge.className = `status-badge ${getStatusClass(overall)}`;
+      setText(ui.overallStatusBadge, String(overall).toUpperCase());
+      setText(ui.lastUpdatedValue, formatDateTime(data?.last_updated));
+      setText(ui.freshnessValue, freshness === null ? "n/a" : `${formatNumber(freshness)}h`);
+
+      if (freshness !== null && freshness > STALE_DATA_HOURS) {
+        ui.staleBanner.classList.remove("hidden");
+      } else {
+        ui.staleBanner.classList.add("hidden");
+      }
+    }
+
+    function renderKpis(data) {
+      const metaAds = data?.meta_ads || {};
+      const analysis = data?.analysis || {};
+      const lemonsqueezy = data?.lemonsqueezy || {};
+
+      const kpis = [
+        { label: "Total Spend", value: formatCurrencyUSD(metaAds.total_spend || 0), footnote: "Paid media spend" },
+        { label: "Total Leads", value: formatNumber(metaAds.total_leads || 0), footnote: "Attributed paid leads" },
+        { label: "Total Purchases", value: formatNumber(metaAds.total_purchases || 0), footnote: "Attributed paid purchases" },
+        { label: "Revenue USD", value: formatCurrencyUSD(lemonsqueezy.total_revenue_usd || 0), footnote: "LemonSqueezy revenue" },
+        { label: "Avg CPL", value: formatCurrencyUSD(metaAds.avg_cpl || 0), footnote: "Average cost per lead" },
+        { label: "Avg CPA", value: formatCurrencyUSD(metaAds.avg_cpa || 0), footnote: "Average cost per acquisition" },
+        { label: "Blended ROAS", value: formatNumber(metaAds.blended_roas || 0), footnote: "Account-level efficiency" },
+        { label: "Revenue - Spend", value: formatCurrencyUSD(analysis.revenue_minus_spend || 0), footnote: "Topline contribution" }
+      ];
+
+      ui.kpiGrid.innerHTML = kpis.map((item) => `
+        <article class="kpi-card">
+          <div class="kpi-label">${escapeHtml(item.label)}</div>
+          <div class="kpi-value">${escapeHtml(item.value)}</div>
+          <div class="kpi-footnote">${escapeHtml(item.footnote)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderRedFlags(data) {
+      const flags = buildRedFlags(data);
+      if (!flags.length) {
+        ui.redFlagsList.innerHTML = `<div class="empty-state">No critical red flags right now.</div>`;
+        return;
+      }
+
+      ui.redFlagsList.innerHTML = flags.map((flag) => `
+        <div class="red-flag-item">
+          <span class="red-flag-pill"></span>
+          <div>${escapeHtml(flag)}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderFunnel(data) {
+      const funnel = data?.funnel || {};
+      const cards = [
+        { label: "Impressions", value: formatNumber(funnel.impressions || 0), footnote: "Reach into the funnel" },
+        { label: "Clicks", value: formatNumber(funnel.clicks || 0), footnote: "Traffic generated" },
+        { label: "LP Visits", value: formatNumber(funnel.lp_visits || 0), footnote: "Landing page sessions proxy" },
+        { label: "Opt-ins", value: formatNumber(funnel.opt_ins || 0), footnote: "Lead capture volume" },
+        { label: "Purchases L1", value: formatNumber(funnel.purchases_l1 || 0), footnote: "Primary conversion layer" },
+        { label: "Consultations L2", value: formatNumber(funnel.consultations_l2 || 0), footnote: "High-intent downstream action" },
+        { label: "CTR", value: formatPercent(funnel.ctr || 0), footnote: "Clicks from impressions" },
+        { label: "LP CVR", value: formatPercent(funnel.lp_cvr || 0), footnote: "Opt-ins from visits" },
+        { label: "Email CVR", value: formatPercent(funnel.email_cvr || 0), footnote: "Purchases from opt-ins" }
+      ];
+
+      ui.funnelGrid.innerHTML = cards.map((item) => `
+        <article class="funnel-card">
+          <div class="funnel-label">${escapeHtml(item.label)}</div>
+          <div class="funnel-value">${escapeHtml(item.value)}</div>
+          <div class="funnel-footnote">${escapeHtml(item.footnote)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderInsights(data) {
+      const analysis = data?.analysis || {};
+      const cards = [
+        {
+          label: "Top Problem Area",
+          value: analysis.top_problem_area || "No urgent issue flagged",
+          footnote: "Primary constraint detected from the current data."
+        },
+        {
+          label: "Top Opportunity Area",
+          value: analysis.top_opportunity_area || "No strong edge detected yet",
+          footnote: "Best current lever to push if data quality is sufficient."
+        },
+        {
+          label: "Break-even ROAS",
+          value: formatNumber(analysis.break_even_roas || 0),
+          footnote: "Spend divided by revenue from the current snapshot."
+        },
+        {
+          label: "Revenue - Spend",
+          value: formatCurrencyUSD(analysis.revenue_minus_spend || 0),
+          footnote: "Positive means revenue is ahead of paid spend."
+        }
+      ];
+
+      ui.insightGrid.innerHTML = cards.map((item) => `
+        <article class="insight-card">
+          <div class="insight-label">${escapeHtml(item.label)}</div>
+          <div class="insight-value">${escapeHtml(item.value)}</div>
+          <div class="insight-footnote">${escapeHtml(item.footnote)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderAdSetsTable(data) {
+      const adSets = Array.isArray(data?.meta_ads?.ad_sets) ? data.meta_ads.ad_sets : [];
+      if (!adSets.length) {
+        ui.adSetsBody.innerHTML = `
+          <tr>
+            <td colspan="11">No ad set data available.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      ui.adSetsBody.innerHTML = adSets.map((adSet) => {
+        const status = String(adSet?.status || "unknown").toUpperCase();
+        const decision = String(adSet?.decision || "NO_DATA").toUpperCase();
+        return `
+          <tr>
+            <td class="name-cell">${escapeHtml(adSet?.name || "Unnamed ad set")}</td>
+            <td><span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span></td>
+            <td>${escapeHtml(formatCurrencyUSD(adSet?.spend || 0))}</td>
+            <td>${escapeHtml(formatNumber(adSet?.impressions || 0))}</td>
+            <td>${escapeHtml(formatNumber(adSet?.clicks || 0))}</td>
+            <td>${escapeHtml(formatNumber(adSet?.leads || 0))}</td>
+            <td>${escapeHtml(formatNumber(adSet?.purchases || 0))}</td>
+            <td>${escapeHtml(formatCurrencyUSD(adSet?.cpl || 0))}</td>
+            <td>${escapeHtml(formatCurrencyUSD(adSet?.cpa || 0))}</td>
+            <td>${escapeHtml(formatNumber(adSet?.frequency || 0))}</td>
+            <td><span class="decision-badge ${getDecisionClass(decision)}">${escapeHtml(decision)}</span></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderSourceHealth(data) {
+      const sources = [
+        { label: "Meta Ads", key: "meta_ads" },
+        { label: "Instagram Organic", key: "instagram_organic" },
+        { label: "LemonSqueezy", key: "lemonsqueezy" },
+        { label: "MailerLite", key: "mailerlite" }
+      ];
+
+      ui.sourceGrid.innerHTML = sources.map((source) => {
+        const status = getSourceStatus(data, source.key);
+        return `
+          <article class="source-card">
+            <div class="source-label">${escapeHtml(source.label)}</div>
+            <div><span class="status-badge ${getStatusClass(status)}">${escapeHtml(String(status).toUpperCase())}</span></div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function appendChatMessage(role, label, content) {
+      const message = document.createElement("div");
+      message.className = `chat-message ${role}`;
+      message.innerHTML = `
+        <span class="chat-meta">${escapeHtml(label)}</span>
+        ${escapeHtml(content)}
+      `;
+      ui.chatMessages.appendChild(message);
+      ui.chatMessages.scrollTop = ui.chatMessages.scrollHeight;
+      return message;
+    }
+
+    function renderQuickPrompts() {
+      ui.quickPrompts.innerHTML = QUICK_PROMPTS.map((item) => `
+        <button class="quick-button" type="button" data-prompt="${escapeHtml(item.prompt)}">${escapeHtml(item.label)}</button>
+      `).join("");
+
+      ui.quickPrompts.querySelectorAll("[data-prompt]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          ui.chatQuestionInput.value = button.getAttribute("data-prompt") || "";
+          await askClaude();
+        });
+      });
+    }
+
+    function buildAnthropicMessages(question) {
+      const history = state.chatHistory.slice(-6).map((message) => ({
+        role: message.role,
+        content: message.content
+      }));
+
+      return [
+        ...history,
+        {
+          role: "user",
+          content: [
+            "Use this dashboard context for the conversation.",
+            "",
+            buildClaudeContext(state.data),
+            "",
+            `Question: ${question}`
+          ].join("\n")
+        }
+      ];
+    }
+
+    async function callClaude(question) {
+      const apiKey = ui.apiKeyInput.value.trim() || loadApiKeyFromSession();
+      if (!apiKey) {
+        throw new Error("Missing Anthropic API key. Add it in the dashboard before sending a prompt.");
+      }
+
+      const response = await fetch(ANTHROPIC_API_URL, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": ANTHROPIC_API_VERSION,
+          "anthropic-dangerous-direct-browser-access": "true"
+        },
+        body: JSON.stringify({
+          model: ANTHROPIC_MODEL,
+          max_tokens: 900,
+          system: CLAUDE_SYSTEM_PROMPT,
+          messages: buildAnthropicMessages(question)
+        })
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const message = payload?.error?.message || payload?.message || `Anthropic API returned HTTP ${response.status}.`;
+        throw new Error(message);
+      }
+
+      const content = Array.isArray(payload?.content)
+        ? payload.content
+            .filter((part) => part?.type === "text")
+            .map((part) => part?.text || "")
+            .join("\n\n")
+            .trim()
+        : "";
+
+      if (!content) {
+        throw new Error("Anthropic returned an empty response.");
+      }
+
+      return content;
+    }
+
+    async function askClaude() {
+      if (state.isChatLoading || !state.data) return;
+
+      const question = ui.chatQuestionInput.value.trim();
+      if (!question) {
+        appendChatMessage("error", "System", "Enter a question before asking Claude.");
+        return;
+      }
+
+      state.isChatLoading = true;
+      ui.askClaudeButton.disabled = true;
+      ui.askClaudeButton.textContent = "Asking Claude...";
+
+      appendChatMessage("user", "You", question);
+      const loadingMessage = appendChatMessage("assistant", "Claude", "Thinking...");
+
+      try {
+        const answer = await callClaude(question);
+        loadingMessage.remove();
+        appendChatMessage("assistant", "Claude", answer);
+        state.chatHistory.push({ role: "user", content: question });
+        state.chatHistory.push({ role: "assistant", content: answer });
+        ui.chatQuestionInput.value = "";
+      } catch (error) {
+        loadingMessage.remove();
+        appendChatMessage(
+          "error",
+          "Claude error",
+          error instanceof Error ? error.message : "Could not complete the Claude request."
+        );
+      } finally {
+        state.isChatLoading = false;
+        ui.askClaudeButton.disabled = false;
+        ui.askClaudeButton.textContent = "Ask Claude";
+      }
+    }
+
+    function renderDashboard(data) {
+      state.data = data || {};
+      renderHeader(state.data);
+      renderKpis(state.data);
+      renderRedFlags(state.data);
+      renderFunnel(state.data);
+      renderInsights(state.data);
+      renderAdSetsTable(state.data);
+      renderSourceHealth(state.data);
+    }
+
+    async function loadDashboard() {
+      try {
+        const response = await fetch(DATA_URL, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        renderDashboard(data);
+        ui.loadingState.classList.add("hidden");
+        ui.errorState.classList.add("hidden");
+        ui.app.classList.remove("hidden");
+      } catch (error) {
+        ui.loadingState.classList.add("hidden");
+        ui.app.classList.add("hidden");
+        ui.errorState.classList.remove("hidden");
+        ui.errorStateText.textContent = error instanceof Error
+          ? `The dashboard JSON could not be loaded right now. ${error.message}`
+          : "The dashboard JSON could not be loaded right now.";
+      }
+    }
+
+    function attachEvents() {
+      ui.saveSessionButton.addEventListener("click", saveApiKeyForSession);
+      ui.clearSessionButton.addEventListener("click", clearApiKeySession);
+      ui.askClaudeButton.addEventListener("click", askClaude);
+      ui.chatQuestionInput.addEventListener("keydown", (event) => {
+        if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+          event.preventDefault();
+          askClaude();
+        }
+      });
+    }
+
+    function init() {
+      ui.apiKeyInput.value = loadApiKeyFromSession();
+      renderQuickPrompts();
+      attachEvents();
+      loadDashboard();
+    }
+
+    init();
+  </script>
+</body>
+</html>
