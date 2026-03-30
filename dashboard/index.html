@@ -50,9 +50,9 @@
     }
 
     .page-shell {
-      width: min(1440px, calc(100% - 32px));
+      width: min(1480px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 28px 0 40px;
+      padding: 24px 0 40px;
     }
 
     .hero,
@@ -65,8 +65,8 @@
     }
 
     .hero {
-      padding: 28px;
-      margin-bottom: 22px;
+      padding: 26px;
+      margin-bottom: 20px;
       position: relative;
       overflow: hidden;
     }
@@ -101,9 +101,9 @@
     .hero-top {
       display: flex;
       justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
       align-items: flex-start;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     h1,
@@ -122,11 +122,11 @@
     }
 
     h2 {
-      font-size: 1rem;
+      font-size: 0.94rem;
       letter-spacing: 0.02em;
       text-transform: uppercase;
       color: var(--muted-strong);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     p {
@@ -135,8 +135,9 @@
 
     .hero-copy p {
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       max-width: 560px;
+      line-height: 1.55;
     }
 
     .hero-meta {
@@ -152,8 +153,8 @@
       align-items: center;
       gap: 8px;
       border-radius: 999px;
-      padding: 9px 14px;
-      font-size: 0.85rem;
+      padding: 8px 13px;
+      font-size: 0.8rem;
       border: 1px solid transparent;
       line-height: 1;
       white-space: nowrap;
@@ -172,24 +173,27 @@
 
     .dashboard-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
-      gap: 22px;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.82fr);
+      gap: 24px;
       align-items: start;
     }
 
     .main-column,
     .chat-column {
       display: grid;
-      gap: 22px;
+      gap: 20px;
+      min-width: 0;
     }
 
     .chat-column {
       position: sticky;
-      top: 20px;
+      top: 24px;
+      align-self: start;
+      overflow: hidden;
     }
 
     .panel {
-      padding: 22px;
+      padding: 20px;
     }
 
     .hero-actions {
@@ -205,19 +209,20 @@
       justify-content: space-between;
       gap: 14px;
       align-items: flex-start;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
     .panel-subtitle {
       color: var(--muted);
-      font-size: 0.94rem;
+      font-size: 0.87rem;
+      line-height: 1.5;
       max-width: 560px;
     }
 
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
     }
 
     .kpi-card,
@@ -227,7 +232,11 @@
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-sm);
-      padding: 16px;
+      padding: 16px 17px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
     .kpi-label,
@@ -235,33 +244,34 @@
     .source-label,
     .insight-label {
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 10px;
+      margin-bottom: 9px;
     }
 
     .kpi-value,
     .funnel-value,
     .insight-value {
-      font-size: clamp(1.15rem, 2vw, 1.7rem);
+      font-size: clamp(1.08rem, 1.6vw, 1.45rem);
       font-weight: 600;
       letter-spacing: -0.03em;
       color: var(--text);
+      line-height: 1.2;
     }
 
     .kpi-footnote,
     .funnel-footnote,
     .insight-footnote {
       color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 10px;
+      font-size: 0.82rem;
+      margin-top: 9px;
       line-height: 1.5;
     }
 
     .red-flag-list {
       display: grid;
-      gap: 10px;
+      gap: 9px;
     }
 
     .red-flag-item,
@@ -270,9 +280,10 @@
       border-radius: var(--radius-sm);
       border: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(255, 255, 255, 0.03);
-      padding: 14px 16px;
+      padding: 13px 15px;
       color: var(--muted-strong);
-      line-height: 1.55;
+      line-height: 1.5;
+      font-size: 0.92rem;
     }
 
     .red-flag-item {
@@ -303,7 +314,7 @@
     .insight-grid,
     .current-state-grid {
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .funnel-grid,
@@ -319,11 +330,12 @@
     .source-card {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .table-scroll {
       overflow-x: auto;
+      max-width: 100%;
       border-radius: var(--radius-sm);
       border: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(255, 255, 255, 0.02);
@@ -337,11 +349,11 @@
 
     th,
     td {
-      padding: 14px 16px;
+      padding: 13px 15px;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       vertical-align: middle;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
     }
 
     th {
@@ -349,7 +361,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       background: rgba(255, 255, 255, 0.03);
       position: sticky;
       top: 0;
@@ -370,27 +382,30 @@
     }
 
     .chat-panel {
-      padding: 22px;
-      min-height: 72vh;
+      padding: 18px;
+      min-height: 0;
+      max-height: calc(100vh - 48px);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 14px;
+      overflow: hidden;
     }
 
     .chat-description {
       color: var(--muted);
-      line-height: 1.55;
-      font-size: 0.94rem;
+      line-height: 1.5;
+      font-size: 0.87rem;
     }
 
     .field-group {
       display: grid;
-      gap: 10px;
+      gap: 8px;
+      min-width: 0;
     }
 
     .field-label {
       color: var(--muted-strong);
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
@@ -404,11 +419,11 @@
     input,
     textarea {
       width: 100%;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(255, 255, 255, 0.03);
       color: var(--text);
-      padding: 14px 16px;
+      padding: 12px 14px;
       outline: none;
       transition: border-color 120ms ease, background 120ms ease;
     }
@@ -420,15 +435,15 @@
     }
 
     textarea {
-      min-height: 128px;
+      min-height: 110px;
       resize: vertical;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     button {
       border: 0;
       border-radius: 999px;
-      padding: 11px 16px;
+      padding: 10px 15px;
       cursor: pointer;
       transition: transform 120ms ease, opacity 120ms ease, background 120ms ease;
     }
@@ -458,33 +473,35 @@
     .quick-prompts {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .quick-button {
       background: rgba(255, 255, 255, 0.04);
       color: var(--muted-strong);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding-inline: 14px;
+      padding-inline: 13px;
     }
 
     .chat-messages {
       flex: 1 1 auto;
       display: grid;
-      gap: 12px;
+      gap: 10px;
       align-content: start;
-      max-height: 48vh;
+      min-height: 0;
+      max-height: none;
       overflow-y: auto;
       padding-right: 4px;
     }
 
     .chat-message {
-      padding: 14px 16px;
-      border-radius: 18px;
+      padding: 13px 14px;
+      border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.06);
       background: rgba(255, 255, 255, 0.03);
       white-space: pre-wrap;
-      line-height: 1.6;
+      line-height: 1.55;
+      font-size: 0.9rem;
       color: var(--muted-strong);
     }
 
@@ -667,6 +684,11 @@
 
       .chat-column {
         position: static;
+        overflow: visible;
+      }
+
+      .chat-panel {
+        max-height: none;
       }
     }
 
