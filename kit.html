@@ -883,6 +883,7 @@
     var submitTimeout;
     var successPoll;
     var pendingMailerLiteSubmit = false;
+    var hasTrackedViewContent = false;
 
     function setLoadingState(isLoading) {
       form.classList.toggle('is-loading', isLoading);
@@ -1091,6 +1092,12 @@
       e.preventDefault();
       trySubmitMailerLiteForm();
     });
+
+    window.setTimeout(function() {
+      if (hasTrackedViewContent || typeof window.fbq !== 'function') return;
+      hasTrackedViewContent = true;
+      fbq('track', 'ViewContent');
+    }, 5000);
   })();
   </script>
 </body>
