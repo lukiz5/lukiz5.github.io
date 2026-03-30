@@ -134,4 +134,12 @@
     fbq('track', 'Contact');
   });
 
+  // --- Meta Schedule tracking for consultation booking CTAs ---
+  document.addEventListener('click', function (event) {
+    var scheduleTrigger = event.target.closest('[data-meta-schedule="true"]');
+    if (!scheduleTrigger || typeof window.fbq !== 'function') return;
+
+    fbq('track', 'Schedule');
+  });
+
 })();
