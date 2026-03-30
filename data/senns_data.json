@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-30T19:07:51Z",
+  "last_updated": "2026-03-30T19:33:58Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,8 +23,8 @@
   "instagram_organic": {
     "followers": 24,
     "posts_this_week": 4,
-    "avg_reach": 42.25,
-    "avg_engagement_rate": 26.04,
+    "avg_reach": 42.33,
+    "avg_engagement_rate": 26.39,
     "top_posts": [
       {
         "id": "17903003550224625",
@@ -134,8 +134,8 @@
   "analysis": {
     "break_even_roas": 0.0,
     "revenue_minus_spend": 99.0,
-    "top_problem_area": "",
-    "top_opportunity_area": "",
-    "claude_context_summary": "Paid media spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%. Main problem area: No acute issue detected. Main opportunity: Keep monitoring current data mix for stronger signals."
+    "top_problem_area": "No paid activity detected yet",
+    "top_opportunity_area": "First Level 1 sale recorded",
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. First Level 1 sale recorded. Paid spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }
