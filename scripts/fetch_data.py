@@ -28,12 +28,19 @@ REQUEST_TIMEOUT = 25
 MAX_RETRIES = 2
 MAX_PAGES = 8
 TARGET_CPL = 25.0
+STALE_DATA_HOURS = 36.0
 
 META_SOURCE = "meta_ads"
 INSTAGRAM_SOURCE = "instagram_organic"
 LEMONSQUEEZY_SOURCE = "lemonsqueezy"
 MAILERLITE_SOURCE = "mailerlite"
 ALL_SOURCES = [META_SOURCE, INSTAGRAM_SOURCE, LEMONSQUEEZY_SOURCE, MAILERLITE_SOURCE]
+SOURCE_LABELS = {
+    META_SOURCE: "Meta Ads",
+    INSTAGRAM_SOURCE: "Instagram",
+    LEMONSQUEEZY_SOURCE: "LemonSqueezy",
+    MAILERLITE_SOURCE: "MailerLite",
+}
 
 LEAD_ACTION_TYPES = {
     "lead",
@@ -1307,12 +1314,20 @@ def calculate_analysis(
     lemonsqueezy: dict[str, Any],
     mailerlite: dict[str, Any],
     funnel: dict[str, Any],
+    sources_status: dict[str, str],
+    data_freshness_hours: float | None,
 ) -> dict[str, Any]:
     revenue = safe_float(lemonsqueezy.get("total_revenue_usd"))
     spend = safe_float(meta_ads.get("total_spend"))
     leads = safe_int(meta_ads.get("total_leads"))
     avg_cpl = safe_float(meta_ads.get("avg_cpl"))
     level1_purchases = safe_int(funnel.get("purchases_l1"))
+    clicks = safe_int(funnel.get("clicks"))
+    impressions = safe_int(funnel.get("impressions"))
+    lp_visits = safe_int(funnel.get("lp_visits"))
+    opt_ins = safe_int(funnel.get("opt_ins"))
+    total_subscribers = safe_int(mailerlite.get("total_subscribers"))
+    new_subscribers = safe_int(mailerlite.get("new_subscribers_7d"))
 
     revenue_minus_spend = safe_round(revenue - spend)
     break_even_roas = safe_round(spend / revenue, 4) if revenue > 0 else 0
@@ -1322,63 +1337,89 @@ def calculate_analysis(
         for ad_set in meta_ads.get("ad_sets", [])
         if isinstance(ad_set, dict) and str(ad_set.get("status", "")).upper() == "ACTIVE"
     ]
-    data_available = any(
+    failed_sources = [SOURCE_LABELS[source] for source in ALL_SOURCES if sources_status.get(source) == "failed"]
+    partial_sources = [SOURCE_LABELS[source] for source in ALL_SOURCES if sources_status.get(source) == "partial"]
+    overall_status = str(sources_status.get("overall", "skipped")).lower()
+    meta_healthy = sources_status.get(META_SOURCE) == "ok"
+    instagram_healthy = sources_status.get(INSTAGRAM_SOURCE) == "ok"
+    measurable_paid_activity = any([spend > 0, impressions > 0, clicks > 0, bool(active_ad_sets)])
+    measurable_funnel_data = any([impressions > 0, clicks > 0, lp_visits > 0, opt_ins > 0])
+    sparse_data = any([revenue > 0, leads > 0, level1_purchases > 0, clicks > 0, opt_ins > 0]) and all(
         [
-            spend > 0,
-            revenue > 0,
-            leads > 0,
-            level1_purchases > 0,
-            safe_int(mailerlite.get("total_subscribers")) > 0,
-            safe_int(funnel.get("clicks")) > 0,
-            safe_int(funnel.get("opt_ins")) > 0,
-            bool(active_ad_sets),
+            clicks < 100,
+            leads < 5,
+            opt_ins < 10,
+            level1_purchases <= 1,
         ]
     )
+    is_stale = data_freshness_hours is not None and safe_float(data_freshness_hours) > STALE_DATA_HOURS
 
-    if not data_available:
-        return {
-            "break_even_roas": break_even_roas,
-            "revenue_minus_spend": revenue_minus_spend,
-            "top_problem_area": "",
-            "top_opportunity_area": "",
-            "claude_context_summary": (
-                "Not enough live data is available yet. The dashboard currently contains default or preserved values "
-                "until the integrations return a successful refresh."
-            ),
-        }
-
-    top_problem_area = ""
-    if spend > 0 and leads == 0:
+    if failed_sources:
+        top_problem_area = f"Source failure is limiting conclusions ({', '.join(failed_sources)})"
+    elif partial_sources:
+        top_problem_area = f"Some source data is partial ({', '.join(partial_sources)})"
+    elif is_stale:
+        top_problem_area = "Dashboard data is stale"
+    elif not measurable_paid_activity and meta_healthy:
+        top_problem_area = "No paid activity detected yet"
+    elif not measurable_funnel_data:
+        top_problem_area = "Funnel has no measurable acquisition data yet"
+    elif sparse_data:
+        top_problem_area = "Data is still too sparse for strong performance conclusions"
+    elif spend > 0 and leads == 0:
         top_problem_area = "No leads from paid traffic"
     elif any(
         safe_float(ad_set.get("cpl")) > TARGET_CPL and safe_int(ad_set.get("impressions")) > 500
         for ad_set in active_ad_sets
     ):
         top_problem_area = "High CPL on active ad sets"
-    elif safe_int(funnel.get("lp_visits")) > 0 and safe_float(funnel.get("lp_cvr")) < 15:
+    elif lp_visits > 0 and safe_float(funnel.get("lp_cvr")) < 15:
         top_problem_area = "Low landing page conversion"
-    elif safe_int(mailerlite.get("new_subscribers_7d")) <= 0:
+    elif total_subscribers > 0 and new_subscribers <= 0:
         top_problem_area = "Mailing list not growing"
+    elif overall_status == "ok" and not measurable_paid_activity and revenue <= 0:
+        top_problem_area = "Healthy integrations but no campaign activity yet"
+    else:
+        top_problem_area = "No major operating issue detected right now"
 
-    top_opportunity_area = ""
-    if safe_float(funnel.get("email_cvr")) >= 5 and level1_purchases > 0:
+    if level1_purchases == 1:
+        top_opportunity_area = "First Level 1 sale recorded"
+    elif safe_float(funnel.get("email_cvr")) >= 5 and level1_purchases > 0:
         top_opportunity_area = "Strong email conversion"
     elif revenue > spend and spend > 0:
         top_opportunity_area = "Low spend with positive revenue"
     elif avg_cpl > 0 and avg_cpl < TARGET_CPL and leads >= 10:
         top_opportunity_area = "Healthy CPL with room to scale"
+    elif revenue > 0 and spend == 0:
+        top_opportunity_area = "Sales are appearing before measured paid attribution"
+    elif new_subscribers > 0 and total_subscribers < 100:
+        top_opportunity_area = "Email list is growing but still too small for conversion conclusions"
+    elif meta_healthy and instagram_healthy:
+        top_opportunity_area = "Meta and Instagram integrations are healthy"
+    else:
+        top_opportunity_area = "Keep collecting fresh signal before making bigger optimizations"
+
+    technical_state = "All integrations healthy"
+    if failed_sources:
+        technical_state = f"Failed sources: {', '.join(failed_sources)}"
+    elif partial_sources:
+        technical_state = f"Partial sources: {', '.join(partial_sources)}"
+    elif is_stale:
+        technical_state = f"Data is stale ({safe_round(safe_float(data_freshness_hours), 1)}h old)"
+
+    business_state = top_problem_area
+    if top_opportunity_area and top_opportunity_area != top_problem_area:
+        business_state = f"{top_problem_area}. {top_opportunity_area}."
 
     summary = (
-        f"Paid media spend is ${safe_round(spend)} with {leads} leads, "
-        f"{level1_purchases} level-1 purchases, "
+        f"Technical state: {technical_state}. "
+        f"Business state: {business_state} "
+        f"Paid spend is ${safe_round(spend)} with {leads} leads, {level1_purchases} level-1 purchases, "
         f"and blended ROAS {safe_round(safe_float(meta_ads.get('blended_roas')), 2)}. "
         f"LemonSqueezy revenue is ${safe_round(revenue)}, so revenue minus spend is ${revenue_minus_spend}. "
-        f"MailerLite has {safe_int(mailerlite.get('total_subscribers'))} subscribers and "
-        f"{safe_int(mailerlite.get('new_subscribers_7d'))} new subscribers in the last 7 days. "
-        f"Funnel metrics show {safe_int(funnel.get('clicks'))} clicks, {safe_int(funnel.get('opt_ins'))} opt-ins, "
-        f"LP CVR {safe_round(safe_float(funnel.get('lp_cvr')), 2)}%, and email CVR {safe_round(safe_float(funnel.get('email_cvr')), 2)}%. "
-        f"Main problem area: {top_problem_area or 'No acute issue detected'}. "
-        f"Main opportunity: {top_opportunity_area or 'Keep monitoring current data mix for stronger signals'}."
+        f"MailerLite has {total_subscribers} subscribers and {new_subscribers} new subscribers in the last 7 days. "
+        f"Funnel metrics show {clicks} clicks, {opt_ins} opt-ins, "
+        f"LP CVR {safe_round(safe_float(funnel.get('lp_cvr')), 2)}%, and email CVR {safe_round(safe_float(funnel.get('email_cvr')), 2)}%."
     )
     summary = summary[:1200].strip()
 
@@ -1420,15 +1461,6 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
     refreshed_sources += int(lemonsqueezy_refreshed)
     refreshed_sources += int(mailerlite_refreshed)
 
-    funnel = calculate_funnel(
-        meta_ads,
-        lemonsqueezy,
-        ensure_section(previous_data, "funnel", default_funnel),
-        meta_status,
-        lemonsqueezy_status,
-    )
-    analysis = calculate_analysis(meta_ads, lemonsqueezy, mailerlite, funnel)
-
     sources_status = default_sources_status()
     sources_status[META_SOURCE] = meta_status
     sources_status[INSTAGRAM_SOURCE] = instagram_status
@@ -1440,10 +1472,20 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
         last_updated = isoformat(now_utc())
     else:
         last_updated = previous_data.get("last_updated", "never")
+    data_freshness_hours = calculate_freshness_hours(last_updated)
+
+    funnel = calculate_funnel(
+        meta_ads,
+        lemonsqueezy,
+        ensure_section(previous_data, "funnel", default_funnel),
+        meta_status,
+        lemonsqueezy_status,
+    )
+    analysis = calculate_analysis(meta_ads, lemonsqueezy, mailerlite, funnel, sources_status, data_freshness_hours)
 
     payload = {
         "last_updated": last_updated,
-        "data_freshness_hours": calculate_freshness_hours(last_updated),
+        "data_freshness_hours": data_freshness_hours,
         "errors": errors,
         "warnings": warnings,
         "sources_status": sources_status,

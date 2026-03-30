@@ -300,10 +300,20 @@
 
     .funnel-grid,
     .source-grid,
-    .insight-grid {
+    .insight-grid,
+    .current-state-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
+    }
+
+    .funnel-grid,
+    .source-grid,
+    .insight-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .current-state-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .source-card {
@@ -667,7 +677,8 @@
 
       .funnel-grid,
       .insight-grid,
-      .source-grid {
+      .source-grid,
+      .current-state-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -697,7 +708,8 @@
       .kpi-grid,
       .funnel-grid,
       .insight-grid,
-      .source-grid {
+      .source-grid,
+      .current-state-grid {
         grid-template-columns: 1fr;
       }
 
@@ -775,6 +787,16 @@
                 </div>
               </div>
               <div id="kpiGrid" class="kpi-grid"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2>Current State</h2>
+                  <p class="panel-subtitle">Fast operator read on technical health and current business signal.</p>
+                </div>
+              </div>
+              <div id="currentStateGrid" class="current-state-grid"></div>
             </section>
 
             <section class="panel">
@@ -928,6 +950,12 @@
       { label: "Break-even", prompt: "How close are we to break-even and what should improve first?" },
       { label: "Next creative", prompt: "What creative or angle should I test next based on this data?" }
     ];
+    const SOURCE_LABELS = {
+      meta_ads: "Meta Ads",
+      instagram_organic: "Instagram",
+      lemonsqueezy: "LemonSqueezy",
+      mailerlite: "MailerLite"
+    };
 
     const state = {
       data: null,
@@ -953,6 +981,7 @@
       freshnessValue: document.getElementById("freshnessValue"),
       staleBanner: document.getElementById("staleBanner"),
       kpiGrid: document.getElementById("kpiGrid"),
+      currentStateGrid: document.getElementById("currentStateGrid"),
       redFlagsList: document.getElementById("redFlagsList"),
       funnelGrid: document.getElementById("funnelGrid"),
       insightGrid: document.getElementById("insightGrid"),
@@ -1130,6 +1159,7 @@
       ui.dashboardShell.classList.add("hidden");
       ui.staleBanner.classList.add("hidden");
       ui.kpiGrid.innerHTML = "";
+      ui.currentStateGrid.innerHTML = "";
       ui.redFlagsList.innerHTML = "";
       ui.funnelGrid.innerHTML = "";
       ui.insightGrid.innerHTML = "";
@@ -1222,12 +1252,127 @@
       return Number.isFinite(freshness) ? freshness : null;
     }
 
+    function getSourceStatusBuckets(data) {
+      const sources = data?.sources_status || {};
+      const failed = [];
+      const partial = [];
+
+      Object.entries(SOURCE_LABELS).forEach(([key, label]) => {
+        const status = String(sources?.[key] || "unknown").toLowerCase();
+        if (status === "failed") failed.push(label);
+        if (status === "partial") partial.push(label);
+      });
+
+      return { failed, partial };
+    }
+
+    function getTechnicalState(data) {
+      const freshness = getDataFreshnessHours(data);
+      const { failed, partial } = getSourceStatusBuckets(data);
+      const hasErrors = Array.isArray(data?.errors) && data.errors.length > 0;
+      const hasWarnings = Array.isArray(data?.warnings) && data.warnings.length > 0;
+
+      if (freshness !== null && freshness > STALE_DATA_HOURS) {
+        return `Data is stale (${formatNumber(freshness)}h old)`;
+      }
+      if (failed.length) {
+        return `${failed.join(" and ")} failed`;
+      }
+      if (partial.length) {
+        return `${partial.join(" and ")} partial`;
+      }
+      if (hasErrors || hasWarnings) {
+        return "Integrations are up with non-blocking warnings";
+      }
+      return "All integrations healthy";
+    }
+
+    function getProblemInsightText(data) {
+      const analysis = data?.analysis || {};
+      if (analysis.top_problem_area) return analysis.top_problem_area;
+
+      const freshness = getDataFreshnessHours(data);
+      if (freshness !== null && freshness > STALE_DATA_HOURS) {
+        return "Dashboard data is stale";
+      }
+
+      const { failed, partial } = getSourceStatusBuckets(data);
+      if (failed.length) {
+        return `Source failure is limiting conclusions (${failed.join(", ")})`;
+      }
+      if (partial.length) {
+        return `Some source data is partial (${partial.join(", ")})`;
+      }
+
+      const metaAds = data?.meta_ads || {};
+      const funnel = data?.funnel || {};
+      const hasPaidActivity = [
+        Number(metaAds.total_spend || 0) > 0,
+        Number(funnel.impressions || 0) > 0,
+        Number(funnel.clicks || 0) > 0,
+        Array.isArray(metaAds.ad_sets) && metaAds.ad_sets.length > 0
+      ].some(Boolean);
+
+      if (!hasPaidActivity) return "No paid activity detected yet";
+      if (Number(funnel.clicks || 0) === 0 && Number(funnel.opt_ins || 0) === 0) {
+        return "Funnel has no measurable acquisition data yet";
+      }
+
+      return "No clear business constraint detected from the current snapshot";
+    }
+
+    function getOpportunityInsightText(data) {
+      const analysis = data?.analysis || {};
+      if (analysis.top_opportunity_area) return analysis.top_opportunity_area;
+
+      const metaAds = data?.meta_ads || {};
+      const funnel = data?.funnel || {};
+      const lemonsqueezy = data?.lemonsqueezy || {};
+      const mailerlite = data?.mailerlite || {};
+      const sources = data?.sources_status || {};
+
+      if (Number(funnel.purchases_l1 || 0) === 1) return "First Level 1 sale recorded";
+      if (Number(lemonsqueezy.total_revenue_usd || 0) > Number(metaAds.total_spend || 0) && Number(metaAds.total_spend || 0) > 0) {
+        return "Low spend with positive revenue";
+      }
+      if (Number(lemonsqueezy.total_revenue_usd || 0) > 0 && Number(metaAds.total_spend || 0) === 0) {
+        return "Sales are appearing before measured paid attribution";
+      }
+      if (Number(mailerlite.new_subscribers_7d || 0) > 0 && Number(mailerlite.total_subscribers || 0) < 100) {
+        return "Email list is growing but still too small for conversion conclusions";
+      }
+      if (sources.meta_ads === "ok" && sources.instagram_organic === "ok") {
+        return "Meta and Instagram integrations are healthy";
+      }
+
+      return "Keep collecting fresh signal before making bigger optimizations";
+    }
+
+    function getBusinessState(data) {
+      const problem = getProblemInsightText(data);
+      const opportunity = getOpportunityInsightText(data);
+      const neutralProblem = problem.startsWith("No clear business constraint");
+
+      if (problem && opportunity && !neutralProblem && problem !== opportunity) {
+        return `${problem}. ${opportunity}.`;
+      }
+      return opportunity || problem || "No clear business signal yet.";
+    }
+
+    function getCurrentState(data) {
+      return {
+        technical: getTechnicalState(data),
+        business: getBusinessState(data)
+      };
+    }
+
     function buildClaudeContext(data) {
       const metaAds = data?.meta_ads || {};
       const lemonsqueezy = data?.lemonsqueezy || {};
       const funnel = data?.funnel || {};
       const analysis = data?.analysis || {};
       const sourceStatus = data?.sources_status || {};
+      const currentState = getCurrentState(data);
       const adSets = Array.isArray(metaAds.ad_sets) ? [...metaAds.ad_sets] : [];
 
       const topAdSets = adSets
@@ -1254,6 +1399,10 @@
         `Last updated: ${data?.last_updated || "never"}`,
         `Overall status: ${sourceStatus.overall || "unknown"}`,
         `Data freshness hours: ${data?.data_freshness_hours ?? "n/a"}`,
+        "",
+        "Current state",
+        `- Technical state: ${currentState.technical}`,
+        `- Business state: ${currentState.business}`,
         "",
         "Sources status",
         `- Meta Ads: ${sourceStatus.meta_ads || "unknown"}`,
@@ -1283,8 +1432,8 @@
         `- Email CVR: ${funnel.email_cvr ?? 0}%`,
         "",
         "Top insights",
-        `- Problem area: ${analysis.top_problem_area || "none"}`,
-        `- Opportunity area: ${analysis.top_opportunity_area || "none"}`,
+        `- Problem area: ${getProblemInsightText(data)}`,
+        `- Opportunity area: ${getOpportunityInsightText(data)}`,
         `- Break-even ROAS: ${analysis.break_even_roas ?? 0}`,
         analysis.claude_context_summary ? `- Summary: ${analysis.claude_context_summary}` : "",
         "",
@@ -1399,7 +1548,7 @@
     function renderRedFlags(data) {
       const flags = buildRedFlags(data);
       if (!flags.length) {
-        ui.redFlagsList.innerHTML = `<div class="empty-state">No critical red flags right now.</div>`;
+        ui.redFlagsList.innerHTML = `<div class="empty-state">No technical issues right now.</div>`;
         return;
       }
 
@@ -1434,17 +1583,41 @@
       `).join("");
     }
 
+    function renderCurrentState(data) {
+      const currentState = getCurrentState(data);
+      const cards = [
+        {
+          label: "Technical state",
+          value: currentState.technical,
+          footnote: "Freshness, source status, and technical confidence in the snapshot."
+        },
+        {
+          label: "Business state",
+          value: currentState.business,
+          footnote: "What the current numbers suggest operationally, without overclaiming."
+        }
+      ];
+
+      ui.currentStateGrid.innerHTML = cards.map((item) => `
+        <article class="insight-card">
+          <div class="insight-label">${escapeHtml(item.label)}</div>
+          <div class="insight-value">${escapeHtml(item.value)}</div>
+          <div class="insight-footnote">${escapeHtml(item.footnote)}</div>
+        </article>
+      `).join("");
+    }
+
     function renderInsights(data) {
       const analysis = data?.analysis || {};
       const cards = [
         {
           label: "Top Problem Area",
-          value: analysis.top_problem_area || "No urgent issue flagged",
+          value: getProblemInsightText(data),
           footnote: "Primary constraint detected from the current data."
         },
         {
           label: "Top Opportunity Area",
-          value: analysis.top_opportunity_area || "No strong edge detected yet",
+          value: getOpportunityInsightText(data),
           footnote: "Best current lever to push if data quality is sufficient."
         },
         {
@@ -1657,6 +1830,7 @@
       state.data = data || {};
       renderHeader(state.data);
       renderKpis(state.data);
+      renderCurrentState(state.data);
       renderRedFlags(state.data);
       renderFunnel(state.data);
       renderInsights(state.data);
