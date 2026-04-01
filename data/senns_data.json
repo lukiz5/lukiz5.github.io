@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-31T07:01:07Z",
+  "last_updated": "2026-04-01T07:07:33Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -21,28 +21,18 @@
     "blended_roas": 0
   },
   "instagram_organic": {
-    "followers": 25,
-    "posts_this_week": 4,
-    "avg_reach": 45.0,
-    "avg_engagement_rate": 26.67,
+    "followers": 26,
+    "posts_this_week": 3,
+    "avg_reach": 43.42,
+    "avg_engagement_rate": 22.11,
     "top_posts": [
-      {
-        "id": "17903003550224625",
-        "caption": "Your brand doesn't need another photoshoot.\n\nIt needs a system that gives you full control over the outcome - without the logistics, without the surprises, without a 15-person crew on set.\n\nThis isn't the future. This is now.\n\nIf your produ",
-        "permalink": "https://www.instagram.com/reel/DVqNhXTCPBx/",
-        "timestamp": "2026-03-09T10:00:41+0000",
-        "reach": 215,
-        "engagement_rate": 44.0,
-        "likes": 11,
-        "comments": 0
-      },
       {
         "id": "18118593223538015",
         "caption": "Your lookbook looks exactly like your competitor's lookbook.\n\nSame layout. Same poses. Same safe, predictable aesthetic.\n\nVisual consistency doesn't mean visual predictability. If your customer can't tell your brand apart from the next one ",
         "permalink": "https://www.instagram.com/p/DVvVR2vDfmz/",
         "timestamp": "2026-03-11T09:44:22+0000",
-        "reach": 18,
-        "engagement_rate": 40.0,
+        "reach": 19,
+        "engagement_rate": 38.46,
         "likes": 10,
         "comments": 0
       },
@@ -51,8 +41,8 @@
         "caption": "One product. Four worlds.\n\nAesthetic control isn't a matter of taste - it's a matter of system.\n\nWhen you have a system, you can adapt your visual narrative to every channel, season, and market. No compromises. No starting from scratch.\n\nTh",
         "permalink": "https://www.instagram.com/reel/DV8PK14DxAr/",
         "timestamp": "2026-03-16T10:01:24+0000",
-        "reach": 27,
-        "engagement_rate": 36.0,
+        "reach": 28,
+        "engagement_rate": 34.62,
         "likes": 9,
         "comments": 0
       },
@@ -61,8 +51,8 @@
         "caption": "The client wrote on Monday. By Friday, the campaign was done.\n\n40 images. Full visual consistency. Zero photoshoots.\n\nThis is what visual production looks like when you strip away everything unnecessary - the logistics, the delays, the comp",
         "permalink": "https://www.instagram.com/p/DV0UKTlDdxl/",
         "timestamp": "2026-03-13T08:10:42+0000",
-        "reach": 17,
-        "engagement_rate": 36.0,
+        "reach": 18,
+        "engagement_rate": 34.62,
         "likes": 9,
         "comments": 0
       },
@@ -71,16 +61,26 @@
         "caption": "You're a creative agency. You shouldn't be managing shoot logistics.\n\nYour job is strategy, concept, and creative direction. But somewhere along the way, you also became the ones booking studios, coordinating models, chasing retouchers, and",
         "permalink": "https://www.instagram.com/p/DWBYv32DxyS/",
         "timestamp": "2026-03-18T10:00:57+0000",
-        "reach": 19,
-        "engagement_rate": 32.0,
+        "reach": 20,
+        "engagement_rate": 30.77,
         "likes": 8,
+        "comments": 0
+      },
+      {
+        "id": "18069682250636254",
+        "caption": "From moodboard to campaign - without a single compromise along the way.\n\nEvery detail under control. Lighting, framing, color grading, styling - all matched to the brief down to the pixel.\n\nThis is what happens when production isn't a bottl",
+        "permalink": "https://www.instagram.com/p/DWGlF00jqrr/",
+        "timestamp": "2026-03-20T10:25:03+0000",
+        "reach": 21,
+        "engagement_rate": 26.92,
+        "likes": 7,
         "comments": 0
       }
     ]
   },
   "lemonsqueezy": {
     "total_revenue_usd": 99.0,
-    "orders_this_month": 1,
+    "orders_this_month": 0,
     "orders_last_30_days": [
       {
         "id": "7924535",
@@ -107,7 +107,7 @@
   },
   "mailerlite": {
     "total_subscribers": 3,
-    "new_subscribers_7d": 3,
+    "new_subscribers_7d": 0,
     "avg_open_rate": 0,
     "avg_click_rate": 0,
     "sequences": [
@@ -136,6 +136,6 @@
     "revenue_minus_spend": 99.0,
     "top_problem_area": "No paid activity detected yet",
     "top_opportunity_area": "First Level 1 sale recorded",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. First Level 1 sale recorded. Paid spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 3 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. First Level 1 sale recorded. Paid spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }
