@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-01T07:07:33Z",
+  "last_updated": "2026-04-02T06:59:41Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -22,20 +22,10 @@
   },
   "instagram_organic": {
     "followers": 26,
-    "posts_this_week": 3,
-    "avg_reach": 43.42,
-    "avg_engagement_rate": 22.11,
+    "posts_this_week": 4,
+    "avg_reach": 42.5,
+    "avg_engagement_rate": 19.55,
     "top_posts": [
-      {
-        "id": "18118593223538015",
-        "caption": "Your lookbook looks exactly like your competitor's lookbook.\n\nSame layout. Same poses. Same safe, predictable aesthetic.\n\nVisual consistency doesn't mean visual predictability. If your customer can't tell your brand apart from the next one ",
-        "permalink": "https://www.instagram.com/p/DVvVR2vDfmz/",
-        "timestamp": "2026-03-11T09:44:22+0000",
-        "reach": 19,
-        "engagement_rate": 38.46,
-        "likes": 10,
-        "comments": 0
-      },
       {
         "id": "18066937031304356",
         "caption": "One product. Four worlds.\n\nAesthetic control isn't a matter of taste - it's a matter of system.\n\nWhen you have a system, you can adapt your visual narrative to every channel, season, and market. No compromises. No starting from scratch.\n\nTh",
@@ -57,6 +47,16 @@
         "comments": 0
       },
       {
+        "id": "18069682250636254",
+        "caption": "From moodboard to campaign - without a single compromise along the way.\n\nEvery detail under control. Lighting, framing, color grading, styling - all matched to the brief down to the pixel.\n\nThis is what happens when production isn't a bottl",
+        "permalink": "https://www.instagram.com/p/DWGlF00jqrr/",
+        "timestamp": "2026-03-20T10:25:03+0000",
+        "reach": 21,
+        "engagement_rate": 30.77,
+        "likes": 8,
+        "comments": 0
+      },
+      {
         "id": "17851683249688576",
         "caption": "You're a creative agency. You shouldn't be managing shoot logistics.\n\nYour job is strategy, concept, and creative direction. But somewhere along the way, you also became the ones booking studios, coordinating models, chasing retouchers, and",
         "permalink": "https://www.instagram.com/p/DWBYv32DxyS/",
@@ -67,11 +67,11 @@
         "comments": 0
       },
       {
-        "id": "18069682250636254",
-        "caption": "From moodboard to campaign - without a single compromise along the way.\n\nEvery detail under control. Lighting, framing, color grading, styling - all matched to the brief down to the pixel.\n\nThis is what happens when production isn't a bottl",
-        "permalink": "https://www.instagram.com/p/DWGlF00jqrr/",
-        "timestamp": "2026-03-20T10:25:03+0000",
-        "reach": 21,
+        "id": "18351010750237730",
+        "caption": "Your product is premium. Your photos are not.\n\n3 signs your brand has outgrown its visual content:\n\n1 → Your product quality improved, but your imagery stayed the same. Customers feel the gap even if they can't name it.\n\n2 → You're reusing ",
+        "permalink": "https://www.instagram.com/p/DV5l1_kDIXs/",
+        "timestamp": "2026-03-15T09:21:31+0000",
+        "reach": 16,
         "engagement_rate": 26.92,
         "likes": 7,
         "comments": 0
