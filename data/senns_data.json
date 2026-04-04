@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-03T06:56:30Z",
+  "last_updated": "2026-04-04T06:45:57Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -22,16 +22,16 @@
   },
   "instagram_organic": {
     "followers": 27,
-    "posts_this_week": 5,
-    "avg_reach": 42.58,
-    "avg_engagement_rate": 16.36,
+    "posts_this_week": 6,
+    "avg_reach": 42.25,
+    "avg_engagement_rate": 15.12,
     "top_posts": [
       {
         "id": "18066937031304356",
         "caption": "One product. Four worlds.\n\nAesthetic control isn't a matter of taste - it's a matter of system.\n\nWhen you have a system, you can adapt your visual narrative to every channel, season, and market. No compromises. No starting from scratch.\n\nTh",
         "permalink": "https://www.instagram.com/reel/DV8PK14DxAr/",
         "timestamp": "2026-03-16T10:01:24+0000",
-        "reach": 29,
+        "reach": 30,
         "engagement_rate": 33.33,
         "likes": 9,
         "comments": 0
@@ -57,16 +57,6 @@
         "comments": 0
       },
       {
-        "id": "18351010750237730",
-        "caption": "Your product is premium. Your photos are not.\n\n3 signs your brand has outgrown its visual content:\n\n1 → Your product quality improved, but your imagery stayed the same. Customers feel the gap even if they can't name it.\n\n2 → You're reusing ",
-        "permalink": "https://www.instagram.com/p/DV5l1_kDIXs/",
-        "timestamp": "2026-03-15T09:21:31+0000",
-        "reach": 17,
-        "engagement_rate": 25.93,
-        "likes": 7,
-        "comments": 0
-      },
-      {
         "id": "18574044097058585",
         "caption": "Your frame tells a story before anyone wears it.\n\nEvery angle. Every proportion. Every edge.\nEither it says something - or it says nothing.\n\nMost eyewear imagery documents the product.\nThe best imagery shows the intention behind it.\n\n● senn",
         "permalink": "https://www.instagram.com/p/DWQoWveDuQX/",
@@ -74,6 +64,16 @@
         "reach": 15,
         "engagement_rate": 18.52,
         "likes": 5,
+        "comments": 0
+      },
+      {
+        "id": "18085555268252431",
+        "caption": "This is what a lifestyle campaign looks like in 2026.\n\nNo location scout. No model agency. No crew of twelve.\nOne direction. One afternoon. A complete campaign.\n\nProduct shots. Editorial portraits. Action frames. Lifestyle moments.\nEvery an",
+        "permalink": "https://www.instagram.com/p/DWgj9fdjHoO/",
+        "timestamp": "2026-03-30T12:35:18+0000",
+        "reach": 126,
+        "engagement_rate": 14.81,
+        "likes": 4,
         "comments": 0
       }
     ]
