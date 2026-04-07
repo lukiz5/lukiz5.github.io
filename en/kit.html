@@ -628,6 +628,65 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      cursor: zoom-in;
+    }
+
+    .kit-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(10, 10, 12, 0.9);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.24s ease;
+    }
+
+    .kit-lightbox.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .kit-lightbox__dialog {
+      position: relative;
+      width: min(1100px, 100%);
+      max-height: calc(100vh - 48px);
+      padding: 16px;
+      border: 1px solid var(--border-strong);
+      background: rgba(18, 18, 22, 0.98);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .kit-lightbox__close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      background: rgba(18, 18, 22, 0.92);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .kit-lightbox__image {
+      display: block;
+      width: 100%;
+      max-height: calc(100vh - 80px);
+      object-fit: contain;
+    }
+
+    .kit-lightbox__caption {
+      margin-top: 12px;
+      color: var(--text-dim);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .kit-product__cover-row {
@@ -870,6 +929,19 @@
       .kit-product__previews {
         grid-template-columns: 1fr;
         gap: 10px;
+      }
+
+      .kit-lightbox {
+        padding: 14px;
+      }
+
+      .kit-lightbox__dialog {
+        padding: 12px;
+      }
+
+      .kit-lightbox__close {
+        top: 8px;
+        right: 8px;
       }
 
       .kit-product__cover-row {
@@ -1595,10 +1667,80 @@
     window.addEventListener('orientationchange', checkVisibility);
   })();
   </script>
+  <script>
+  (function() {
+    var previewImages = document.querySelectorAll('.kit-product__previews img');
+    if (!previewImages.length) return;
+
+    var lightbox = document.getElementById('kitLightbox');
+    var lightboxImage = document.getElementById('kitLightboxImage');
+    var lightboxCaption = document.getElementById('kitLightboxCaption');
+    var lightboxClose = document.getElementById('kitLightboxClose');
+    var lastTrigger = null;
+
+    if (!lightbox || !lightboxImage || !lightboxCaption || !lightboxClose) return;
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastTrigger) {
+        lastTrigger.focus();
+      }
+    }
+
+    function openLightbox(image) {
+      lastTrigger = image;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || '';
+      lightboxCaption.textContent = image.alt || '';
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+    }
+
+    previewImages.forEach(function(image) {
+      image.setAttribute('tabindex', '0');
+      image.setAttribute('role', 'button');
+      image.setAttribute('aria-label', (image.alt || 'Preview') + '. Open larger preview.');
+      image.addEventListener('click', function() {
+        openLightbox(image);
+      });
+      image.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(image);
+        }
+      });
+    });
+
+    lightbox.addEventListener('click', function(event) {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    window.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+  })();
+  </script>
   <div class="kit-sticky" id="kitSticky" aria-hidden="true">
     <div class="kit-sticky__inner">
       <span class="kit-sticky__text">SENNS Production Kit</span>
       <a href="#" class="btn btn--primary kit-sticky__btn" id="kitStickyBtn">Get the free kit</a>
+    </div>
+  </div>
+  <div class="kit-lightbox" id="kitLightbox" aria-hidden="true">
+    <div class="kit-lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="kitLightboxCaption">
+      <button class="kit-lightbox__close" id="kitLightboxClose" type="button" aria-label="Close preview">×</button>
+      <img class="kit-lightbox__image" id="kitLightboxImage" alt="">
+      <div class="kit-lightbox__caption" id="kitLightboxCaption"></div>
     </div>
   </div>
 </body>
