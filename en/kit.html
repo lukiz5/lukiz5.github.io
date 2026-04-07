@@ -553,9 +553,111 @@
       pointer-events: none;
     }
 
+    .kit-product__card--expanded {
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .kit-product__header {
+      max-width: 640px;
+    }
+
+    .kit-product__who {
+      color: var(--text-dim);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .kit-product__parts {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .kit-product__part {
+      padding: 20px 16px;
+      border: 1px solid var(--border);
+      background: rgba(26, 26, 34, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .kit-product__part-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #d9b57a;
+      line-height: 1;
+    }
+
+    .kit-product__part strong {
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .kit-product__part span {
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .kit-product__previews {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .kit-product__previews picture {
+      display: block;
+      overflow: hidden;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      aspect-ratio: 16 / 10;
+    }
+
+    .kit-product__previews img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .kit-product__cover-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .kit-product__buy {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kit-product__buy .kit-product__features {
+      margin-bottom: 24px;
+    }
+
+    .kit-product__buy .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
     @media (max-width: 980px) {
       .kit-showcase__grid {
         grid-template-columns: 1fr 1fr;
+      }
+
+      .kit-product__parts {
+        grid-template-columns: repeat(3, 1fr);
       }
 
     }
@@ -590,6 +692,10 @@
       .kit-process__grid {
         grid-template-columns: 1fr 1fr;
         gap: 16px;
+      }
+
+      .kit-product__parts {
+        grid-template-columns: 1fr 1fr;
       }
 
       .kit-hero__value {
@@ -670,6 +776,42 @@
         gap: 12px;
       }
 
+      .kit-product__parts {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .kit-product__part {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 2px 14px;
+        padding: 14px 16px;
+      }
+
+      .kit-product__part-num {
+        grid-row: 1 / 3;
+        align-self: center;
+        font-size: 1.3rem;
+      }
+
+      .kit-product__part strong {
+        grid-column: 2;
+      }
+
+      .kit-product__part span {
+        grid-column: 2;
+      }
+
+      .kit-product__previews {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .kit-product__cover-row {
+        grid-template-columns: 1fr;
+      }
+
       .kit-compare__grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -736,6 +878,10 @@
       .kit-product__cover-placeholder {
         max-width: 180px;
         margin: 0 auto;
+      }
+
+      .kit-product__cover-placeholder {
+        max-width: 160px;
       }
 
       .kit-product__card {
@@ -940,23 +1086,65 @@
 
       <section class="kit-product" id="system">
         <div class="container">
-          <div class="kit-product__card kit-product__card--with-cover">
-            <img src="../assets/the-senns-system-cover.png" alt="The SENNS System cover" class="kit-product__cover" loading="lazy">
-            <div>
-              <p class="kit-product__label">Level 1 / Digital product</p>
+          <div class="kit-product__card kit-product__card--expanded">
+            <div class="kit-product__header">
+              <p class="kit-product__label">Level 1 / The full production framework</p>
               <h3 class="kit-product__title">The SENNS System</h3>
-              <p class="kit-product__desc">The complete production framework. 50+ prompts, full workflow, session templates, realism controls. Everything we use, nothing held back.</p>
-              <div class="kit-product__price">$99</div>
-              <p class="kit-product__price-note">one-time purchase / lifetime access</p>
-              <div class="kit-product__features">
-                <span class="kit-product__feature">50+ prompts in 8 production categories</span>
-                <span class="kit-product__feature">Session planning templates and shot logic</span>
-                <span class="kit-product__feature">Camera, lens and light reference guide</span>
-                <span class="kit-product__feature">Realism checklist and quality control</span>
-                <span class="kit-product__feature">Full hero-to-campaign workflow</span>
-                <span class="kit-product__feature">120+ pages of illustrated production knowledge</span>
+              <p class="kit-product__desc">The complete production system we use on every client brief. Tested on real campaigns for fashion, eyewear and e-commerce brands. Not a course. Not a prompt pack. A working studio's operating manual.</p>
+              <p class="kit-product__who">For brand managers, e-commerce owners, content creators and agency teams who use AI tools and want their output to look directed, not generated. You get the same frameworks, templates and quality standards we apply when a brand sends us a brief.</p>
+            </div>
+
+            <div class="kit-product__parts">
+              <div class="kit-product__part">
+                <span class="kit-product__part-num">01</span>
+                <strong>Foundation</strong>
+                <span>How to think like a director. Three real case studies from brief to final grid.</span>
               </div>
-              <a href="https://senns.lemonsqueezy.com/checkout/buy/a528ffc7-e2c3-4b1a-a28a-aec22bc6fd05?embed=1&media=0&logo=0" class="btn btn--primary kit-product__button-disabled" aria-disabled="true" tabindex="-1" onclick="return false;">COMING SOON!</a>
+              <div class="kit-product__part">
+                <span class="kit-product__part-num">02</span>
+                <strong>Session System</strong>
+                <span>Session planning and the 5-pillar prompt architecture used in every SENNS production.</span>
+              </div>
+              <div class="kit-product__part">
+                <span class="kit-product__part-num">03</span>
+                <strong>Camera, Light, Realism</strong>
+                <span>8 camera combos, 8 film stocks, 6 light setups, the realism checklist we run on every delivery.</span>
+              </div>
+              <div class="kit-product__part">
+                <span class="kit-product__part-num">04</span>
+                <strong>Production</strong>
+                <span>Hero-to-campaign pipeline. 7 category guides. The quality standards every image must clear.</span>
+              </div>
+              <div class="kit-product__part">
+                <span class="kit-product__part-num">05</span>
+                <strong>Production Library</strong>
+                <span>52 prompts, expression library, shot library, background library, client worksheets.</span>
+              </div>
+            </div>
+
+            <div class="kit-product__previews">
+              <picture><img src="../assets/system-preview-1.webp" alt="The SENNS System - five-part structure overview" loading="lazy"></picture>
+              <picture><img src="../assets/system-preview-2.webp" alt="The SENNS System - production prompt with campaign image" loading="lazy"></picture>
+              <picture><img src="../assets/system-preview-3.webp" alt="The SENNS System - light setup reference page" loading="lazy"></picture>
+            </div>
+
+            <div class="kit-product__cover-row">
+              <div class="kit-product__cover-placeholder">COVER COMING SOON</div>
+              <div class="kit-product__buy">
+                <div class="kit-product__price">$99</div>
+                <p class="kit-product__price-note">one-time purchase / lifetime access</p>
+                <div class="kit-product__features">
+                  <span class="kit-product__feature">52 production prompts across 7 categories</span>
+                  <span class="kit-product__feature">Session planning framework used on real client work</span>
+                  <span class="kit-product__feature">Camera, lens and film stock decision system</span>
+                  <span class="kit-product__feature">6 light setups with exact prompt language</span>
+                  <span class="kit-product__feature">Realism checklist and production quality standards</span>
+                  <span class="kit-product__feature">Expression, shot, background and composition libraries</span>
+                  <span class="kit-product__feature">Brand consistency worksheet for client projects</span>
+                  <span class="kit-product__feature">120+ illustrated pages across 5 parts</span>
+                </div>
+                <a href="https://senns.lemonsqueezy.com/checkout/buy/a528ffc7-e2c3-4b1a-a28a-aec22bc6fd05?embed=1&media=0&logo=0" class="btn btn--primary kit-product__button-disabled" aria-disabled="true" tabindex="-1" onclick="return false;">COMING SOON</a>
+              </div>
             </div>
           </div>
         </div>
