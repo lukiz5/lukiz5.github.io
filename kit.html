@@ -615,12 +615,35 @@
     }
 
     .kit-product__previews picture {
+      position: relative;
       display: block;
       overflow: hidden;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--bg-alt);
       aspect-ratio: 16 / 10;
+      cursor: zoom-in;
+    }
+
+    .kit-product__previews picture::after {
+      content: '+';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(14, 14, 16, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      z-index: 2;
+      pointer-events: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
     }
 
     .kit-product__previews img {
@@ -1669,6 +1692,7 @@
   </script>
   <script>
   (function() {
+    function initPreviewLightbox() {
     var previewImages = document.querySelectorAll('.kit-product__previews img');
     if (!previewImages.length) return;
 
@@ -1728,6 +1752,13 @@
         closeLightbox();
       }
     });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPreviewLightbox);
+    } else {
+      initPreviewLightbox();
+    }
   })();
   </script>
   <div class="kit-sticky" id="kitSticky" aria-hidden="true">
