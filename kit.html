@@ -678,7 +678,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border-strong);
-      padding: 12px 20px;
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
       transform: translateY(100%);
       transition: transform 0.3s var(--ease);
     }
@@ -1017,20 +1017,20 @@
           <div class="kit-hero__grid">
             <div class="kit-hero__content">
               <p class="text-label">Darmowy Production Kit</p>
-              <h1 class="kit-hero__title">Wizuale kampanijne bez sesji zdjeciowej.</h1>
-              <p class="kit-hero__subtitle"><span class="kit-hero__subtitle-long">Prompty, briefy i workflow ktorych uzywamy w codziennej produkcji dla klientow. Ten sam system. Teraz Twoj.</span><span class="kit-hero__subtitle-short">Prompty i workflow studia. Za darmo.</span> <span class="kit-hero__accent">Za darmo.</span></p>
+              <h1 class="kit-hero__title">Wizuale kampanijne bez sesji zdjęciowej.</h1>
+              <p class="kit-hero__subtitle"><span class="kit-hero__subtitle-long">Prompty, briefy i workflow, których używamy w codziennej produkcji dla klientów. Ten sam system. Teraz Twój.</span><span class="kit-hero__subtitle-short">Prompty i workflow studia. Za darmo.</span> <span class="kit-hero__accent">Za darmo.</span></p>
               <div class="kit-hero__values kit-hero__checks">
                 <div class="kit-hero__value">
-                  <strong>10 promptow gotowych do kampanii</strong>
-                  <span>Moda, eyewear, beauty, lifestyle, e-commerce. Kazdy testowany na prawdziwych briefach.</span>
+                  <strong>10 promptów gotowych do kampanii</strong>
+                  <span>Moda, eyewear, beauty, lifestyle, e-commerce. Każdy testowany na prawdziwych briefach.</span>
                 </div>
                 <div class="kit-hero__value">
                   <strong>Metoda planowania sesji</strong>
-                  <span>Jak zamieniamy jeden brief w pelna kampanie. Myslenie produkcyjne za kazdym zdjeciem.</span>
+                  <span>Jak zamieniamy jeden brief w pełną kampanię. Myślenie produkcyjne za każdym zdjęciem.</span>
                 </div>
                 <div class="kit-hero__value">
-                  <strong>Referencje kamery, swiatla i kliszy</strong>
-                  <span>Jezyk techniczny ktory sprawia ze AI output wyglada jak kierowana sesja.</span>
+                  <strong>Referencje kamery, światła i kliszy</strong>
+                  <span>Język techniczny, który sprawia, że AI output wygląda jak kierowana sesja.</span>
                 </div>
               </div>
               <form class="kit-form" method="POST" novalidate>
@@ -1056,41 +1056,41 @@
           <div class="kit-showcase__head">
             <p class="text-label">Z naszej produkcji</p>
             <h2 class="section__title">Bez sesji. Bez studia. Bez ekipy.</h2>
-            <p class="section__subtitle">Kazde zdjecie ponizej powstalo na prawdziwy brief w tym systemie. Te same prompty. Ten sam workflow. Te same standardy.</p>
+            <p class="section__subtitle">Każde zdjęcie poniżej powstało na prawdziwy brief w tym systemie. Te same prompty. Ten sam workflow. Te same standardy.</p>
           </div>
           <div class="kit-showcase__grid">
             <picture><img src="assets/work-main.webp" alt="Kampania modowa SENNS.STUDIO" loading="lazy"></picture>
             <picture><img src="assets/work-1.webp" alt="Editorial SENNS.STUDIO" loading="lazy"></picture>
             <picture><img src="assets/work-2.webp" alt="Lookbook SENNS.STUDIO" loading="lazy"></picture>
           </div>
-          <p class="section__caption" style="margin-top:28px;">Zbudowane na prawdziwe briefy klientow. Opublikowane na naszym feedzie.</p>
+          <p class="section__caption" style="margin-top:28px;">Zbudowane na prawdziwych briefach klientów. Opublikowane na naszym feedzie.</p>
         </div>
       </section>
 
       <section class="kit-process">
         <div class="container">
-          <p class="text-label">Jak to dziala</p>
+          <p class="text-label">Jak to działa</p>
           <h2 class="section__title">Od briefu do kampanii w czterech krokach.</h2>
           <div class="kit-process__grid">
             <div class="kit-process__step">
               <span class="kit-process__number">01</span>
               <strong>Napisz brief sesji</strong>
-              <span>Swiat, postac, swiatlo, role zdjec. Piec minut.</span>
+              <span>Świat, postać, światło, role zdjęć. Pięć minut.</span>
             </div>
             <div class="kit-process__step">
               <span class="kit-process__number">02</span>
               <strong>Zbuduj jeden hero frame</strong>
-              <span>Jedno zdjecie ktore zamyka kierunek calej sesji.</span>
+              <span>Jedno zdjęcie, które zamyka kierunek całej sesji.</span>
             </div>
             <div class="kit-process__step">
               <span class="kit-process__number">03</span>
               <strong>Oczysc i rozwin</strong>
-              <span>Napraw artefakty. Generuj ujecia, kadry, ekspresje.</span>
+              <span>Napraw artefakty. Generuj ujęcia, kadry, ekspresje.</span>
             </div>
             <div class="kit-process__step">
               <span class="kit-process__number">04</span>
-              <strong>Dostarcz kampanie</strong>
-              <span>Hero, produkt, detal, lifestyle. Jedna sesja pokrywa kazdy format.</span>
+              <strong>Dostarcz kampanię</strong>
+              <span>Hero, produkt, detal, lifestyle. Jedna sesja pokrywa każdy format.</span>
             </div>
           </div>
         </div>
@@ -1101,15 +1101,15 @@
           <div class="kit-stats__grid">
             <div class="kit-stats__item">
               <strong>52</strong>
-              <span>promptow produkcyjnych</span>
+              <span>promptów produkcyjnych</span>
             </div>
             <div class="kit-stats__item">
               <strong>8</strong>
-              <span>rozdzialow</span>
+              <span>rozdziałów</span>
             </div>
             <div class="kit-stats__item">
               <strong>6</strong>
-              <span>setupow swiatla</span>
+              <span>setupów światła</span>
             </div>
             <div class="kit-stats__item">
               <strong>30+</strong>
@@ -1125,87 +1125,87 @@
 
       <section class="kit-compare">
         <div class="container">
-          <p class="text-label">Roznica</p>
+          <p class="text-label">Różnica</p>
           <h2 class="section__title">Generyczny output vs. kierowana produkcja.</h2>
           <div class="kit-compare__grid">
             <div class="kit-compare__side">
               <picture class="kit-compare__image">
-                <img src="assets/compare-generic.webp" alt="Generyczny obraz modowy AI z plaskim swiatlem i stockowa poza" loading="lazy">
+                <img src="assets/compare-generic.webp" alt="Generyczny obraz modowy AI z płaskim światłem i stockową pozą" loading="lazy">
               </picture>
               <div class="kit-compare__label kit-compare__label--before">Bez kierunku</div>
-              <p class="kit-compare__desc">Losowy prompt. Stockowa poza. Plaskie swiatlo. Generyczne tlo. Moze pochodzic z dowolnego narzedzia, od kogokolwiek.</p>
+              <p class="kit-compare__desc">Losowy prompt. Stockowa poza. Płaskie światło. Generyczne tło. Może pochodzić z dowolnego narzędzia, od kogokolwiek.</p>
             </div>
             <div class="kit-compare__side">
               <picture class="kit-compare__image">
-                <img src="assets/compare-directed.webp" alt="Kierowany obraz modowy SENNS ze specyficznym swiatlem i editorialowa poza" loading="lazy">
+                <img src="assets/compare-directed.webp" alt="Kierowany obraz modowy SENNS ze specyficznym światłem i editorialową pozą" loading="lazy">
               </picture>
               <div class="kit-compare__label kit-compare__label--after">Kierowane przez studio</div>
-              <p class="kit-compare__desc">Brief klienta. Planowanie sesji. Kierowane swiatlo. Prawdziwy jezyk kamery. Zbudowane pod kampanie, nie pod feed.</p>
+              <p class="kit-compare__desc">Brief klienta. Planowanie sesji. Kierowane światło. Prawdziwy język kamery. Zbudowane pod kampanię, nie pod feed.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Darmowy kit to poczatek. Oto pelny system.</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Darmowy kit to początek. Oto pełny system.</p></div></section>
 
       <section class="kit-product" id="system">
         <div class="container">
           <div class="kit-product__card kit-product__card--expanded">
             <div class="kit-product__header">
-              <p class="kit-product__label">Level 1 / Pelny framework produkcyjny</p>
+              <p class="kit-product__label">Level 1 / Pełny framework produkcyjny</p>
               <h3 class="kit-product__title">The SENNS System</h3>
-              <p class="kit-product__desc">Kompletny system produkcyjny ktorego uzywamy na kazdym briefie klienta. Testowany na prawdziwych kampaniach dla marek fashion, eyewear i e-commerce. Nie kurs. Nie paczka promptow. Instrukcja operacyjna dzialajacego studia.</p>
-              <p class="kit-product__who">Dla brand managerow, wlascicieli e-commerce, tworcow contentu i zespolow agencyjnych ktorzy uzywaja narzedzi AI i chca zeby ich output wygladal na kierowany, nie generowany. Dostajesz te same frameworki, szablony i standardy jakosci ktore stosujemy gdy marka wysyla nam brief.</p>
+              <p class="kit-product__desc">Kompletny system produkcyjny, którego używamy przy każdym briefie klienta. Testowany na prawdziwych kampaniach dla marek fashion, eyewear i e-commerce. Nie kurs. Nie paczka promptów. Instrukcja operacyjna działającego studia.</p>
+              <p class="kit-product__who">Dla brand managerów, właścicieli e-commerce, twórców contentu i zespołów agencyjnych, którzy używają narzędzi AI i chcą, żeby ich output wyglądał na kierowany, a nie generowany. Dostajesz te same frameworki, szablony i standardy jakości, które stosujemy, gdy marka wysyła nam brief.</p>
             </div>
 
             <div class="kit-product__parts">
               <div class="kit-product__part">
                 <span class="kit-product__part-num">01</span>
                 <strong>Foundation</strong>
-                <span>Jak myslec jak rezyser. Trzy prawdziwe case studies od briefu do finalnej siatki.</span>
+                <span>Jak myśleć jak reżyser. Trzy prawdziwe case studies od briefu do finalnej siatki.</span>
               </div>
               <div class="kit-product__part">
                 <span class="kit-product__part-num">02</span>
                 <strong>Session System</strong>
-                <span>Planowanie sesji i 5-filarowa architektura promptow uzywana w kazdej produkcji SENNS.</span>
+                <span>Planowanie sesji i 5-filarowa architektura promptów używana w każdej produkcji SENNS.</span>
               </div>
               <div class="kit-product__part">
                 <span class="kit-product__part-num">03</span>
                 <strong>Camera, Light, Realism</strong>
-                <span>8 zestawow kamera+obiektyw, 8 klisz, 6 setupow swiatla, checklist realizmu ktory odpalamy na kazdej dostawie.</span>
+                <span>8 zestawów kamera + obiektyw, 8 klisz, 6 setupów światła, checklista realizmu, którą odpalamy przy każdej dostawie.</span>
               </div>
               <div class="kit-product__part">
                 <span class="kit-product__part-num">04</span>
                 <strong>Production</strong>
-                <span>Pipeline od hero do kampanii. 7 przewodnikow po kategoriach. Standardy jakosci ktore kazde zdjecie musi przejsc.</span>
+                <span>Pipeline od hero do kampanii. 7 przewodników po kategoriach. Standardy jakości, które każde zdjęcie musi przejść.</span>
               </div>
               <div class="kit-product__part">
                 <span class="kit-product__part-num">05</span>
                 <strong>Production Library</strong>
-                <span>52 prompty, biblioteka ekspresji, ujecien, tel, worksheety klienckie.</span>
+                <span>52 prompty, biblioteka ekspresji, ujęć, teł i worksheety klienckie.</span>
               </div>
             </div>
 
             <div class="kit-product__previews">
-              <picture><img src="assets/system-preview-1.webp" alt="The SENNS System - przeglad pieciu czesci" loading="lazy"></picture>
+              <picture><img src="assets/system-preview-1.webp" alt="The SENNS System - przegląd pięciu części" loading="lazy"></picture>
               <picture><img src="assets/system-preview-2.webp" alt="The SENNS System - prompt produkcyjny z obrazem kampanii" loading="lazy"></picture>
-              <picture><img src="assets/system-preview-3.webp" alt="The SENNS System - strona z referencja setupu swiatla" loading="lazy"></picture>
+              <picture><img src="assets/system-preview-3.webp" alt="The SENNS System - strona z referencją setupu światła" loading="lazy"></picture>
             </div>
 
             <div class="kit-product__cover-row">
               <div class="kit-product__cover-placeholder">COVER COMING SOON</div>
               <div class="kit-product__buy">
                 <div class="kit-product__price">369 PLN</div>
-                <p class="kit-product__price-note">jednorazowy zakup / dostep bez limitu</p>
+                <p class="kit-product__price-note">jednorazowy zakup / dostęp bez limitu</p>
                 <div class="kit-product__features">
                   <span class="kit-product__feature">52 prompty produkcyjne w 7 kategoriach</span>
-                  <span class="kit-product__feature">Framework planowania sesji uzywany w pracy z klientami</span>
-                  <span class="kit-product__feature">System decyzji kamera, obiektyw i klisza</span>
-                  <span class="kit-product__feature">6 setupow swiatla z dokladnym jezykiem promptow</span>
-                  <span class="kit-product__feature">Checklist realizmu i standardy jakosci produkcji</span>
-                  <span class="kit-product__feature">Biblioteka ekspresji, ujec, tła i kompozycji</span>
-                  <span class="kit-product__feature">Worksheet do projektow klienckich i spojnosci marki</span>
-                  <span class="kit-product__feature">120+ ilustrowanych stron w 5 czesciach</span>
+                  <span class="kit-product__feature">Framework planowania sesji używany w pracy z klientami</span>
+                  <span class="kit-product__feature">System decyzji: kamera, obiektyw i klisza</span>
+                  <span class="kit-product__feature">6 setupów światła z dokładnym językiem promptów</span>
+                  <span class="kit-product__feature">Checklista realizmu i standardy jakości produkcji</span>
+                  <span class="kit-product__feature">Biblioteka ekspresji, ujęć, tła i kompozycji</span>
+                  <span class="kit-product__feature">Worksheet do projektów klienckich i spójności marki</span>
+                  <span class="kit-product__feature">120+ ilustrowanych stron w 5 częściach</span>
                 </div>
                 <a href="https://senns.lemonsqueezy.com/checkout/buy/a528ffc7-e2c3-4b1a-a28a-aec22bc6fd05?embed=1&media=0&logo=0" class="btn btn--primary kit-product__button-disabled" aria-disabled="true" tabindex="-1" onclick="return false;">COMING SOON</a>
               </div>
@@ -1214,7 +1214,7 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Chcesz bezposrednich wskazowek dla swojej marki?</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Chcesz bezpośrednich wskazówek dla swojej marki?</p></div></section>
 
       <section class="kit-product" id="consultation">
         <div class="container">
@@ -1236,14 +1236,14 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Albo zostaw produkcje nam.</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Albo zostaw produkcję nam.</p></div></section>
 
       <section class="kit-product" id="production">
         <div class="container">
           <div class="kit-product__card kit-product__card--compact">
             <div>
               <p class="kit-product__label">Level 3 / Zrobimy to za Ciebie</p>
-              <h3 class="kit-product__title">Zajmiemy sie produkcja.</h3>
+              <h3 class="kit-product__title">Zajmiemy się produkcją.</h3>
               <p class="kit-product__desc">Kampanie. Lookbooki. E-commerce. Eyewear. My prowadzimy produkcję wizualną, Ty akceptujesz wyniki.</p>
               <div class="kit-product__price">Indywidualnie</div>
               <p class="kit-product__price-note">zakres i wycena per projekt</p>

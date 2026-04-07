@@ -678,7 +678,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-top: 1px solid var(--border-strong);
-      padding: 12px 20px;
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
       transform: translateY(100%);
       transition: transform 0.3s var(--ease);
     }
