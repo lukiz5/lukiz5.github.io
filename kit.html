@@ -667,6 +667,54 @@
       font-size: clamp(1.5rem, 2.5vw, 2rem);
     }
 
+    .kit-sticky {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(14, 14, 16, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-strong);
+      padding: 12px 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s var(--ease);
+    }
+
+    .kit-sticky.is-visible {
+      transform: translateY(0);
+    }
+
+    .kit-sticky__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .kit-sticky__text {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .kit-sticky__btn {
+      white-space: nowrap;
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+
+    @media (min-width: 769px) {
+      .kit-sticky {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 980px) {
       .kit-showcase__grid {
         grid-template-columns: 1fr 1fr;
@@ -1491,5 +1539,62 @@
     }, 5000);
   })();
   </script>
+  <script>
+  (function() {
+    var sticky = document.getElementById('kitSticky');
+    var stickyBtn = document.getElementById('kitStickyBtn');
+    var form = document.querySelector('.kit-form');
+    var emailInput = form ? form.querySelector('input[type="email"]') : null;
+    var success = document.querySelector('.kit-form__success');
+
+    if (!sticky || !form) return;
+
+    function checkVisibility() {
+      if (success && success.style.display !== 'none') {
+        sticky.style.display = 'none';
+        return;
+      }
+      var rect = form.getBoundingClientRect();
+      var isFormHidden = rect.bottom < 0;
+      if (isFormHidden && window.innerWidth < 769) {
+        sticky.style.display = 'block';
+        sticky.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(function() {
+          sticky.classList.add('is-visible');
+        });
+      } else {
+        sticky.classList.remove('is-visible');
+        sticky.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    if (stickyBtn) {
+      stickyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (emailInput) {
+          emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(function() { emailInput.focus(); }, 500);
+        }
+      });
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          checkVisibility();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+  </script>
+  <div class="kit-sticky" id="kitSticky" aria-hidden="true">
+    <div class="kit-sticky__inner">
+      <span class="kit-sticky__text">SENNS Production Kit</span>
+      <a href="#" class="btn btn--primary kit-sticky__btn" id="kitStickyBtn">Pobierz darmowy kit</a>
+    </div>
+  </div>
 </body>
 </html>
