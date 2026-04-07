@@ -1579,6 +1579,8 @@
     }
 
     var ticking = false;
+    checkVisibility();
+
     window.addEventListener('scroll', function() {
       if (!ticking) {
         requestAnimationFrame(function() {
@@ -1588,6 +1590,9 @@
         ticking = true;
       }
     });
+
+    window.addEventListener('resize', checkVisibility);
+    window.addEventListener('orientationchange', checkVisibility);
   })();
   </script>
   <div class="kit-sticky" id="kitSticky" aria-hidden="true">
