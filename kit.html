@@ -452,8 +452,9 @@
 
     .kit-product__cover {
       width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: var(--bg-alt);
       border-radius: 4px;
       border: 1px solid var(--border);
     }
@@ -1288,7 +1289,7 @@
             </div>
 
             <div class="kit-product__cover-row">
-              <div class="kit-product__cover-placeholder">COVER COMING SOON</div>
+              <img src="assets/senns-system-cover.webp" alt="The SENNS System cover" class="kit-product__cover" loading="lazy">
               <div class="kit-product__buy">
                 <div class="kit-product__price">369 PLN</div>
                 <p class="kit-product__price-note">jednorazowy zakup / dostęp bez limitu</p>
