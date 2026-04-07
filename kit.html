@@ -333,6 +333,60 @@
       margin-top: 4px;
     }
 
+    .kit-compare {
+      padding: clamp(72px, 9vw, 110px) 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .kit-compare__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .kit-compare__side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .kit-compare__image {
+      display: block;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 4 / 5;
+      background: var(--bg-elevated);
+    }
+
+    .kit-compare__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .kit-compare__label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .kit-compare__label--before {
+      color: var(--text-dim);
+    }
+
+    .kit-compare__label--after {
+      color: #d9b57a;
+    }
+
+    .kit-compare__desc {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
     .kit-transition {
       text-align: center;
       padding: clamp(40px, 5vw, 56px) 0;
@@ -616,6 +670,11 @@
         gap: 12px;
       }
 
+      .kit-compare__grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
       .kit-process__step {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -849,6 +908,29 @@
             <div class="kit-stats__item">
               <strong>120+</strong>
               <span>stron</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-compare">
+        <div class="container">
+          <p class="text-label">Roznica</p>
+          <h2 class="section__title">Generyczny output vs. kierowana produkcja.</h2>
+          <div class="kit-compare__grid">
+            <div class="kit-compare__side">
+              <picture class="kit-compare__image">
+                <img src="assets/compare-generic.webp" alt="Generyczny obraz modowy AI z plaskim swiatlem i stockowa poza" loading="lazy">
+              </picture>
+              <div class="kit-compare__label kit-compare__label--before">Bez kierunku</div>
+              <p class="kit-compare__desc">Losowy prompt. Stockowa poza. Plaskie swiatlo. Generyczne tlo. Moze pochodzic z dowolnego narzedzia, od kogokolwiek.</p>
+            </div>
+            <div class="kit-compare__side">
+              <picture class="kit-compare__image">
+                <img src="assets/compare-directed.webp" alt="Kierowany obraz modowy SENNS ze specyficznym swiatlem i editorialowa poza" loading="lazy">
+              </picture>
+              <div class="kit-compare__label kit-compare__label--after">Kierowane przez studio</div>
+              <p class="kit-compare__desc">Brief klienta. Planowanie sesji. Kierowane swiatlo. Prawdziwy jezyk kamery. Zbudowane pod kampanie, nie pod feed.</p>
             </div>
           </div>
         </div>
