@@ -255,47 +255,82 @@
       border-top: 1px solid var(--border-subtle);
     }
 
-    .kit-testimonials {
-      padding: clamp(64px, 8vw, 96px) 0;
+    .kit-process {
+      padding: clamp(72px, 9vw, 110px) 0;
       border-top: 1px solid var(--border-subtle);
     }
 
-    .kit-testimonials__grid {
+    .kit-process__grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 24px;
+      margin-top: 40px;
     }
 
-    .kit-testimonial {
-      padding: 28px;
-      background: var(--bg-elevated);
+    .kit-process__step {
+      padding: 28px 24px;
       border: 1px solid var(--border);
+      background: var(--bg-alt);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 8px;
     }
 
-    .kit-testimonial__quote {
+    .kit-process__number {
       font-family: var(--font-display);
       font-style: italic;
-      font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
-      line-height: 1.65;
-      color: var(--text);
-      margin-bottom: 20px;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      color: #d9b57a;
+      line-height: 1;
+      margin-bottom: 4px;
     }
 
-    .kit-testimonial__author strong {
-      display: block;
+    .kit-process__step strong {
       color: var(--text);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
-      margin-bottom: 2px;
+      line-height: 1.35;
     }
 
-    .kit-testimonial__author span {
-      color: var(--text-dim);
+    .kit-process__step span {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .kit-stats {
+      padding: clamp(40px, 5vw, 56px) 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .kit-stats__grid {
+      display: flex;
+      justify-content: center;
+      gap: clamp(24px, 4vw, 48px);
+      flex-wrap: wrap;
+    }
+
+    .kit-stats__item {
+      text-align: center;
+    }
+
+    .kit-stats__item strong {
+      display: block;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .kit-stats__item span {
+      display: block;
       font-size: 12px;
-      letter-spacing: 0.03em;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 4px;
     }
 
     .kit-transition {
@@ -469,10 +504,6 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .kit-testimonials__grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
     }
 
     @media (max-width: 768px) {
@@ -500,6 +531,11 @@
         grid-template-columns: 1fr;
         gap: 10px;
         margin-bottom: 24px;
+      }
+
+      .kit-process__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
       }
 
       .kit-hero__value {
@@ -571,9 +607,45 @@
         padding: 12px 14px 12px 16px;
       }
 
-      .kit-showcase__grid,
-      .kit-testimonials__grid {
+      .kit-showcase__grid {
         grid-template-columns: 1fr;
+      }
+
+      .kit-process__grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .kit-process__step {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 4px 16px;
+        padding: 16px 18px;
+      }
+
+      .kit-process__number {
+        grid-row: 1 / 3;
+        align-self: center;
+        font-size: 2rem;
+      }
+
+      .kit-process__step strong {
+        grid-column: 2;
+        align-self: end;
+      }
+
+      .kit-process__step span {
+        grid-column: 2;
+        align-self: start;
+      }
+
+      .kit-stats__grid {
+        gap: 20px;
+      }
+
+      .kit-stats__item strong {
+        font-size: 2rem;
       }
 
       .kit-form {
@@ -726,29 +798,57 @@
         </div>
       </section>
 
-      <section class="kit-testimonials">
+      <section class="kit-process">
         <div class="container">
-          <div class="kit-testimonials__grid">
-            <div class="kit-testimonial">
-              <p class="kit-testimonial__quote">"Przez tygodnie generowałem losowe obrazy. Sama metoda planowania sesji zmieniła wszystko. Moje wyniki w końcu wyglądają spójnie."</p>
-              <div class="kit-testimonial__author">
-                <strong>Marta Kowalczyk</strong>
-                <span>Brand Manager, Aterra Clothing</span>
-              </div>
+          <p class="text-label">Jak to dziala</p>
+          <h2 class="section__title">Od briefu do kampanii w czterech krokach.</h2>
+          <div class="kit-process__grid">
+            <div class="kit-process__step">
+              <span class="kit-process__number">01</span>
+              <strong>Napisz brief sesji</strong>
+              <span>Swiat, postac, swiatlo, role zdjec. Piec minut.</span>
             </div>
-            <div class="kit-testimonial">
-              <p class="kit-testimonial__quote">"Użyliśmy trzech promptów z kitu do wiosennego lookbooka. Klient zapytał, kto jest naszym nowym fotografem."</p>
-              <div class="kit-testimonial__author">
-                <strong>Daniel Varga</strong>
-                <span>Creative Director, Noma Studio</span>
-              </div>
+            <div class="kit-process__step">
+              <span class="kit-process__number">02</span>
+              <strong>Zbuduj jeden hero frame</strong>
+              <span>Jedno zdjecie ktore zamyka kierunek calej sesji.</span>
             </div>
-            <div class="kit-testimonial">
-              <p class="kit-testimonial__quote">"Referencje kamer i światła zrobiły największą różnicę. Nasze zdjęcia produktowe w końcu wyglądają, jakby należały do tej samej kampanii."</p>
-              <div class="kit-testimonial__author">
-                <strong>Lena Richter</strong>
-                <span>E-commerce Lead, Belmonte Eyewear</span>
-              </div>
+            <div class="kit-process__step">
+              <span class="kit-process__number">03</span>
+              <strong>Oczysc i rozwin</strong>
+              <span>Napraw artefakty. Generuj ujecia, kadry, ekspresje.</span>
+            </div>
+            <div class="kit-process__step">
+              <span class="kit-process__number">04</span>
+              <strong>Dostarcz kampanie</strong>
+              <span>Hero, produkt, detal, lifestyle. Jedna sesja pokrywa kazdy format.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kit-stats">
+        <div class="container">
+          <div class="kit-stats__grid">
+            <div class="kit-stats__item">
+              <strong>52</strong>
+              <span>promptow produkcyjnych</span>
+            </div>
+            <div class="kit-stats__item">
+              <strong>8</strong>
+              <span>rozdzialow</span>
+            </div>
+            <div class="kit-stats__item">
+              <strong>6</strong>
+              <span>setupow swiatla</span>
+            </div>
+            <div class="kit-stats__item">
+              <strong>30+</strong>
+              <span>nazwanych ekspresji</span>
+            </div>
+            <div class="kit-stats__item">
+              <strong>120+</strong>
+              <span>stron</span>
             </div>
           </div>
         </div>
