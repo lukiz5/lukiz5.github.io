@@ -651,6 +651,22 @@
       justify-content: center;
     }
 
+    .kit-product__card--compact {
+      max-width: 620px;
+      padding: clamp(24px, 3vw, 32px);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .kit-product__card--compact .kit-product__title {
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    }
+
+    .kit-product__card--compact .kit-product__price {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+
     @media (max-width: 980px) {
       .kit-showcase__grid {
         grid-template-columns: 1fr 1fr;
@@ -1082,7 +1098,7 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Chcesz więcej niż starter kit?</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Darmowy kit to poczatek. Oto pelny system.</p></div></section>
 
       <section class="kit-product" id="system">
         <div class="container">
@@ -1150,11 +1166,11 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Nie wiesz, którą ścieżkę wybrać?</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Chcesz bezposrednich wskazowek dla swojej marki?</p></div></section>
 
       <section class="kit-product" id="consultation">
         <div class="container">
-          <div class="kit-product__card">
+          <div class="kit-product__card kit-product__card--compact">
             <div>
               <p class="kit-product__label">Level 2 / 1-na-1</p>
               <h3 class="kit-product__title">Konsultacja produkcyjna.</h3>
@@ -1172,11 +1188,11 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Albo pomiń etap nauki.</p></div></section>
+      <section class="kit-transition"><div class="container"><p>Albo zostaw produkcje nam.</p></div></section>
 
       <section class="kit-product" id="production">
         <div class="container">
-          <div class="kit-product__card">
+          <div class="kit-product__card kit-product__card--compact">
             <div>
               <p class="kit-product__label">Level 3 / Zrobimy to za Ciebie</p>
               <h3 class="kit-product__title">Zajmiemy sie produkcja.</h3>
