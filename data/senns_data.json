@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-07T07:03:55Z",
+  "last_updated": "2026-04-08T07:05:43Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,8 +23,8 @@
   "instagram_organic": {
     "followers": 28,
     "posts_this_week": 5,
-    "avg_reach": 50.33,
-    "avg_engagement_rate": 13.69,
+    "avg_reach": 51.0,
+    "avg_engagement_rate": 11.9,
     "top_posts": [
       {
         "id": "18069682250636254",
@@ -37,21 +37,11 @@
         "comments": 0
       },
       {
-        "id": "17851683249688576",
-        "caption": "You're a creative agency. You shouldn't be managing shoot logistics.\n\nYour job is strategy, concept, and creative direction. But somewhere along the way, you also became the ones booking studios, coordinating models, chasing retouchers, and",
-        "permalink": "https://www.instagram.com/p/DWBYv32DxyS/",
-        "timestamp": "2026-03-18T10:00:57+0000",
-        "reach": 22,
-        "engagement_rate": 28.57,
-        "likes": 8,
-        "comments": 0
-      },
-      {
         "id": "18085555268252431",
         "caption": "This is what a lifestyle campaign looks like in 2026.\n\nNo location scout. No model agency. No crew of twelve.\nOne direction. One afternoon. A complete campaign.\n\nProduct shots. Editorial portraits. Action frames. Lifestyle moments.\nEvery an",
         "permalink": "https://www.instagram.com/p/DWgj9fdjHoO/",
         "timestamp": "2026-03-30T12:35:18+0000",
-        "reach": 129,
+        "reach": 130,
         "engagement_rate": 17.86,
         "likes": 5,
         "comments": 0
@@ -71,7 +61,17 @@
         "caption": "72 hours. 24 images. No photoshoot.\n\nThat's not a fast turnaround.\nThat's a different production model entirely.\n\nYour content pipeline should move as fast as your product pipeline.\n\n● senns.studio\nvisual production\n\n#fashioncampaign #conte",
         "permalink": "https://www.instagram.com/reel/DWS4gPmlbtf/",
         "timestamp": "2026-03-25T05:09:32+0000",
-        "reach": 122,
+        "reach": 123,
+        "engagement_rate": 14.29,
+        "likes": 4,
+        "comments": 0
+      },
+      {
+        "id": "17990896226786576",
+        "caption": "Same brief. Two results.\n\nOne side: what you get without direction. The other: what a production system delivers. Same category, same starting point. The gap is light control, skin rendering, expression direction.\n\nGeneric tools produce ima",
+        "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
+        "timestamp": "2026-04-06T07:01:27+0000",
+        "reach": 118,
         "engagement_rate": 14.29,
         "likes": 4,
         "comments": 0
@@ -117,6 +117,13 @@
         "status": "",
         "subscribers": 0,
         "emails": 4
+      },
+      {
+        "id": "184109755947550105",
+        "name": "SENNS - Production Kit Welcome",
+        "status": "",
+        "subscribers": 0,
+        "emails": 5
       }
     ]
   },
