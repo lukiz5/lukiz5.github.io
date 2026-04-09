@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-08T07:05:43Z",
+  "last_updated": "2026-04-09T07:09:47Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,19 +23,9 @@
   "instagram_organic": {
     "followers": 28,
     "posts_this_week": 5,
-    "avg_reach": 51.0,
-    "avg_engagement_rate": 11.9,
+    "avg_reach": 49.67,
+    "avg_engagement_rate": 9.52,
     "top_posts": [
-      {
-        "id": "18069682250636254",
-        "caption": "From moodboard to campaign - without a single compromise along the way.\n\nEvery detail under control. Lighting, framing, color grading, styling - all matched to the brief down to the pixel.\n\nThis is what happens when production isn't a bottl",
-        "permalink": "https://www.instagram.com/p/DWGlF00jqrr/",
-        "timestamp": "2026-03-20T10:25:03+0000",
-        "reach": 23,
-        "engagement_rate": 28.57,
-        "likes": 8,
-        "comments": 0
-      },
       {
         "id": "18085555268252431",
         "caption": "This is what a lifestyle campaign looks like in 2026.\n\nNo location scout. No model agency. No crew of twelve.\nOne direction. One afternoon. A complete campaign.\n\nProduct shots. Editorial portraits. Action frames. Lifestyle moments.\nEvery an",
@@ -72,6 +62,16 @@
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
         "reach": 118,
+        "engagement_rate": 14.29,
+        "likes": 4,
+        "comments": 0
+      },
+      {
+        "id": "17924584500270135",
+        "caption": "Every line earned. Every pore real.\n\nThis face has crow's feet that don't match on both sides. \nSun spots on the forehead. Salt in the beard that follows \nnatural growth patterns. Catchlights in the eyes reflecting \nthe actual light source.",
+        "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
+        "timestamp": "2026-04-03T09:41:13+0000",
+        "reach": 15,
         "engagement_rate": 14.29,
         "likes": 4,
         "comments": 0
