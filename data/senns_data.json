@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-09T07:09:47Z",
+  "last_updated": "2026-04-10T07:14:19Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,8 +23,8 @@
   "instagram_organic": {
     "followers": 28,
     "posts_this_week": 5,
-    "avg_reach": 49.67,
-    "avg_engagement_rate": 9.52,
+    "avg_reach": 48.67,
+    "avg_engagement_rate": 8.93,
     "top_posts": [
       {
         "id": "18085555268252431",
