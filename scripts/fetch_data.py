@@ -402,6 +402,23 @@ def atomic_write_json(target_path: Path, tmp_path: Path, payload: dict[str, Any]
     os.replace(tmp_path, target_path)
 
 
+def sanitize_output_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    sanitized = deep_copy_dict(payload)
+    sanitized.pop(LEGACY_SALES_SOURCE, None)
+
+    sources_status = sanitized.get("sources_status")
+    if isinstance(sources_status, dict):
+        sources_status.pop(LEGACY_SALES_SOURCE, None)
+        if SALES_SOURCE not in sources_status:
+            sources_status[SALES_SOURCE] = "skipped"
+
+    sales_section = sanitized.get(SALES_SOURCE)
+    if not isinstance(sales_section, dict):
+        sanitized[SALES_SOURCE] = default_sales()
+
+    return sanitized
+
+
 class HttpClient:
     def __init__(self) -> None:
         self.session = requests.Session()
@@ -1566,7 +1583,7 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
         "funnel": funnel,
         "analysis": analysis,
     }
-    return payload
+    return sanitize_output_payload(payload)
 
 
 def main() -> int:
@@ -1586,6 +1603,7 @@ def main() -> int:
         payload["sources_status"]["overall"] = "failed"
         payload["data_freshness_hours"] = calculate_freshness_hours(payload.get("last_updated", "never"))
 
+    payload = sanitize_output_payload(payload)
     atomic_write_json(DATA_FILE, TMP_DATA_FILE, payload)
     log("INFO", f"Dashboard data written to {DATA_FILE}")
     log("INFO", f"Overall source status: {payload.get('sources_status', {}).get('overall', 'unknown')}")
