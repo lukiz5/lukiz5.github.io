@@ -416,6 +416,14 @@ def sanitize_output_payload(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(sales_section, dict):
         sanitized[SALES_SOURCE] = default_sales()
 
+    analysis = sanitized.get("analysis")
+    if isinstance(analysis, dict):
+        summary = analysis.get("claude_context_summary")
+        if isinstance(summary, str) and summary:
+            analysis["claude_context_summary"] = summary.replace("LemonSqueezy revenue", "Sales revenue").replace(
+                "LemonSqueezy", "Sales"
+            )
+
     return sanitized
 
 
