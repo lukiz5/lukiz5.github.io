@@ -37,6 +37,7 @@ META_SOURCE = "meta_ads"
 INSTAGRAM_SOURCE = "instagram_organic"
 SALES_SOURCE = "sales"
 MAILERLITE_SOURCE = "mailerlite"
+# Backward compatibility for reading pre-migration dashboard snapshots only.
 LEGACY_SALES_SOURCE = "lemonsqueezy"
 ALL_SOURCES = [META_SOURCE, INSTAGRAM_SOURCE, SALES_SOURCE, MAILERLITE_SOURCE]
 SOURCE_LABELS = {
