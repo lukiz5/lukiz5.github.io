@@ -980,7 +980,7 @@
     const SOURCE_LABELS = {
       meta_ads: "Meta Ads",
       instagram_organic: "Instagram",
-      lemonsqueezy: "LemonSqueezy",
+      sales: "Sales",
       mailerlite: "MailerLite"
     };
 
@@ -1354,15 +1354,15 @@
 
       const metaAds = data?.meta_ads || {};
       const funnel = data?.funnel || {};
-      const lemonsqueezy = data?.lemonsqueezy || {};
+      const sales = data?.sales || {};
       const mailerlite = data?.mailerlite || {};
       const sources = data?.sources_status || {};
 
       if (Number(funnel.purchases_l1 || 0) === 1) return "First Level 1 sale recorded";
-      if (Number(lemonsqueezy.total_revenue_usd || 0) > Number(metaAds.total_spend || 0) && Number(metaAds.total_spend || 0) > 0) {
+      if (Number(sales.total_revenue_usd || 0) > Number(metaAds.total_spend || 0) && Number(metaAds.total_spend || 0) > 0) {
         return "Low spend with positive revenue";
       }
-      if (Number(lemonsqueezy.total_revenue_usd || 0) > 0 && Number(metaAds.total_spend || 0) === 0) {
+      if (Number(sales.total_revenue_usd || 0) > 0 && Number(metaAds.total_spend || 0) === 0) {
         return "Sales are appearing before measured paid attribution";
       }
       if (Number(mailerlite.new_subscribers_7d || 0) > 0 && Number(mailerlite.total_subscribers || 0) < 100) {
@@ -1395,7 +1395,7 @@
 
     function buildClaudeContext(data) {
       const metaAds = data?.meta_ads || {};
-      const lemonsqueezy = data?.lemonsqueezy || {};
+      const sales = data?.sales || {};
       const funnel = data?.funnel || {};
       const analysis = data?.analysis || {};
       const sourceStatus = data?.sources_status || {};
@@ -1434,14 +1434,14 @@
         "Sources status",
         `- Meta Ads: ${sourceStatus.meta_ads || "unknown"}`,
         `- Instagram Organic: ${sourceStatus.instagram_organic || "unknown"}`,
-        `- LemonSqueezy: ${sourceStatus.lemonsqueezy || "unknown"}`,
+        `- Sales: ${sourceStatus.sales || "unknown"}`,
         `- MailerLite: ${sourceStatus.mailerlite || "unknown"}`,
         "",
         "KPI",
         `- Spend: ${metaAds.total_spend ?? 0} USD`,
         `- Leads: ${metaAds.total_leads ?? 0}`,
         `- Purchases: ${metaAds.total_purchases ?? 0}`,
-        `- Revenue: ${lemonsqueezy.total_revenue_usd ?? 0} USD`,
+        `- Revenue: ${sales.total_revenue_usd ?? 0} USD`,
         `- Avg CPL: ${metaAds.avg_cpl ?? 0} USD`,
         `- Avg CPA: ${metaAds.avg_cpa ?? 0} USD`,
         `- Blended ROAS: ${metaAds.blended_roas ?? 0}`,
@@ -1550,13 +1550,13 @@
     function renderKpis(data) {
       const metaAds = data?.meta_ads || {};
       const analysis = data?.analysis || {};
-      const lemonsqueezy = data?.lemonsqueezy || {};
+      const sales = data?.sales || {};
 
       const kpis = [
         { label: "Total Spend", value: formatCurrencyUSD(metaAds.total_spend || 0), footnote: "Paid media spend" },
         { label: "Total Leads", value: formatNumber(metaAds.total_leads || 0), footnote: "Attributed paid leads" },
         { label: "Total Purchases", value: formatNumber(metaAds.total_purchases || 0), footnote: "Attributed paid purchases" },
-        { label: "Revenue USD", value: formatCurrencyUSD(lemonsqueezy.total_revenue_usd || 0), footnote: "LemonSqueezy revenue" },
+        { label: "Revenue USD", value: formatCurrencyUSD(sales.total_revenue_usd || 0), footnote: "Sales revenue" },
         { label: "Avg CPL", value: formatCurrencyUSD(metaAds.avg_cpl || 0), footnote: "Average cost per lead" },
         { label: "Avg CPA", value: formatCurrencyUSD(metaAds.avg_cpa || 0), footnote: "Average cost per acquisition" },
         { label: "Blended ROAS", value: formatNumber(metaAds.blended_roas || 0), footnote: "Account-level efficiency" },
@@ -1704,7 +1704,7 @@
       const sources = [
         { label: "Meta Ads", key: "meta_ads" },
         { label: "Instagram Organic", key: "instagram_organic" },
-        { label: "LemonSqueezy", key: "lemonsqueezy" },
+        { label: "Sales", key: "sales" },
         { label: "MailerLite", key: "mailerlite" }
       ];
 

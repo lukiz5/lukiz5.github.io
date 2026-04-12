@@ -3,7 +3,7 @@
 ## SENNS Dashboard
 
 ### What it is
-Private SENNS dashboard for monitoring paid, organic, revenue, and funnel performance.
+Private SENNS dashboard for monitoring paid, organic, sales, and funnel performance.
 
 ### How it works
 - GitHub Actions runs [`scripts/fetch_data.py`](/Users/apple/Desktop/SENNS.STUDIO/Strona/SENNS.STUDIO WEB/scripts/fetch_data.py).
@@ -18,11 +18,12 @@ GitHub → Actions → `Fetch SENNS Dashboard Data` → `Run workflow`
 - `META_ACCESS_TOKEN`
 - `META_AD_ACCOUNT_ID`
 - `META_INSTAGRAM_ID`
-- `LEMONSQUEEZY_API_KEY`
+- `GOOGLE_SERVICE_ACCOUNT_JSON`
 - `MAILERLITE_API_KEY`
 
 ### Access
 Open `/dashboard`
+Open `/dashboard/cover-generator.html` for the internal cover tool.
 
 ### Security note
 - The dashboard uses a client-side password gate suitable for a static GitHub Pages setup.

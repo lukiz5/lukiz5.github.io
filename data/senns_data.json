@@ -6,7 +6,7 @@
   "sources_status": {
     "meta_ads": "ok",
     "instagram_organic": "ok",
-    "lemonsqueezy": "ok",
+    "sales": "ok",
     "mailerlite": "ok",
     "overall": "ok"
   },
@@ -78,9 +78,11 @@
       }
     ]
   },
-  "lemonsqueezy": {
+  "sales": {
     "total_revenue_usd": 99.0,
     "orders_this_month": 0,
+    "last_30_days_orders": 1,
+    "last_order_date": "2026-03-30T10:31:34Z",
     "orders_last_30_days": [
       {
         "id": "7924535",
@@ -91,7 +93,14 @@
         "product_name": "The SENNS System",
         "customer_name": "Łukasz Ziółkowski",
         "quantity": 1,
-        "unit_price_usd": 99.0
+        "unit_price_usd": 99.0,
+        "currency": "",
+        "country": "",
+        "coupon_code": "",
+        "payment_type": "",
+        "event_type": "",
+        "product_key": "",
+        "license_key": ""
       }
     ],
     "products": [
@@ -143,6 +152,6 @@
     "revenue_minus_spend": 99.0,
     "top_problem_area": "No paid activity detected yet",
     "top_opportunity_area": "First Level 1 sale recorded",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. First Level 1 sale recorded. Paid spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. LemonSqueezy revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. First Level 1 sale recorded. Paid spend is $0.0 with 0 leads, 1 level-1 purchases, and blended ROAS 0.0. Sales revenue is $99.0, so revenue minus spend is $99.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }

@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, quote, urlencode, urlsplit, urlunsplit
 
 import requests
 from dateutil import parser as date_parser
@@ -21,7 +21,10 @@ DATA_FILE = Path("data/senns_data.json")
 TMP_DATA_FILE = Path("data/senns_data.tmp.json")
 
 GRAPH_API_BASE = "https://graph.facebook.com/v19.0"
-LEMONSQUEEZY_API_BASE = "https://api.lemonsqueezy.com/v1"
+GOOGLE_SHEETS_API_BASE = "https://sheets.googleapis.com/v4/spreadsheets"
+GOOGLE_SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets.readonly"
+GOOGLE_SERVICE_ACCOUNT_SECRET = "GOOGLE_SERVICE_ACCOUNT_JSON"
+GOOGLE_SALES_SHEET_ID = "1yv9EmGQbYjfup141LvEv8R3i9NHf-2Kn4HMkyWKoEU8"
 MAILERLITE_API_BASE = "https://connect.mailerlite.com/api"
 
 REQUEST_TIMEOUT = 25
@@ -32,15 +35,31 @@ STALE_DATA_HOURS = 36.0
 
 META_SOURCE = "meta_ads"
 INSTAGRAM_SOURCE = "instagram_organic"
-LEMONSQUEEZY_SOURCE = "lemonsqueezy"
+SALES_SOURCE = "sales"
 MAILERLITE_SOURCE = "mailerlite"
-ALL_SOURCES = [META_SOURCE, INSTAGRAM_SOURCE, LEMONSQUEEZY_SOURCE, MAILERLITE_SOURCE]
+LEGACY_SALES_SOURCE = "lemonsqueezy"
+ALL_SOURCES = [META_SOURCE, INSTAGRAM_SOURCE, SALES_SOURCE, MAILERLITE_SOURCE]
 SOURCE_LABELS = {
     META_SOURCE: "Meta Ads",
     INSTAGRAM_SOURCE: "Instagram",
-    LEMONSQUEEZY_SOURCE: "LemonSqueezy",
+    SALES_SOURCE: "Sales",
     MAILERLITE_SOURCE: "MailerLite",
 }
+
+SALES_SHEET_COLUMNS = [
+    "Date",
+    "Email",
+    "Product",
+    "Product Key",
+    "Order ID",
+    "Currency",
+    "Price",
+    "Payment Type",
+    "Country",
+    "Coupon Code",
+    "Event Type",
+    "License Key",
+]
 
 LEAD_ACTION_TYPES = {
     "lead",
@@ -141,64 +160,6 @@ def nested_dict_value(mapping: dict[str, Any], *keys: str) -> Any:
             return None
         current = current.get(key)
     return current
-
-
-def normalize_lemonsqueezy_amount(
-    raw_value: Any,
-    *,
-    formatted_value: Any = None,
-    assume_cents: bool = False,
-) -> float:
-    formatted_amount = parse_currency_string(formatted_value)
-    raw_text = str(raw_value).strip() if raw_value not in (None, "") else ""
-    raw_amount = parse_currency_string(raw_value)
-
-    if formatted_amount is not None and raw_amount is None:
-        return safe_round(formatted_amount)
-    if raw_amount is None:
-        return 0.0
-
-    raw_looks_decimal = "." in raw_text
-    direct_amount = safe_round(raw_amount)
-    cents_amount = safe_round(raw_amount / 100.0)
-
-    if formatted_amount is not None:
-        direct_diff = abs(direct_amount - formatted_amount)
-        cents_diff = abs(cents_amount - formatted_amount)
-        if cents_diff < direct_diff:
-            return cents_amount
-        if direct_diff < cents_diff:
-            return direct_amount
-
-    if assume_cents and not raw_looks_decimal:
-        return cents_amount
-    return direct_amount
-
-
-def build_lemonsqueezy_amount_warning(
-    *,
-    context: str,
-    normalized_amount: float,
-    formatted_amount: float | None,
-    unit_price: float,
-    quantity: int,
-) -> str | None:
-    if formatted_amount is not None and formatted_amount > 0:
-        ratio = normalized_amount / formatted_amount if formatted_amount else 1
-        if ratio >= 50:
-            return (
-                f"LemonSqueezy {context} looks suspiciously high after normalization "
-                f"(${safe_round(normalized_amount)} vs formatted ${safe_round(formatted_amount)})."
-            )
-
-    expected_total = unit_price * max(quantity, 1)
-    if expected_total > 0 and normalized_amount > expected_total * 20:
-        return (
-            f"LemonSqueezy {context} looks unusually high versus line price "
-            f"(${safe_round(normalized_amount)} vs expected about ${safe_round(expected_total)})."
-        )
-
-    return None
 
 
 SENSITIVE_QUERY_KEYS = {
@@ -305,10 +266,12 @@ def default_instagram_organic() -> dict[str, Any]:
     }
 
 
-def default_lemonsqueezy() -> dict[str, Any]:
+def default_sales() -> dict[str, Any]:
     return {
         "total_revenue_usd": 0,
         "orders_this_month": 0,
+        "last_30_days_orders": 0,
+        "last_order_date": None,
         "orders_last_30_days": [],
         "products": [],
     }
@@ -352,7 +315,7 @@ def default_sources_status() -> dict[str, str]:
     return {
         META_SOURCE: "skipped",
         INSTAGRAM_SOURCE: "skipped",
-        LEMONSQUEEZY_SOURCE: "skipped",
+        SALES_SOURCE: "skipped",
         MAILERLITE_SOURCE: "skipped",
         "overall": "skipped",
     }
@@ -367,7 +330,7 @@ def default_dashboard_data() -> dict[str, Any]:
         "sources_status": default_sources_status(),
         META_SOURCE: default_meta_ads(),
         INSTAGRAM_SOURCE: default_instagram_organic(),
-        LEMONSQUEEZY_SOURCE: default_lemonsqueezy(),
+        SALES_SOURCE: default_sales(),
         MAILERLITE_SOURCE: default_mailerlite(),
         "funnel": default_funnel(),
         "analysis": default_analysis(),
@@ -381,6 +344,13 @@ def ensure_section(previous_data: dict[str, Any], section_name: str, factory: An
         merged.update(deep_copy_dict(section))
         return merged
     return factory()
+
+
+def merge_section(section: Any, factory: Any) -> dict[str, Any]:
+    merged = factory()
+    if isinstance(section, dict):
+        merged.update(deep_copy_dict(section))
+    return merged
 
 
 def load_previous_data() -> tuple[dict[str, Any], list[str]]:
@@ -406,10 +376,17 @@ def load_previous_data() -> tuple[dict[str, Any], list[str]]:
     previous["warnings"] = raw_data.get("warnings", []) if isinstance(raw_data.get("warnings"), list) else []
     previous["sources_status"] = default_sources_status()
     if isinstance(raw_data.get("sources_status"), dict):
-        previous["sources_status"].update(raw_data["sources_status"])
+        sources_status = deep_copy_dict(raw_data["sources_status"])
+        if SALES_SOURCE not in sources_status and LEGACY_SALES_SOURCE in sources_status:
+            sources_status[SALES_SOURCE] = sources_status.get(LEGACY_SALES_SOURCE)
+        sources_status.pop(LEGACY_SALES_SOURCE, None)
+        previous["sources_status"].update(sources_status)
     previous[META_SOURCE] = ensure_section(raw_data, META_SOURCE, default_meta_ads)
     previous[INSTAGRAM_SOURCE] = ensure_section(raw_data, INSTAGRAM_SOURCE, default_instagram_organic)
-    previous[LEMONSQUEEZY_SOURCE] = ensure_section(raw_data, LEMONSQUEEZY_SOURCE, default_lemonsqueezy)
+    sales_section = raw_data.get(SALES_SOURCE)
+    if not isinstance(sales_section, dict):
+        sales_section = raw_data.get(LEGACY_SALES_SOURCE)
+    previous[SALES_SOURCE] = merge_section(sales_section, default_sales)
     previous[MAILERLITE_SOURCE] = ensure_section(raw_data, MAILERLITE_SOURCE, default_mailerlite)
     previous["funnel"] = ensure_section(raw_data, "funnel", default_funnel)
     previous["analysis"] = ensure_section(raw_data, "analysis", default_analysis)
@@ -578,6 +555,138 @@ def decide_ad_set(ad_set: dict[str, Any], target_cpl: float = TARGET_CPL) -> str
     if cpl > target_cpl and cpl <= 2 * target_cpl:
         return "OPTIMIZE"
     return "MONITOR"
+
+
+def get_google_sheets_access_token(service_account_info: dict[str, Any]) -> tuple[str | None, str | None]:
+    try:
+        from google.auth.transport.requests import Request as GoogleAuthRequest
+        from google.oauth2 import service_account
+    except ImportError as exc:
+        return None, f"Google Sheets dependency missing: {exc}"
+
+    try:
+        credentials = service_account.Credentials.from_service_account_info(
+            service_account_info,
+            scopes=[GOOGLE_SHEETS_SCOPE],
+        )
+        credentials.refresh(GoogleAuthRequest(session=requests.Session()))
+    except Exception as exc:  # pragma: no cover - network/auth path
+        return None, f"Google Sheets authorization failed: {mask_sensitive_text(str(exc))}"
+
+    if not credentials.token:
+        return None, "Google Sheets authorization failed: access token missing."
+    return str(credentials.token), None
+
+
+def quote_sheet_range(sheet_title: str, cell_range: str = "A:Z") -> str:
+    escaped_title = sheet_title.replace("'", "''")
+    return quote(f"'{escaped_title}'!{cell_range}", safe="")
+
+
+def row_cell(row: list[Any], index: int | None) -> str:
+    if index is None or index < 0 or index >= len(row):
+        return ""
+    return str(row[index]).strip()
+
+
+def get_sales_column_indexes(header_row: list[Any] | None) -> tuple[dict[str, int], bool, list[str]]:
+    default_indexes = {column.lower(): index for index, column in enumerate(SALES_SHEET_COLUMNS)}
+    if not header_row:
+        return default_indexes, False, []
+
+    header_lookup = {
+        str(value).strip().lower(): index
+        for index, value in enumerate(header_row)
+        if str(value).strip()
+    }
+    matched_columns = set(default_indexes).intersection(header_lookup)
+    if len(matched_columns) < 4:
+        return default_indexes, False, []
+
+    indexes = dict(default_indexes)
+    for column in default_indexes:
+        if column in header_lookup:
+            indexes[column] = header_lookup[column]
+
+    missing_columns = [column for column in SALES_SHEET_COLUMNS if column.lower() not in header_lookup]
+    warnings: list[str] = []
+    if missing_columns:
+        warnings.append(
+            "Sales sheet is missing expected columns: " + ", ".join(missing_columns)
+        )
+
+    return indexes, True, warnings
+
+
+def build_sales_order(row: list[Any], column_indexes: dict[str, int], row_number: int) -> tuple[dict[str, Any], datetime | None, list[str]]:
+    warnings: list[str] = []
+    raw_date = row_cell(row, column_indexes.get("date"))
+    raw_price = row_cell(row, column_indexes.get("price"))
+    parsed_date = parse_datetime(raw_date)
+    if raw_date and parsed_date is None:
+        warnings.append(f"Sales row {row_number} has an invalid Date value: {raw_date}")
+
+    parsed_price = parse_currency_string(raw_price)
+    if raw_price and parsed_price is None:
+        warnings.append(f"Sales row {row_number} has an invalid Price value: {raw_price}")
+    price_usd = safe_round(parsed_price) if parsed_price is not None and parsed_price > 0 else 0
+
+    email = row_cell(row, column_indexes.get("email"))
+    product = row_cell(row, column_indexes.get("product"))
+    product_key = row_cell(row, column_indexes.get("product key"))
+    order_id = row_cell(row, column_indexes.get("order id"))
+    currency = row_cell(row, column_indexes.get("currency"))
+    payment_type = row_cell(row, column_indexes.get("payment type"))
+    country = row_cell(row, column_indexes.get("country"))
+    coupon_code = row_cell(row, column_indexes.get("coupon code"))
+    event_type = row_cell(row, column_indexes.get("event type"))
+    license_key = row_cell(row, column_indexes.get("license key"))
+
+    order = {
+        "id": order_id or f"row-{row_number}",
+        "identifier": license_key or product_key or order_id or f"row-{row_number}",
+        "status": event_type or payment_type or "paid",
+        "created_at": isoformat(parsed_date) if parsed_date else raw_date,
+        "revenue_usd": price_usd,
+        "product_name": product,
+        "customer_name": email,
+        "quantity": 1,
+        "unit_price_usd": price_usd,
+        "currency": currency,
+        "country": country,
+        "coupon_code": coupon_code,
+        "payment_type": payment_type,
+        "event_type": event_type,
+        "product_key": product_key,
+        "license_key": license_key,
+    }
+    return order, parsed_date, warnings
+
+
+def summarize_sales_products(orders: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    product_map: dict[str, dict[str, Any]] = {}
+    for order in orders:
+        product_name = str(order.get("product_name") or "Unknown")
+        product_key = str(order.get("product_key") or product_name)
+        entry = product_map.setdefault(
+            product_key,
+            {
+                "id": product_key,
+                "name": product_name,
+                "status": "",
+                "price_usd": 0,
+                "orders": 0,
+                "revenue_usd": 0,
+            },
+        )
+        entry["orders"] += 1
+        entry["revenue_usd"] = safe_round(entry["revenue_usd"] + safe_float(order.get("revenue_usd")))
+        if safe_float(order.get("unit_price_usd")) > 0:
+            entry["price_usd"] = safe_round(safe_float(order.get("unit_price_usd")))
+
+    products = list(product_map.values())
+    products.sort(key=lambda item: (safe_float(item.get("revenue_usd")), safe_int(item.get("orders"))), reverse=True)
+    return products
 
 
 def fetch_meta_ads(
@@ -902,187 +1011,145 @@ def fetch_instagram_organic(
     return section, status, errors, warnings, True
 
 
-def parse_lemonsqueezy_order(order: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
-    attributes = order.get("attributes", {}) if isinstance(order, dict) else {}
-    first_item = attributes.get("first_order_item", {}) if isinstance(attributes.get("first_order_item"), dict) else {}
-    warnings: list[str] = []
-
-    unit_price = normalize_lemonsqueezy_amount(
-        first_item.get("price"),
-        formatted_value=first_item.get("price_formatted"),
-        assume_cents=True,
-    )
-    quantity = safe_int(first_item.get("quantity"), 1) or 1
-    revenue = normalize_lemonsqueezy_amount(
-        attributes.get("total_usd") or attributes.get("subtotal_usd") or first_item.get("price") or 0,
-        formatted_value=attributes.get("total_formatted") or attributes.get("subtotal_formatted") or first_item.get("price_formatted"),
-        assume_cents=True,
-    )
-    formatted_total = parse_currency_string(attributes.get("total_formatted") or attributes.get("subtotal_formatted"))
-    sanity_warning = build_lemonsqueezy_amount_warning(
-        context=f"order {order.get('id', '') or attributes.get('identifier', '') or 'unknown'}",
-        normalized_amount=revenue,
-        formatted_amount=formatted_total,
-        unit_price=unit_price,
-        quantity=quantity,
-    )
-    if sanity_warning:
-        warnings.append(sanity_warning)
-
-    created_at = attributes.get("created_at") or attributes.get("createdAt") or ""
-    return (
-        {
-            "id": order.get("id", ""),
-            "identifier": attributes.get("identifier", ""),
-            "status": attributes.get("status", ""),
-            "created_at": created_at,
-            "revenue_usd": safe_round(revenue),
-            "product_name": first_item.get("product_name") or attributes.get("product_name") or "",
-            "customer_name": attributes.get("user_name") or "",
-            "quantity": quantity,
-            "unit_price_usd": safe_round(unit_price),
-        },
-        warnings,
-    )
-
-
-def fetch_lemonsqueezy(
+def fetch_sales_data(
     client: HttpClient,
     previous_data: dict[str, Any],
 ) -> tuple[dict[str, Any], str, list[str], list[str], bool]:
-    previous_section = ensure_section(previous_data, LEMONSQUEEZY_SOURCE, default_lemonsqueezy)
+    previous_section = ensure_section(previous_data, SALES_SOURCE, default_sales)
     section = deep_copy_dict(previous_section)
     warnings: list[str] = []
     errors: list[str] = []
     status = "ok"
     refreshed = False
 
-    api_key = os.getenv("LEMONSQUEEZY_API_KEY", "").strip()
-    if not api_key:
-        warning = "LemonSqueezy credentials missing; keeping previous or empty data."
+    service_account_raw = os.getenv(GOOGLE_SERVICE_ACCOUNT_SECRET, "").strip()
+    if not service_account_raw:
+        warning = "Google Sheets credentials missing; keeping previous or empty data."
         log("WARN", warning)
         warnings.append(warning)
         return section, "skipped", errors, warnings, False
 
+    try:
+        service_account_info = json.loads(service_account_raw)
+    except ValueError as exc:
+        failure = f"Google Sheets credentials are invalid JSON: {exc}"
+        errors.append(failure)
+        log("ERROR", failure)
+        return previous_section, "failed", errors, warnings, False
+
+    access_token, auth_error = get_google_sheets_access_token(service_account_info)
+    if auth_error:
+        errors.append(auth_error)
+        log("ERROR", auth_error)
+        return previous_section, "failed", errors, warnings, False
+
     headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Accept": "application/vnd.api+json",
+        "Authorization": f"Bearer {access_token}",
+        "Accept": "application/json",
     }
 
-    orders_url = f"{LEMONSQUEEZY_API_BASE}/orders"
-    orders, orders_error = client.get_paginated(
-        orders_url,
+    spreadsheet_url = f"{GOOGLE_SHEETS_API_BASE}/{GOOGLE_SALES_SHEET_ID}"
+    spreadsheet_payload, spreadsheet_error = client.request_json(
+        spreadsheet_url,
         headers=headers,
-        params={"page[size]": 100},
-        item_key="data",
+        params={"fields": "sheets(properties(title,index))"},
     )
+    if spreadsheet_error:
+        errors.append(f"Sales sheet metadata fetch failed: {spreadsheet_error}")
+        log("ERROR", errors[-1])
+        return previous_section, "failed", errors, warnings, False
+
+    sheet_entries = spreadsheet_payload.get("sheets", []) if isinstance(spreadsheet_payload, dict) else []
+    first_sheet_title = ""
+    if isinstance(sheet_entries, list):
+        ordered_sheets = sorted(
+            (
+                entry.get("properties", {})
+                for entry in sheet_entries
+                if isinstance(entry, dict) and isinstance(entry.get("properties"), dict)
+            ),
+            key=lambda item: safe_int(item.get("index")),
+        )
+        if ordered_sheets:
+            first_sheet_title = str(ordered_sheets[0].get("title", "")).strip()
+
+    if not first_sheet_title:
+        failure = "Sales sheet metadata fetch returned no sheets."
+        errors.append(failure)
+        log("ERROR", failure)
+        return previous_section, "failed", errors, warnings, False
+
+    values_url = f"{GOOGLE_SHEETS_API_BASE}/{GOOGLE_SALES_SHEET_ID}/values/{quote_sheet_range(first_sheet_title)}"
+    values_payload, values_error = client.request_json(
+        values_url,
+        headers=headers,
+        params={"majorDimension": "ROWS"},
+    )
+    if values_error:
+        errors.append(f"Sales sheet values fetch failed: {values_error}")
+        log("ERROR", errors[-1])
+        return previous_section, "failed", errors, warnings, False
+
+    rows = values_payload.get("values", []) if isinstance(values_payload, dict) else []
+    row_list = rows if isinstance(rows, list) else []
+    header_row = row_list[0] if row_list and isinstance(row_list[0], list) else None
+    column_indexes, has_header_row, header_warnings = get_sales_column_indexes(header_row)
+    warnings.extend(header_warnings)
+    if header_warnings:
+        status = "partial"
+    data_rows = row_list[1:] if has_header_row else row_list
 
     parsed_orders: list[dict[str, Any]] = []
     revenue_total = 0.0
     month_count = 0
     recent_orders: list[dict[str, Any]] = []
+    recent_order_dates: list[tuple[datetime, dict[str, Any]]] = []
     current_time = now_utc()
     month_start = current_time.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     thirty_days_ago = current_time - timedelta(days=30)
+    last_order_date: datetime | None = None
 
-    if orders_error:
-        errors.append(f"LemonSqueezy orders fetch failed: {orders_error}")
-        log("ERROR", errors[-1])
-        status = "partial"
-    else:
-        for order in orders:
-            if not isinstance(order, dict):
-                continue
-            parsed, order_warnings = parse_lemonsqueezy_order(order)
-            parsed_orders.append(parsed)
-            warnings.extend(order_warnings)
-            revenue_total += safe_float(parsed.get("revenue_usd"))
-            created_at = parse_datetime(parsed.get("created_at"))
-            if created_at and created_at >= month_start:
-                month_count += 1
-            if created_at and created_at >= thirty_days_ago:
-                recent_orders.append(parsed)
+    for row_index, row in enumerate(data_rows, start=2 if has_header_row else 1):
+        if not isinstance(row, list):
+            continue
+        if not any(str(value).strip() for value in row):
+            continue
+        parsed_order, order_date, order_warnings = build_sales_order(row, column_indexes, row_index)
+        parsed_orders.append(parsed_order)
+        warnings.extend(order_warnings)
+        if order_warnings:
+            status = "partial"
 
-        recent_orders.sort(key=lambda order: order.get("created_at", ""), reverse=True)
-        section["total_revenue_usd"] = safe_round(revenue_total)
-        section["orders_this_month"] = month_count
-        section["orders_last_30_days"] = recent_orders[:50]
-        refreshed = True
+        order_revenue = safe_float(parsed_order.get("revenue_usd"))
+        if order_revenue > 0:
+            revenue_total += order_revenue
+        if order_date and order_date >= month_start:
+            month_count += 1
+        if order_date and order_date >= thirty_days_ago:
+            recent_order_dates.append((order_date, parsed_order))
+        if order_date and (last_order_date is None or order_date > last_order_date):
+            last_order_date = order_date
 
-    products_url = f"{LEMONSQUEEZY_API_BASE}/products"
-    products, products_error = client.get_paginated(
-        products_url,
-        headers=headers,
-        params={"page[size]": 100},
-        item_key="data",
-    )
-
-    if products_error:
-        errors.append(f"LemonSqueezy products fetch failed: {products_error}")
-        log("ERROR", errors[-1])
-        status = "partial"
-    else:
-        revenue_by_product: dict[str, float] = {}
-        orders_by_product: dict[str, int] = {}
-        for order in parsed_orders:
-            product_name = order.get("product_name") or "Unknown"
-            revenue_by_product[product_name] = revenue_by_product.get(product_name, 0.0) + safe_float(order.get("revenue_usd"))
-            orders_by_product[product_name] = orders_by_product.get(product_name, 0) + 1
-
-        parsed_products: list[dict[str, Any]] = []
-        for product in products:
-            if not isinstance(product, dict):
-                continue
-            attributes = product.get("attributes", {})
-            name = attributes.get("name", "")
-            normalized_price = normalize_lemonsqueezy_amount(
-                attributes.get("price"),
-                formatted_value=attributes.get("price_formatted"),
-                assume_cents=True,
-            )
-            parsed_products.append(
-                {
-                    "id": product.get("id", ""),
-                    "name": name,
-                    "status": attributes.get("status", ""),
-                    "price_usd": safe_round(normalized_price),
-                    "orders": orders_by_product.get(name, 0),
-                    "revenue_usd": safe_round(revenue_by_product.get(name, 0.0)),
-                }
-            )
-        section["products"] = parsed_products
-        refreshed = True
-
-        for product in parsed_products:
-            price_usd = safe_float(product.get("price_usd"))
-            orders_count = safe_int(product.get("orders"))
-            revenue_usd = safe_float(product.get("revenue_usd"))
-            if price_usd > 0 and orders_count > 0 and revenue_usd > price_usd * orders_count * 20:
-                warnings.append(
-                    f"LemonSqueezy revenue for product '{product.get('name', 'Unknown')}' looks unusually high "
-                    f"(${safe_round(revenue_usd)} for {orders_count} orders at ${safe_round(price_usd)})."
-                )
-
-    if not section.get("products") and parsed_orders:
-        fallback_products: dict[str, dict[str, Any]] = {}
-        for order in parsed_orders:
-            product_name = order.get("product_name") or "Unknown"
-            entry = fallback_products.setdefault(
-                product_name,
-                {"id": product_name, "name": product_name, "status": "unknown", "price_usd": 0, "orders": 0, "revenue_usd": 0},
-            )
-            entry["orders"] += 1
-            entry["revenue_usd"] = safe_round(entry["revenue_usd"] + safe_float(order.get("revenue_usd")))
-        section["products"] = list(fallback_products.values())
+    recent_orders = [
+        order
+        for _, order in sorted(recent_order_dates, key=lambda item: item[0], reverse=True)[:50]
+    ]
+    section["total_revenue_usd"] = safe_round(revenue_total)
+    section["orders_this_month"] = month_count
+    section["last_30_days_orders"] = len(recent_orders)
+    section["last_order_date"] = isoformat(last_order_date) if last_order_date else None
+    section["orders_last_30_days"] = recent_orders
+    section["products"] = summarize_sales_products(parsed_orders)
+    refreshed = True
 
     if not refreshed:
-        failure = "LemonSqueezy integration failed completely; preserving previous data."
+        failure = "Sales integration failed completely; preserving previous data."
         errors.append(failure)
         log("ERROR", failure)
         return previous_section, "failed", errors, warnings, False
 
     if status == "partial":
-        warnings.append("LemonSqueezy data is partially refreshed; missing endpoints used previous or fallback values.")
+        warnings.append("Sales data is partially refreshed; some rows could not be fully parsed.")
 
     return section, status, errors, warnings, True
 
@@ -1268,10 +1335,10 @@ def fetch_mailerlite(
 
 def calculate_funnel(
     meta_ads: dict[str, Any],
-    lemonsqueezy: dict[str, Any],
+    sales: dict[str, Any],
     previous_funnel: dict[str, Any],
     meta_status: str,
-    lemonsqueezy_status: str,
+    sales_status: str,
 ) -> dict[str, Any]:
     funnel = deep_copy_dict(previous_funnel)
 
@@ -1288,15 +1355,17 @@ def calculate_funnel(
 
     paid_purchases = safe_int(meta_ads.get("total_purchases")) if meta_status not in {"failed", "skipped"} else 0
     revenue_purchases = 0
-    if lemonsqueezy_status not in {"failed", "skipped"}:
-        recent_orders = lemonsqueezy.get("orders_last_30_days", [])
-        revenue_purchases = len(recent_orders) if isinstance(recent_orders, list) and recent_orders else safe_int(
-            lemonsqueezy.get("orders_this_month")
-        )
+    if sales_status not in {"failed", "skipped"}:
+        recent_orders = sales.get("orders_last_30_days", [])
+        revenue_purchases = safe_int(sales.get("last_30_days_orders"))
+        if revenue_purchases <= 0 and isinstance(recent_orders, list) and recent_orders:
+            revenue_purchases = len(recent_orders)
+        if revenue_purchases <= 0:
+            revenue_purchases = safe_int(sales.get("orders_this_month"))
 
     if paid_purchases > 0 or revenue_purchases > 0:
         funnel["purchases_l1"] = max(paid_purchases, revenue_purchases)
-    elif meta_status in {"failed", "skipped"} and lemonsqueezy_status in {"failed", "skipped"}:
+    elif meta_status in {"failed", "skipped"} and sales_status in {"failed", "skipped"}:
         funnel["purchases_l1"] = safe_int(previous_funnel.get("purchases_l1"))
     else:
         funnel["purchases_l1"] = 0
@@ -1311,13 +1380,13 @@ def calculate_funnel(
 
 def calculate_analysis(
     meta_ads: dict[str, Any],
-    lemonsqueezy: dict[str, Any],
+    sales: dict[str, Any],
     mailerlite: dict[str, Any],
     funnel: dict[str, Any],
     sources_status: dict[str, str],
     data_freshness_hours: float | None,
 ) -> dict[str, Any]:
-    revenue = safe_float(lemonsqueezy.get("total_revenue_usd"))
+    revenue = safe_float(sales.get("total_revenue_usd"))
     spend = safe_float(meta_ads.get("total_spend"))
     leads = safe_int(meta_ads.get("total_leads"))
     avg_cpl = safe_float(meta_ads.get("avg_cpl"))
@@ -1416,7 +1485,7 @@ def calculate_analysis(
         f"Business state: {business_state} "
         f"Paid spend is ${safe_round(spend)} with {leads} leads, {level1_purchases} level-1 purchases, "
         f"and blended ROAS {safe_round(safe_float(meta_ads.get('blended_roas')), 2)}. "
-        f"LemonSqueezy revenue is ${safe_round(revenue)}, so revenue minus spend is ${revenue_minus_spend}. "
+        f"Sales revenue is ${safe_round(revenue)}, so revenue minus spend is ${revenue_minus_spend}. "
         f"MailerLite has {total_subscribers} subscribers and {new_subscribers} new subscribers in the last 7 days. "
         f"Funnel metrics show {clicks} clicks, {opt_ins} opt-ins, "
         f"LP CVR {safe_round(safe_float(funnel.get('lp_cvr')), 2)}%, and email CVR {safe_round(safe_float(funnel.get('email_cvr')), 2)}%."
@@ -1451,20 +1520,20 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
 
     meta_ads, meta_status, meta_errors, meta_warnings, _, meta_refreshed = fetch_meta_ads(client, previous_data)
     instagram_organic, instagram_status, instagram_errors, instagram_warnings, instagram_refreshed = fetch_instagram_organic(client, previous_data)
-    lemonsqueezy, lemonsqueezy_status, lemonsqueezy_errors, lemonsqueezy_warnings, lemonsqueezy_refreshed = fetch_lemonsqueezy(client, previous_data)
+    sales, sales_status, sales_errors, sales_warnings, sales_refreshed = fetch_sales_data(client, previous_data)
     mailerlite, mailerlite_status, mailerlite_errors, mailerlite_warnings, mailerlite_refreshed = fetch_mailerlite(client, previous_data)
 
-    errors.extend(meta_errors + instagram_errors + lemonsqueezy_errors + mailerlite_errors)
-    warnings.extend(meta_warnings + instagram_warnings + lemonsqueezy_warnings + mailerlite_warnings)
+    errors.extend(meta_errors + instagram_errors + sales_errors + mailerlite_errors)
+    warnings.extend(meta_warnings + instagram_warnings + sales_warnings + mailerlite_warnings)
     refreshed_sources += int(meta_refreshed)
     refreshed_sources += int(instagram_refreshed)
-    refreshed_sources += int(lemonsqueezy_refreshed)
+    refreshed_sources += int(sales_refreshed)
     refreshed_sources += int(mailerlite_refreshed)
 
     sources_status = default_sources_status()
     sources_status[META_SOURCE] = meta_status
     sources_status[INSTAGRAM_SOURCE] = instagram_status
-    sources_status[LEMONSQUEEZY_SOURCE] = lemonsqueezy_status
+    sources_status[SALES_SOURCE] = sales_status
     sources_status[MAILERLITE_SOURCE] = mailerlite_status
     sources_status["overall"] = calculate_overall_status(sources_status)
 
@@ -1476,12 +1545,12 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
 
     funnel = calculate_funnel(
         meta_ads,
-        lemonsqueezy,
+        sales,
         ensure_section(previous_data, "funnel", default_funnel),
         meta_status,
-        lemonsqueezy_status,
+        sales_status,
     )
-    analysis = calculate_analysis(meta_ads, lemonsqueezy, mailerlite, funnel, sources_status, data_freshness_hours)
+    analysis = calculate_analysis(meta_ads, sales, mailerlite, funnel, sources_status, data_freshness_hours)
 
     payload = {
         "last_updated": last_updated,
@@ -1491,7 +1560,7 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
         "sources_status": sources_status,
         META_SOURCE: meta_ads,
         INSTAGRAM_SOURCE: instagram_organic,
-        LEMONSQUEEZY_SOURCE: lemonsqueezy,
+        SALES_SOURCE: sales,
         MAILERLITE_SOURCE: mailerlite,
         "funnel": funnel,
         "analysis": analysis,
