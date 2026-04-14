@@ -186,13 +186,12 @@
     }
 
     .chat-column {
-      position: sticky;
-      top: 18px;
+      position: static;
       align-self: start;
       justify-self: end;
       width: 100%;
       max-width: 420px;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .panel {
@@ -387,11 +386,11 @@
     .chat-panel {
       padding: 18px;
       min-height: 0;
-      max-height: calc(100vh - 36px);
+      max-height: none;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      overflow: hidden;
+      overflow: visible;
       width: 100%;
     }
 
@@ -688,14 +687,12 @@
       }
     }
 
-    @media (max-width: 1520px) {
+    @media (max-width: 1700px) {
       .dashboard-layout {
         grid-template-columns: 1fr;
       }
 
       .chat-column {
-        position: static;
-        overflow: visible;
         max-width: none;
       }
 
