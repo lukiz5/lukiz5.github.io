@@ -1438,6 +1438,29 @@
   <script src="../script.js"></script>
   <script>
   (function() {
+    function resetLandingScroll() {
+      window.scrollTo(0, 0);
+    }
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    window.addEventListener('load', function() {
+      requestAnimationFrame(function() {
+        resetLandingScroll();
+      });
+    });
+
+    window.addEventListener('pageshow', function() {
+      requestAnimationFrame(function() {
+        resetLandingScroll();
+      });
+    });
+  })();
+  </script>
+  <script>
+  (function() {
     var form = document.querySelector('.kit-form');
     if (!form) return;
 
