@@ -1438,8 +1438,35 @@
   <script src="script.js"></script>
   <script>
   (function() {
+    var resetTimer = null;
+    var resetAttempts = 0;
+    var maxResetAttempts = 10;
+
     function resetLandingScroll() {
       window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
+    function stopResetLoop() {
+      if (resetTimer) {
+        window.clearInterval(resetTimer);
+        resetTimer = null;
+      }
+    }
+
+    function startResetLoop() {
+      stopResetLoop();
+      resetAttempts = 0;
+      resetLandingScroll();
+
+      resetTimer = window.setInterval(function() {
+        resetAttempts += 1;
+        resetLandingScroll();
+        if (resetAttempts >= maxResetAttempts) {
+          stopResetLoop();
+        }
+      }, 180);
     }
 
     if ('scrollRestoration' in history) {
@@ -1448,15 +1475,18 @@
 
     window.addEventListener('load', function() {
       requestAnimationFrame(function() {
-        resetLandingScroll();
+        startResetLoop();
       });
     });
 
     window.addEventListener('pageshow', function() {
       requestAnimationFrame(function() {
-        resetLandingScroll();
+        startResetLoop();
       });
     });
+
+    window.addEventListener('touchstart', stopResetLoop, { passive: true });
+    window.addEventListener('wheel', stopResetLoop, { passive: true });
   })();
   </script>
   <script>
