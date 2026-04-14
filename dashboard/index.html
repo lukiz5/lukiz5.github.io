@@ -173,8 +173,8 @@
 
     .dashboard-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(330px, 380px);
-      gap: 28px;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 34%);
+      gap: clamp(18px, 2vw, 28px);
       align-items: start;
     }
 
@@ -187,11 +187,11 @@
 
     .chat-column {
       position: sticky;
-      top: 24px;
+      top: 18px;
       align-self: start;
       justify-self: end;
       width: 100%;
-      max-width: 380px;
+      max-width: 420px;
       overflow: hidden;
     }
 
@@ -387,7 +387,7 @@
     .chat-panel {
       padding: 18px;
       min-height: 0;
-      max-height: calc(100vh - 48px);
+      max-height: calc(100vh - 36px);
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -682,7 +682,13 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 1180px) {
+    @media (max-width: 1500px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1520px) {
       .dashboard-layout {
         grid-template-columns: 1fr;
       }
@@ -690,18 +696,31 @@
       .chat-column {
         position: static;
         overflow: visible;
+        max-width: none;
       }
 
       .chat-panel {
+        padding: 16px;
+        gap: 12px;
         max-height: none;
+      }
+
+      .chat-messages {
+        min-height: 180px;
+      }
+
+      textarea {
+        min-height: 96px;
+      }
+    }
+
+    @media (max-width: 1360px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
     @media (max-width: 900px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
       .funnel-grid,
       .insight-grid,
       .source-grid,
@@ -721,6 +740,14 @@
       .chat-panel {
         padding: 18px;
         border-radius: 18px;
+      }
+
+      .chat-messages {
+        min-height: 160px;
+      }
+
+      textarea {
+        min-height: 88px;
       }
 
       .hero-top,
