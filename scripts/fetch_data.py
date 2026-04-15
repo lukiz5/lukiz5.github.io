@@ -774,6 +774,14 @@ def fetch_meta_ads(
         return section, "skipped", errors, warnings, {}, False
 
     normalized_account_id = normalize_ad_account_id(ad_account_id)
+    reporting_now = now_utc()
+    reporting_until = reporting_now.date()
+    reporting_since = reporting_until - timedelta(days=30)
+    reporting_time_range = {
+        "since": reporting_since.isoformat(),
+        "until": reporting_until.isoformat(),
+    }
+    reporting_time_range_json = json.dumps(reporting_time_range, separators=(",", ":"))
 
     campaigns_url = f"{GRAPH_API_BASE}/{normalized_account_id}/campaigns"
     campaigns_payload, campaigns_error = client.request_json(
@@ -804,13 +812,17 @@ def fetch_meta_ads(
         refreshed = True
 
     ad_sets_url = f"{GRAPH_API_BASE}/{normalized_account_id}/adsets"
+    ad_sets_insights_fragment = (
+        f'insights.time_range({reporting_time_range_json}).limit(1)'
+        "{spend,impressions,clicks,cpm,ctr,cpc,frequency,actions}"
+    )
     ad_sets_payload, ad_sets_error = client.request_json(
         ad_sets_url,
         params={
             "access_token": access_token,
             "fields": (
                 "id,name,status,daily_budget,"
-                "insights.limit(1){spend,impressions,clicks,cpm,ctr,cpc,frequency,actions}"
+                f"{ad_sets_insights_fragment}"
             ),
             "limit": 200,
         },
@@ -892,7 +904,7 @@ def fetch_meta_ads(
         params={
             "access_token": access_token,
             "fields": "spend,impressions,clicks,actions,purchase_roas",
-            "date_preset": "last_30d",
+            "time_range": reporting_time_range_json,
             "level": "account",
             "limit": 1,
         },
