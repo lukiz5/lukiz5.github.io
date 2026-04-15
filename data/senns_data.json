@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-15T12:06:35Z",
+  "last_updated": "2026-04-15T15:38:25Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -25,13 +25,13 @@
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 20.06,
-        "impressions": 145,
-        "clicks": 11,
-        "cpm": 138.34,
-        "ctr": 7.5862,
-        "cpc": 1.82,
-        "frequency": 1.06,
+        "spend": 26.87,
+        "impressions": 200,
+        "clicks": 17,
+        "cpm": 134.35,
+        "ctr": 8.5,
+        "cpc": 1.58,
+        "frequency": 1.05,
         "leads": 0,
         "purchases": 0,
         "cpl": 0,
@@ -43,12 +43,12 @@
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 12.47,
-        "impressions": 141,
+        "spend": 19.07,
+        "impressions": 220,
         "clicks": 4,
-        "cpm": 88.44,
-        "ctr": 2.8369,
-        "cpc": 3.12,
+        "cpm": 86.68,
+        "ctr": 1.8182,
+        "cpc": 4.77,
         "frequency": 1.05,
         "leads": 0,
         "purchases": 0,
@@ -61,13 +61,13 @@
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 21.81,
-        "impressions": 182,
-        "clicks": 8,
-        "cpm": 119.84,
-        "ctr": 4.3956,
-        "cpc": 2.73,
-        "frequency": 1.06,
+        "spend": 29.51,
+        "impressions": 257,
+        "clicks": 10,
+        "cpm": 114.82,
+        "ctr": 3.8911,
+        "cpc": 2.95,
+        "frequency": 1.09,
         "leads": 0,
         "purchases": 0,
         "cpl": 0,
@@ -75,7 +75,7 @@
         "decision": "LEARNING"
       }
     ],
-    "total_spend": 54.34,
+    "total_spend": 75.45,
     "total_leads": 0,
     "total_purchases": 0,
     "avg_cpl": 0,
@@ -83,18 +83,18 @@
     "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 32,
+    "followers": 33,
     "posts_this_week": 5,
-    "avg_reach": 33.5,
-    "avg_engagement_rate": 5.73,
+    "avg_reach": 35.67,
+    "avg_engagement_rate": 5.55,
     "top_posts": [
       {
         "id": "17990896226786576",
         "caption": "Same brief. Two results.\n\nOne side: what you get without direction. The other: what a production system delivers. Same category, same starting point. The gap is light control, skin rendering, expression direction.\n\nGeneric tools produce ima",
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
-        "reach": 124,
-        "engagement_rate": 12.5,
+        "reach": 126,
+        "engagement_rate": 12.12,
         "likes": 4,
         "comments": 0
       },
@@ -103,8 +103,8 @@
         "caption": "Every line earned. Every pore real.\n\nThis face has crow's feet that don't match on both sides. \nSun spots on the forehead. Salt in the beard that follows \nnatural growth patterns. Catchlights in the eyes reflecting \nthe actual light source.",
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
-        "reach": 21,
-        "engagement_rate": 12.5,
+        "reach": 23,
+        "engagement_rate": 12.12,
         "likes": 4,
         "comments": 0
       },
@@ -113,8 +113,8 @@
         "caption": "One frame. Full campaign.\n\nA single directed photograph. From that one frame: campaign hero, product packshot, lifestyle still life, on-skin detail, editorial close-up, social asset. Six formats from one session.\n\nThis is what production lo",
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
-        "reach": 140,
-        "engagement_rate": 6.25,
+        "reach": 144,
+        "engagement_rate": 6.06,
         "likes": 0,
         "comments": 2
       },
@@ -123,8 +123,8 @@
         "caption": "Same face. Six completely different campaigns.\n\nBusiness editorial. Streetwear. Summer resort. Evening. Wellness. Casual.\n\nSame model. Same skin. Same quality. Same system.\n\nDifferent outfit, different scene, different energy.\nEvery single ",
         "permalink": "https://www.instagram.com/p/DWllhslDLEF/",
         "timestamp": "2026-04-01T11:25:11+0000",
-        "reach": 19,
-        "engagement_rate": 6.25,
+        "reach": 20,
+        "engagement_rate": 6.06,
         "likes": 2,
         "comments": 0
       },
@@ -133,8 +133,8 @@
         "caption": "Skin that photographs like skin. Not porcelain. Not plastic. Not smoothed into nothing.\n\nVisible pores. Water droplets catching directional light. Natural lip pigment variation. The beauty mark stays. The flyaways stay.\n\nThis is what beauty",
         "permalink": "https://www.instagram.com/p/DW55fKaDE4J/",
         "timestamp": "2026-04-09T08:44:24+0000",
-        "reach": 14,
-        "engagement_rate": 6.25,
+        "reach": 16,
+        "engagement_rate": 6.06,
         "likes": 2,
         "comments": 0
       }
@@ -154,8 +154,8 @@
     "products": []
   },
   "mailerlite": {
-    "total_subscribers": 9,
-    "new_subscribers_7d": 6,
+    "total_subscribers": 11,
+    "new_subscribers_7d": 8,
     "avg_open_rate": 0,
     "avg_click_rate": 0,
     "sequences": [
@@ -169,21 +169,21 @@
     ]
   },
   "funnel": {
-    "impressions": 468,
-    "clicks": 23,
-    "lp_visits": 23,
+    "impressions": 677,
+    "clicks": 31,
+    "lp_visits": 31,
     "opt_ins": 0,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 4.91,
+    "ctr": 4.58,
     "lp_cvr": 0.0,
     "email_cvr": 0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": -54.34,
+    "revenue_minus_spend": -75.45,
     "top_problem_area": "Data is still too sparse for strong performance conclusions",
     "top_opportunity_area": "Email list is growing but still too small for conversion conclusions",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: Data is still too sparse for strong performance conclusions. Email list is growing but still too small for conversion conclusions. Paid spend is 54.34 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -54.34 PLN. USD to PLN rate is 3.5939 (2026-04-15). MailerLite has 9 subscribers and 6 new subscribers in the last 7 days. Funnel metrics show 23 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: Data is still too sparse for strong performance conclusions. Email list is growing but still too small for conversion conclusions. Paid spend is 75.45 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -75.45 PLN. USD to PLN rate is 3.5939 (2026-04-15). MailerLite has 11 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 31 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }
