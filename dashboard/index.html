@@ -148,9 +148,22 @@
 
     .hero-schedule {
       margin-top: 10px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.45;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-schedule strong {
+      color: var(--text);
+      font-weight: 600;
     }
 
     .meta-chip,
@@ -834,7 +847,7 @@
             <div class="meta-chip">Freshness <strong id="freshnessValue">n/a</strong></div>
             <div class="meta-chip">Mode <strong>Operational snapshot</strong></div>
           </div>
-          <p class="hero-schedule">Auto updates (PL): 07:15, 10:15, 13:15, 16:15, 19:15, 22:15.</p>
+          <p class="hero-schedule"><strong>Auto updates (PL)</strong> 07:15 · 10:15 · 13:15 · 16:15 · 19:15 · 22:15</p>
         </section>
 
         <div id="staleBanner" class="banner hidden">Data may be stale</div>
