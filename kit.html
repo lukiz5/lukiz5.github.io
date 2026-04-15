@@ -399,6 +399,17 @@
       letter-spacing: 0.04em;
     }
 
+    .kit-transition--primary {
+      padding: clamp(48px, 6vw, 64px) 0;
+      border-top: 1px solid var(--border-strong, rgba(255,255,255,0.12));
+    }
+
+    .kit-transition--primary p {
+      font-size: clamp(1rem, 1.3vw, 1.125rem);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
     .kit-transition + .kit-product {
       border-top: none;
       padding-top: 0;
@@ -1123,7 +1134,7 @@
             <span class="nav__lang-sep">/</span>
             <button class="nav__lang-btn" data-lang="en">EN</button>
           </div>
-          <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Spotkanie</a>
+          <a href="#kit-form-anchor" class="nav__cta">Pobierz kit</a>
           <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span></button>
         </div>
       </div>
@@ -1142,7 +1153,7 @@
           <span class="nav__lang-sep">/</span>
           <button class="nav__lang-btn" data-lang="en">EN</button>
         </div>
-        <a href="https://calendly.com/senns-studio/discovery-call-senns-studio" target="_blank" rel="noopener noreferrer" class="nav__cta">Spotkanie</a>
+        <a href="#kit-form-anchor" class="nav__cta">Pobierz kit</a>
       </div>
     </div>
 
@@ -1168,12 +1179,12 @@
                   <span>Język techniczny, który oddziela reżyserowaną produkcję od losowego generowania.</span>
                 </div>
               </div>
-              <form class="kit-form" method="POST" novalidate>
+              <form class="kit-form" method="POST" novalidate id="kit-form-anchor">
                 <input type="email" name="email" class="kit-form__input" placeholder="Twój adres email" autocomplete="email" required>
                 <button type="submit" class="btn btn--primary kit-form__button">Pobierz darmowy kit</button>
               </form>
               <div class="kit-form__status" aria-live="polite"></div>
-              <p style="text-align:center;color:var(--text-dim);font-size:12px;letter-spacing:0.04em;margin-top:12px;">Używany przez brand managerów, fotografów i twórców w 30+ krajach.</p>
+              <p class="kit-form__proof" style="text-align:center;color:var(--text-dim);font-size:12px;letter-spacing:0.04em;margin-top:12px;">Używany przez brand managerów, fotografów i twórców w 30+ krajach.</p>
               <div class="kit-form__success" style="display:none;">
                 <p class="kit-form__success-title">SENNS Production Kit jest gotowy do pobrania.</p>
                 <p class="kit-form__success-subtitle">Pobierz PDF poniżej.</p>
@@ -1191,8 +1202,8 @@
         <div class="container">
           <div class="kit-showcase__head">
             <p class="text-label">Z naszej produkcji</p>
-            <h2 class="section__title">Bez sesji. Bez studia. Bez ekipy.</h2>
-            <p class="section__subtitle">Każde zdjęcie poniżej powstało na prawdziwy brief w tym systemie. Te same prompty. Ten sam workflow. Te same standardy.</p>
+            <h2 class="section__title">Tworzone z reżyserią. Nie z ekipą.</h2>
+            <p class="section__subtitle">Każdy obraz poniżej powstał na podstawie realnego briefu klienta. Te same prompty. Ten sam workflow. Te same standardy, które dostajesz w kicie.</p>
           </div>
           <div class="kit-showcase__grid">
             <picture><img src="assets/work-main.webp" alt="Kampania modowa SENNS.STUDIO" loading="lazy"></picture>
@@ -1255,7 +1266,7 @@
         </div>
       </section>
 
-      <section class="kit-transition"><div class="container"><p>Starter kit jest darmowy. Oto pełny system.</p></div></section>
+      <section class="kit-transition kit-transition--primary"><div class="container"><p>Starter kit jest darmowy. Oto pełny system.</p></div></section>
 
       <section class="kit-stats">
         <div class="container">
@@ -1466,6 +1477,7 @@
     var checks = document.querySelector('.kit-hero__checks');
     var success = document.querySelector('.kit-form__success');
     var status = document.querySelector('.kit-form__status');
+    var proof = document.querySelector('.kit-form__proof');
     var downloadLink = document.querySelector('.kit-form__download');
     var mailerLiteEmbed = document.querySelector('.kit-mailerlite-embed');
     var submitButton = form.querySelector('.kit-form__button');
@@ -1520,6 +1532,7 @@
       }
       form.style.display = 'none';
       if (checks) checks.style.display = 'none';
+      if (proof) proof.style.display = 'none';
       if (success) success.style.display = 'block';
       setStatus('');
       var successTitle = success ? success.querySelector('.kit-form__success-title') : null;
