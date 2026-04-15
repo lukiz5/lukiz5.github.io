@@ -1438,35 +1438,9 @@
   <script src="script.js"></script>
   <script>
   (function() {
-    var resetTimer = null;
-    var resetAttempts = 0;
-    var maxResetAttempts = 10;
-
     function resetLandingScroll() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }
-
-    function stopResetLoop() {
-      if (resetTimer) {
-        window.clearInterval(resetTimer);
-        resetTimer = null;
-      }
-    }
-
-    function startResetLoop() {
-      stopResetLoop();
-      resetAttempts = 0;
-      resetLandingScroll();
-
-      resetTimer = window.setInterval(function() {
-        resetAttempts += 1;
-        resetLandingScroll();
-        if (resetAttempts >= maxResetAttempts) {
-          stopResetLoop();
-        }
-      }, 180);
+      if (window.location.hash) return;
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }
 
     if ('scrollRestoration' in history) {
@@ -1474,19 +1448,13 @@
     }
 
     window.addEventListener('load', function() {
-      requestAnimationFrame(function() {
-        startResetLoop();
-      });
+      window.setTimeout(resetLandingScroll, 0);
     });
 
-    window.addEventListener('pageshow', function() {
-      requestAnimationFrame(function() {
-        startResetLoop();
-      });
+    window.addEventListener('pageshow', function(event) {
+      if (event.persisted) return;
+      window.setTimeout(resetLandingScroll, 0);
     });
-
-    window.addEventListener('touchstart', stopResetLoop, { passive: true });
-    window.addEventListener('wheel', stopResetLoop, { passive: true });
   })();
   </script>
   <script>
