@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-14T07:16:41Z",
+  "last_updated": "2026-04-15T08:23:36Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -25,86 +25,76 @@
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 0.0,
-        "impressions": 0,
-        "clicks": 0,
-        "cpm": 0.0,
-        "ctr": 0.0,
-        "cpc": 0.0,
-        "frequency": 0.0,
+        "spend": 2.81,
+        "impressions": 17,
+        "clicks": 2,
+        "cpm": 165.29,
+        "ctr": 11.7647,
+        "cpc": 1.41,
+        "frequency": 1.06,
         "leads": 0,
         "purchases": 0,
         "cpl": 0,
         "cpa": 0,
-        "decision": "NO_DATA"
+        "decision": "LEARNING"
       },
       {
         "id": "120240407374040192",
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 0.0,
-        "impressions": 0,
-        "clicks": 0,
-        "cpm": 0.0,
-        "ctr": 0.0,
-        "cpc": 0.0,
-        "frequency": 0.0,
+        "spend": 3.4,
+        "impressions": 62,
+        "clicks": 1,
+        "cpm": 54.84,
+        "ctr": 1.6129,
+        "cpc": 3.4,
+        "frequency": 1.02,
         "leads": 0,
         "purchases": 0,
         "cpl": 0,
         "cpa": 0,
-        "decision": "NO_DATA"
+        "decision": "LEARNING"
       },
       {
         "id": "120240405871220192",
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 0.0,
-        "impressions": 0,
-        "clicks": 0,
-        "cpm": 0.0,
-        "ctr": 0.0,
-        "cpc": 0.0,
-        "frequency": 0.0,
+        "spend": 0.88,
+        "impressions": 21,
+        "clicks": 1,
+        "cpm": 41.9,
+        "ctr": 4.7619,
+        "cpc": 0.88,
+        "frequency": 1.0,
         "leads": 0,
         "purchases": 0,
         "cpl": 0,
         "cpa": 0,
-        "decision": "NO_DATA"
+        "decision": "LEARNING"
       }
     ],
-    "total_spend": 0.0,
+    "total_spend": 7.09,
     "total_leads": 0,
     "total_purchases": 0,
     "avg_cpl": 0,
     "avg_cpa": 0,
-    "blended_roas": 0
+    "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 28,
-    "posts_this_week": 5,
-    "avg_reach": 49.83,
-    "avg_engagement_rate": 7.44,
+    "followers": 30,
+    "posts_this_week": 6,
+    "avg_reach": 32.55,
+    "avg_engagement_rate": 5.0,
     "top_posts": [
-      {
-        "id": "18085555268252431",
-        "caption": "This is what a lifestyle campaign looks like in 2026.\n\nNo location scout. No model agency. No crew of twelve.\nOne direction. One afternoon. A complete campaign.\n\nProduct shots. Editorial portraits. Action frames. Lifestyle moments.\nEvery an",
-        "permalink": "https://www.instagram.com/p/DWgj9fdjHoO/",
-        "timestamp": "2026-03-30T12:35:18+0000",
-        "reach": 130,
-        "engagement_rate": 17.86,
-        "likes": 5,
-        "comments": 0
-      },
       {
         "id": "17990896226786576",
         "caption": "Same brief. Two results.\n\nOne side: what you get without direction. The other: what a production system delivers. Same category, same starting point. The gap is light control, skin rendering, expression direction.\n\nGeneric tools produce ima",
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
-        "reach": 120,
-        "engagement_rate": 14.29,
+        "reach": 121,
+        "engagement_rate": 13.33,
         "likes": 4,
         "comments": 0
       },
@@ -113,19 +103,9 @@
         "caption": "Every line earned. Every pore real.\n\nThis face has crow's feet that don't match on both sides. \nSun spots on the forehead. Salt in the beard that follows \nnatural growth patterns. Catchlights in the eyes reflecting \nthe actual light source.",
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
-        "reach": 17,
-        "engagement_rate": 14.29,
+        "reach": 18,
+        "engagement_rate": 13.33,
         "likes": 4,
-        "comments": 0
-      },
-      {
-        "id": "18132628636548009",
-        "caption": "One satisfying frame.\n\nAnd from that frame - a full campaign.\nHero shots. Detail textures. Editorial moments.\n\nEvery angle your brand needs. \nOne direction. This is what visual production looks like in 2026.\n\nNot twelve separate shoots. Not",
-        "permalink": "https://www.instagram.com/reel/DWgEhPQD9y_/",
-        "timestamp": "2026-03-30T08:00:59+0000",
-        "reach": 122,
-        "engagement_rate": 10.71,
-        "likes": 3,
         "comments": 0
       },
       {
@@ -133,8 +113,28 @@
         "caption": "Same face. Six completely different campaigns.\n\nBusiness editorial. Streetwear. Summer resort. Evening. Wellness. Casual.\n\nSame model. Same skin. Same quality. Same system.\n\nDifferent outfit, different scene, different energy.\nEvery single ",
         "permalink": "https://www.instagram.com/p/DWllhslDLEF/",
         "timestamp": "2026-04-01T11:25:11+0000",
-        "reach": 16,
-        "engagement_rate": 7.14,
+        "reach": 18,
+        "engagement_rate": 6.67,
+        "likes": 2,
+        "comments": 0
+      },
+      {
+        "id": "17883672294483327",
+        "caption": "Skin that photographs like skin. Not porcelain. Not plastic. Not smoothed into nothing.\n\nVisible pores. Water droplets catching directional light. Natural lip pigment variation. The beauty mark stays. The flyaways stay.\n\nThis is what beauty",
+        "permalink": "https://www.instagram.com/p/DW55fKaDE4J/",
+        "timestamp": "2026-04-09T08:44:24+0000",
+        "reach": 9,
+        "engagement_rate": 6.67,
+        "likes": 2,
+        "comments": 0
+      },
+      {
+        "id": "18129219025560172",
+        "caption": "One morning. One location. One model. Five formats ready to use.\n\nHero for your homepage. Detail for your product page. Lifestyle for social. Wide shot for your newsletter. Close-up for Stories.\n\nBrands spend weeks coordinating separate sho",
+        "permalink": "https://www.instagram.com/p/DW0l_v2DAnH/",
+        "timestamp": "2026-04-07T07:17:53+0000",
+        "reach": 9,
+        "engagement_rate": 6.67,
         "likes": 2,
         "comments": 0
       }
@@ -143,8 +143,8 @@
   "sales": {
     "currency": "PLN",
     "source_currency": "USD",
-    "fx_rate_usd_pln": 0.0,
-    "fx_rate_date": null,
+    "fx_rate_usd_pln": 3.6015,
+    "fx_rate_date": "2026-04-14",
     "total_revenue_usd": 0.0,
     "total_revenue_pln": 0.0,
     "orders_this_month": 0,
@@ -160,13 +160,6 @@
     "avg_click_rate": 0,
     "sequences": [
       {
-        "id": "182853570754774651",
-        "name": "SENNS - Kit Welcome",
-        "status": "",
-        "subscribers": 0,
-        "emails": 4
-      },
-      {
         "id": "184109755947550105",
         "name": "SENNS - Production Kit Welcome",
         "status": "",
@@ -176,21 +169,21 @@
     ]
   },
   "funnel": {
-    "impressions": 0,
-    "clicks": 0,
-    "lp_visits": 0,
+    "impressions": 100,
+    "clicks": 4,
+    "lp_visits": 4,
     "opt_ins": 0,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 0,
-    "lp_cvr": 0,
+    "ctr": 4.0,
+    "lp_cvr": 0.0,
     "email_cvr": 0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": 0.0,
-    "top_problem_area": "Funnel has no measurable acquisition data yet",
+    "revenue_minus_spend": -7.09,
+    "top_problem_area": "Data is still too sparse for strong performance conclusions",
     "top_opportunity_area": "Meta and Instagram integrations are healthy",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: Funnel has no measurable acquisition data yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 0.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: Data is still too sparse for strong performance conclusions. Meta and Instagram integrations are healthy. Paid spend is 7.09 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -7.09 PLN. USD to PLN rate is 3.6015 (2026-04-14). MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 4 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }
