@@ -141,7 +141,12 @@
     ]
   },
   "sales": {
+    "currency": "PLN",
+    "source_currency": "USD",
+    "fx_rate_usd_pln": 0.0,
+    "fx_rate_date": null,
     "total_revenue_usd": 0.0,
+    "total_revenue_pln": 0.0,
     "orders_this_month": 0,
     "last_30_days_orders": 0,
     "last_order_date": null,
@@ -186,6 +191,6 @@
     "revenue_minus_spend": 0.0,
     "top_problem_area": "Funnel has no measurable acquisition data yet",
     "top_opportunity_area": "Meta and Instagram integrations are healthy",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: Funnel has no measurable acquisition data yet. Meta and Instagram integrations are healthy. Paid spend is $0.0 with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is $0.0, so revenue minus spend is $0.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: Funnel has no measurable acquisition data yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 0.0. MailerLite has 3 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   }
 }

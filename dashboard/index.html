@@ -1070,16 +1070,6 @@
       }).format(number);
     }
 
-    function formatCurrencyUSD(value) {
-      const number = Number(value);
-      if (!Number.isFinite(number)) return "n/a";
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: number % 1 === 0 ? 0 : 2
-      }).format(number);
-    }
-
     function formatNumber(value) {
       const number = Number(value);
       if (!Number.isFinite(number)) return "n/a";
@@ -1386,10 +1376,10 @@
       const sources = data?.sources_status || {};
 
       if (Number(funnel.purchases_l1 || 0) === 1) return "First Level 1 sale recorded";
-      if (Number(sales.total_revenue_usd || 0) > Number(metaAds.total_spend || 0) && Number(metaAds.total_spend || 0) > 0) {
+      if (Number(sales.total_revenue_pln || 0) > Number(metaAds.total_spend || 0) && Number(metaAds.total_spend || 0) > 0) {
         return "Low spend with positive revenue";
       }
-      if (Number(sales.total_revenue_usd || 0) > 0 && Number(metaAds.total_spend || 0) === 0) {
+      if (Number(sales.total_revenue_pln || 0) > 0 && Number(metaAds.total_spend || 0) === 0) {
         return "Sales are appearing before measured paid attribution";
       }
       if (Number(mailerlite.new_subscribers_7d || 0) > 0 && Number(mailerlite.total_subscribers || 0) < 100) {
@@ -1436,13 +1426,13 @@
           return [
             `- ${adSet?.name || "Unnamed ad set"}`,
             `status ${adSet?.status || "unknown"}`,
-            `spend ${formatCurrencyUSD(adSet?.spend || 0)}`,
+            `spend ${formatCurrencyPLN(adSet?.spend || 0)}`,
             `impressions ${formatNumber(adSet?.impressions || 0)}`,
             `clicks ${formatNumber(adSet?.clicks || 0)}`,
             `leads ${formatNumber(adSet?.leads || 0)}`,
             `purchases ${formatNumber(adSet?.purchases || 0)}`,
-            `CPL ${formatCurrencyUSD(adSet?.cpl || 0)}`,
-            `CPA ${formatCurrencyUSD(adSet?.cpa || 0)}`,
+            `CPL ${formatCurrencyPLN(adSet?.cpl || 0)}`,
+            `CPA ${formatCurrencyPLN(adSet?.cpa || 0)}`,
             `frequency ${formatNumber(adSet?.frequency || 0)}`,
             `decision ${adSet?.decision || "NO_DATA"}`
           ].join(" | ");
@@ -1465,14 +1455,15 @@
         `- MailerLite: ${sourceStatus.mailerlite || "unknown"}`,
         "",
         "KPI",
-        `- Spend: ${metaAds.total_spend ?? 0} USD`,
+        `- Spend: ${metaAds.total_spend ?? 0} PLN`,
         `- Leads: ${metaAds.total_leads ?? 0}`,
         `- Purchases: ${metaAds.total_purchases ?? 0}`,
-        `- Revenue: ${sales.total_revenue_usd ?? 0} USD`,
-        `- Avg CPL: ${metaAds.avg_cpl ?? 0} USD`,
-        `- Avg CPA: ${metaAds.avg_cpa ?? 0} USD`,
+        `- Revenue: ${sales.total_revenue_pln ?? 0} PLN`,
+        `- Avg CPL: ${metaAds.avg_cpl ?? 0} PLN`,
+        `- Avg CPA: ${metaAds.avg_cpa ?? 0} PLN`,
         `- Blended ROAS: ${metaAds.blended_roas ?? 0}`,
-        `- Revenue minus spend: ${analysis.revenue_minus_spend ?? 0} USD`,
+        `- Revenue minus spend: ${analysis.revenue_minus_spend ?? 0} PLN`,
+        `- USD/PLN FX: ${sales.fx_rate_usd_pln ?? 0}${sales.fx_rate_date ? ` (${sales.fx_rate_date})` : ""}`,
         "",
         "Funnel",
         `- Impressions: ${funnel.impressions ?? 0}`,
@@ -1580,14 +1571,14 @@
       const sales = data?.sales || {};
 
       const kpis = [
-        { label: "Total Spend", value: formatCurrencyUSD(metaAds.total_spend || 0), footnote: "Paid media spend" },
+        { label: "Total Spend", value: formatCurrencyPLN(metaAds.total_spend || 0), footnote: "Paid media spend" },
         { label: "Total Leads", value: formatNumber(metaAds.total_leads || 0), footnote: "Attributed paid leads" },
         { label: "Total Purchases", value: formatNumber(metaAds.total_purchases || 0), footnote: "Attributed paid purchases" },
-        { label: "Revenue USD", value: formatCurrencyUSD(sales.total_revenue_usd || 0), footnote: "Sales revenue" },
-        { label: "Avg CPL", value: formatCurrencyUSD(metaAds.avg_cpl || 0), footnote: "Average cost per lead" },
-        { label: "Avg CPA", value: formatCurrencyUSD(metaAds.avg_cpa || 0), footnote: "Average cost per acquisition" },
+        { label: "Revenue PLN", value: formatCurrencyPLN(sales.total_revenue_pln || 0), footnote: "Sales revenue (USD converted via NBP)" },
+        { label: "Avg CPL", value: formatCurrencyPLN(metaAds.avg_cpl || 0), footnote: "Average cost per lead" },
+        { label: "Avg CPA", value: formatCurrencyPLN(metaAds.avg_cpa || 0), footnote: "Average cost per acquisition" },
         { label: "Blended ROAS", value: formatNumber(metaAds.blended_roas || 0), footnote: "Account-level efficiency" },
-        { label: "Revenue - Spend", value: formatCurrencyUSD(analysis.revenue_minus_spend || 0), footnote: "Topline contribution" }
+        { label: "Revenue - Spend", value: formatCurrencyPLN(analysis.revenue_minus_spend || 0), footnote: "Topline contribution" }
       ];
 
       ui.kpiGrid.innerHTML = kpis.map((item) => `
@@ -1681,7 +1672,7 @@
         },
         {
           label: "Revenue - Spend",
-          value: formatCurrencyUSD(analysis.revenue_minus_spend || 0),
+          value: formatCurrencyPLN(analysis.revenue_minus_spend || 0),
           footnote: "Positive means revenue is ahead of paid spend."
         }
       ];
@@ -1713,13 +1704,13 @@
           <tr>
             <td class="name-cell">${escapeHtml(adSet?.name || "Unnamed ad set")}</td>
             <td><span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span></td>
-            <td>${escapeHtml(formatCurrencyUSD(adSet?.spend || 0))}</td>
+            <td>${escapeHtml(formatCurrencyPLN(adSet?.spend || 0))}</td>
             <td>${escapeHtml(formatNumber(adSet?.impressions || 0))}</td>
             <td>${escapeHtml(formatNumber(adSet?.clicks || 0))}</td>
             <td>${escapeHtml(formatNumber(adSet?.leads || 0))}</td>
             <td>${escapeHtml(formatNumber(adSet?.purchases || 0))}</td>
-            <td>${escapeHtml(formatCurrencyUSD(adSet?.cpl || 0))}</td>
-            <td>${escapeHtml(formatCurrencyUSD(adSet?.cpa || 0))}</td>
+            <td>${escapeHtml(formatCurrencyPLN(adSet?.cpl || 0))}</td>
+            <td>${escapeHtml(formatCurrencyPLN(adSet?.cpa || 0))}</td>
             <td>${escapeHtml(formatNumber(adSet?.frequency || 0))}</td>
             <td><span class="decision-badge ${getDecisionClass(decision)}">${escapeHtml(decision)}</span></td>
           </tr>

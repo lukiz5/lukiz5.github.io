@@ -26,6 +26,7 @@ GOOGLE_SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets.readonly"
 GOOGLE_SERVICE_ACCOUNT_SECRET = "GOOGLE_SERVICE_ACCOUNT_JSON"
 GOOGLE_SALES_SHEET_ID = "1yv9EmGQbYjfup141LvEv8R3i9NHf-2Kn4HMkyWKoEU8"
 MAILERLITE_API_BASE = "https://connect.mailerlite.com/api"
+NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A"
 
 REQUEST_TIMEOUT = 25
 MAX_RETRIES = 2
@@ -269,7 +270,12 @@ def default_instagram_organic() -> dict[str, Any]:
 
 def default_sales() -> dict[str, Any]:
     return {
+        "currency": "PLN",
+        "source_currency": "USD",
+        "fx_rate_usd_pln": 0,
+        "fx_rate_date": None,
         "total_revenue_usd": 0,
+        "total_revenue_pln": 0,
         "orders_this_month": 0,
         "last_30_days_orders": 0,
         "last_order_date": None,
@@ -701,18 +707,51 @@ def summarize_sales_products(orders: list[dict[str, Any]]) -> list[dict[str, Any
                 "name": product_name,
                 "status": "",
                 "price_usd": 0,
+                "price_pln": 0,
                 "orders": 0,
                 "revenue_usd": 0,
+                "revenue_pln": 0,
             },
         )
         entry["orders"] += 1
         entry["revenue_usd"] = safe_round(entry["revenue_usd"] + safe_float(order.get("revenue_usd")))
+        entry["revenue_pln"] = safe_round(entry["revenue_pln"] + safe_float(order.get("revenue_pln")))
         if safe_float(order.get("unit_price_usd")) > 0:
             entry["price_usd"] = safe_round(safe_float(order.get("unit_price_usd")))
+        if safe_float(order.get("unit_price_pln")) > 0:
+            entry["price_pln"] = safe_round(safe_float(order.get("unit_price_pln")))
 
     products = list(product_map.values())
-    products.sort(key=lambda item: (safe_float(item.get("revenue_usd")), safe_int(item.get("orders"))), reverse=True)
+    products.sort(key=lambda item: (safe_float(item.get("revenue_pln")), safe_int(item.get("orders"))), reverse=True)
     return products
+
+
+def fetch_usd_pln_rate(client: HttpClient, previous_sales: dict[str, Any]) -> tuple[float | None, str | None, list[str], list[str]]:
+    warnings: list[str] = []
+    errors: list[str] = []
+    rate_url = f"{NBP_API_BASE}/USD"
+    payload, request_error = client.request_json(rate_url, params={"format": "json"})
+
+    if request_error:
+        fallback_rate = safe_float(previous_sales.get("fx_rate_usd_pln"))
+        fallback_date = str(previous_sales.get("fx_rate_date") or "").strip() or None
+        if fallback_rate > 0:
+            warnings.append(
+                f"NBP USD/PLN fetch failed; using previous FX rate {safe_round(fallback_rate, 4)}."
+            )
+            return fallback_rate, fallback_date, errors, warnings
+        errors.append(f"NBP USD/PLN fetch failed: {request_error}")
+        return None, None, errors, warnings
+
+    rates = payload.get("rates", []) if isinstance(payload, dict) else []
+    first_rate = rates[0] if rates and isinstance(rates[0], dict) else {}
+    mid = safe_float(first_rate.get("mid"))
+    effective_date = str(first_rate.get("effectiveDate") or "").strip() or None
+    if mid <= 0:
+        errors.append("NBP USD/PLN response did not include a valid mid rate.")
+        return None, None, errors, warnings
+
+    return safe_round(mid, 6), effective_date, errors, warnings
 
 
 def fetch_meta_ads(
@@ -1126,7 +1165,8 @@ def fetch_sales_data(
     data_rows = row_list[1:] if has_header_row else row_list
 
     parsed_orders: list[dict[str, Any]] = []
-    revenue_total = 0.0
+    revenue_total_usd = 0.0
+    revenue_total_pln = 0.0
     month_count = 0
     recent_orders: list[dict[str, Any]] = []
     recent_order_dates: list[tuple[datetime, dict[str, Any]]] = []
@@ -1134,6 +1174,16 @@ def fetch_sales_data(
     month_start = current_time.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     thirty_days_ago = current_time - timedelta(days=30)
     last_order_date: datetime | None = None
+    usd_pln_rate, usd_pln_date, rate_errors, rate_warnings = fetch_usd_pln_rate(client, previous_section)
+    errors.extend(rate_errors)
+    warnings.extend(rate_warnings)
+    if usd_pln_rate is None:
+        failure = "Sales conversion requires USD/PLN rate but NBP rate is unavailable."
+        errors.append(failure)
+        log("ERROR", failure)
+        return previous_section, "failed", errors, warnings, False
+    if rate_warnings:
+        status = "partial"
 
     for row_index, row in enumerate(data_rows, start=2 if has_header_row else 1):
         if not isinstance(row, list):
@@ -1147,8 +1197,12 @@ def fetch_sales_data(
             status = "partial"
 
         order_revenue = safe_float(parsed_order.get("revenue_usd"))
+        order_revenue_pln = safe_round(order_revenue * usd_pln_rate)
+        parsed_order["revenue_pln"] = order_revenue_pln
+        parsed_order["unit_price_pln"] = safe_round(safe_float(parsed_order.get("unit_price_usd")) * usd_pln_rate)
         if order_revenue > 0:
-            revenue_total += order_revenue
+            revenue_total_usd += order_revenue
+            revenue_total_pln += order_revenue_pln
         if order_date and order_date >= month_start:
             month_count += 1
         if order_date and order_date >= thirty_days_ago:
@@ -1160,7 +1214,12 @@ def fetch_sales_data(
         order
         for _, order in sorted(recent_order_dates, key=lambda item: item[0], reverse=True)[:50]
     ]
-    section["total_revenue_usd"] = safe_round(revenue_total)
+    section["currency"] = "PLN"
+    section["source_currency"] = "USD"
+    section["fx_rate_usd_pln"] = safe_round(usd_pln_rate, 6)
+    section["fx_rate_date"] = usd_pln_date
+    section["total_revenue_usd"] = safe_round(revenue_total_usd)
+    section["total_revenue_pln"] = safe_round(revenue_total_pln)
     section["orders_this_month"] = month_count
     section["last_30_days_orders"] = len(recent_orders)
     section["last_order_date"] = isoformat(last_order_date) if last_order_date else None
@@ -1412,7 +1471,7 @@ def calculate_analysis(
     sources_status: dict[str, str],
     data_freshness_hours: float | None,
 ) -> dict[str, Any]:
-    revenue = safe_float(sales.get("total_revenue_usd"))
+    revenue = safe_float(sales.get("total_revenue_pln"))
     spend = safe_float(meta_ads.get("total_spend"))
     leads = safe_int(meta_ads.get("total_leads"))
     avg_cpl = safe_float(meta_ads.get("avg_cpl"))
@@ -1423,6 +1482,8 @@ def calculate_analysis(
     opt_ins = safe_int(funnel.get("opt_ins"))
     total_subscribers = safe_int(mailerlite.get("total_subscribers"))
     new_subscribers = safe_int(mailerlite.get("new_subscribers_7d"))
+    fx_rate = safe_float(sales.get("fx_rate_usd_pln"))
+    fx_rate_date = sales.get("fx_rate_date")
 
     revenue_minus_spend = safe_round(revenue - spend)
     break_even_roas = safe_round(spend / revenue, 4) if revenue > 0 else 0
@@ -1509,9 +1570,11 @@ def calculate_analysis(
     summary = (
         f"Technical state: {technical_state}. "
         f"Business state: {business_state} "
-        f"Paid spend is ${safe_round(spend)} with {leads} leads, {level1_purchases} level-1 purchases, "
+        f"Paid spend is {safe_round(spend)} PLN with {leads} leads, {level1_purchases} level-1 purchases, "
         f"and blended ROAS {safe_round(safe_float(meta_ads.get('blended_roas')), 2)}. "
-        f"Sales revenue is ${safe_round(revenue)}, so revenue minus spend is ${revenue_minus_spend}. "
+        f"Sales revenue is {safe_round(revenue)} PLN, so revenue minus spend is {revenue_minus_spend} PLN. "
+        f"USD to PLN rate is {safe_round(fx_rate, 4)}"
+        f"{f' ({fx_rate_date})' if fx_rate_date else ''}. "
         f"MailerLite has {total_subscribers} subscribers and {new_subscribers} new subscribers in the last 7 days. "
         f"Funnel metrics show {clicks} clicks, {opt_ins} opt-ins, "
         f"LP CVR {safe_round(safe_float(funnel.get('lp_cvr')), 2)}%, and email CVR {safe_round(safe_float(funnel.get('email_cvr')), 2)}%."
