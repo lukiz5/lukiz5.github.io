@@ -192,10 +192,9 @@
     }
 
     .dashboard-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 34%);
+      display: flex;
       gap: clamp(18px, 2vw, 28px);
-      align-items: start;
+      align-items: flex-start;
     }
 
     .main-column,
@@ -205,12 +204,16 @@
       min-width: 0;
     }
 
+    .main-column {
+      flex: 1 1 auto;
+    }
+
     .chat-column {
+      flex: 0 0 420px;
       position: sticky;
       top: 18px;
       align-self: start;
-      justify-self: end;
-      width: 100%;
+      width: 420px;
       max-width: 420px;
       overflow: hidden;
     }
@@ -710,12 +713,15 @@
 
     @media (max-width: 1520px) {
       .dashboard-layout {
+        display: grid;
         grid-template-columns: 1fr;
       }
 
       .chat-column {
+        flex: initial;
         position: static;
         overflow: visible;
+        width: 100%;
         max-width: none;
       }
 
