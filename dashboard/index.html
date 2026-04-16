@@ -1081,6 +1081,13 @@
         .replace(/'/g, "&#39;");
     }
 
+    function truncateText(value, maxChars) {
+      const text = String(value ?? "").trim();
+      if (!text) return "";
+      if (text.length <= maxChars) return text;
+      return `${text.slice(0, maxChars).trimEnd()}\n...[truncated]`;
+    }
+
     function formatCurrencyPLN(value) {
       const number = Number(value);
       if (!Number.isFinite(number)) return "n/a";
@@ -1436,9 +1443,13 @@
       const sales = data?.sales || {};
       const funnel = data?.funnel || {};
       const analysis = data?.analysis || {};
+      const knowledge = data?.knowledge_context || {};
       const sourceStatus = data?.sources_status || {};
       const currentState = getCurrentState(data);
       const adSets = Array.isArray(metaAds.ad_sets) ? [...metaAds.ad_sets] : [];
+      const knowledgeFiles = Array.isArray(knowledge.files) ? knowledge.files : [];
+      const knowledgeText = truncateText(knowledge.combined_text || "", 12000);
+      const knowledgeNames = knowledgeFiles.map((entry) => entry?.name).filter(Boolean);
 
       const topAdSets = adSets
         .sort((left, right) => (Number(right?.spend || 0) - Number(left?.spend || 0)))
@@ -1502,6 +1513,15 @@
         `- Opportunity area: ${getOpportunityInsightText(data)}`,
         `- Break-even ROAS: ${analysis.break_even_roas ?? 0}`,
         analysis.claude_context_summary ? `- Summary: ${analysis.claude_context_summary}` : "",
+        "",
+        "Ads knowledge files",
+        `- Source dir: ${knowledge.source_dir || "knowledge/ads"}`,
+        `- Status: ${knowledge.status || (knowledgeNames.length ? "ok" : "empty")}`,
+        `- Files loaded: ${knowledgeNames.length}`,
+        knowledgeNames.length ? `- File names: ${knowledgeNames.join(", ")}` : "- File names: none",
+        knowledgeText ? "" : "- Knowledge context: none",
+        knowledgeText ? "Knowledge context (reference before answering)" : "",
+        knowledgeText || "",
         "",
         `Errors: ${Array.isArray(data?.errors) && data.errors.length ? data.errors.join(" | ") : "none"}`,
         `Warnings: ${Array.isArray(data?.warnings) && data.warnings.length ? data.warnings.join(" | ") : "none"}`,

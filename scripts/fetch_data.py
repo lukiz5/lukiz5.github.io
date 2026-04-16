@@ -19,8 +19,10 @@ from dateutil import parser as date_parser
 
 DATA_FILE = Path("data/senns_data.json")
 TMP_DATA_FILE = Path("data/senns_data.tmp.json")
+KNOWLEDGE_ADS_DIR = Path("knowledge/ads")
 
-GRAPH_API_BASE = "https://graph.facebook.com/v19.0"
+META_GRAPH_API_VERSION = "v25.0"
+GRAPH_API_BASE = f"https://graph.facebook.com/{META_GRAPH_API_VERSION}"
 GOOGLE_SHEETS_API_BASE = "https://sheets.googleapis.com/v4/spreadsheets"
 GOOGLE_SHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets.readonly"
 GOOGLE_SERVICE_ACCOUNT_SECRET = "GOOGLE_SERVICE_ACCOUNT_JSON"
@@ -33,6 +35,9 @@ MAX_RETRIES = 2
 MAX_PAGES = 8
 TARGET_CPL = 25.0
 STALE_DATA_HOURS = 36.0
+MAX_KNOWLEDGE_FILES = 60
+MAX_KNOWLEDGE_CHARS_PER_FILE = 6000
+MAX_KNOWLEDGE_TOTAL_CHARS = 28000
 
 META_SOURCE = "meta_ads"
 INSTAGRAM_SOURCE = "instagram_organic"
@@ -153,6 +158,12 @@ def deep_copy_dict(data: dict[str, Any]) -> dict[str, Any]:
 
 def safe_dict(value: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
+
+
+def list_of_dicts(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, dict)]
 
 
 def nested_dict_value(mapping: dict[str, Any], *keys: str) -> Any:
@@ -318,6 +329,16 @@ def default_analysis() -> dict[str, Any]:
     }
 
 
+def default_knowledge_context() -> dict[str, Any]:
+    return {
+        "source_dir": str(KNOWLEDGE_ADS_DIR),
+        "status": "empty",
+        "files": [],
+        "combined_text": "",
+        "generated_at": None,
+    }
+
+
 def default_sources_status() -> dict[str, str]:
     return {
         META_SOURCE: "skipped",
@@ -341,6 +362,7 @@ def default_dashboard_data() -> dict[str, Any]:
         MAILERLITE_SOURCE: default_mailerlite(),
         "funnel": default_funnel(),
         "analysis": default_analysis(),
+        "knowledge_context": default_knowledge_context(),
     }
 
 
@@ -397,6 +419,7 @@ def load_previous_data() -> tuple[dict[str, Any], list[str]]:
     previous[MAILERLITE_SOURCE] = ensure_section(raw_data, MAILERLITE_SOURCE, default_mailerlite)
     previous["funnel"] = ensure_section(raw_data, "funnel", default_funnel)
     previous["analysis"] = ensure_section(raw_data, "analysis", default_analysis)
+    previous["knowledge_context"] = ensure_section(raw_data, "knowledge_context", default_knowledge_context)
     return previous, warnings
 
 
@@ -422,6 +445,35 @@ def sanitize_output_payload(payload: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(sales_section, dict):
         sanitized[SALES_SOURCE] = default_sales()
 
+    meta_ads = sanitized.get(META_SOURCE)
+    if not isinstance(meta_ads, dict):
+        meta_ads = default_meta_ads()
+        sanitized[META_SOURCE] = meta_ads
+    meta_ads["campaigns"] = list_of_dicts(meta_ads.get("campaigns"))
+    meta_ads["ad_sets"] = list_of_dicts(meta_ads.get("ad_sets"))
+
+    instagram_organic = sanitized.get(INSTAGRAM_SOURCE)
+    if not isinstance(instagram_organic, dict):
+        instagram_organic = default_instagram_organic()
+        sanitized[INSTAGRAM_SOURCE] = instagram_organic
+    instagram_organic["top_posts"] = list_of_dicts(instagram_organic.get("top_posts"))
+
+    funnel = sanitized.get("funnel")
+    if not isinstance(funnel, dict):
+        sanitized["funnel"] = default_funnel()
+
+    analysis = sanitized.get("analysis")
+    if not isinstance(analysis, dict):
+        sanitized["analysis"] = default_analysis()
+        analysis = sanitized["analysis"]
+
+    knowledge_context = sanitized.get("knowledge_context")
+    if not isinstance(knowledge_context, dict):
+        sanitized["knowledge_context"] = default_knowledge_context()
+        knowledge_context = sanitized["knowledge_context"]
+    if "source_dir" not in knowledge_context:
+        knowledge_context["source_dir"] = str(KNOWLEDGE_ADS_DIR)
+
     analysis = sanitized.get("analysis")
     if isinstance(analysis, dict):
         summary = analysis.get("claude_context_summary")
@@ -431,6 +483,63 @@ def sanitize_output_payload(payload: dict[str, Any]) -> dict[str, Any]:
             )
 
     return sanitized
+
+
+def collect_ads_knowledge_context() -> tuple[dict[str, Any], list[str]]:
+    warnings: list[str] = []
+    context = default_knowledge_context()
+
+    if not KNOWLEDGE_ADS_DIR.exists():
+        context["status"] = "missing"
+        return context, warnings
+
+    markdown_files = sorted(path for path in KNOWLEDGE_ADS_DIR.glob("*.md") if path.is_file())
+    if not markdown_files:
+        context["status"] = "empty"
+        return context, warnings
+
+    file_entries: list[dict[str, Any]] = []
+    chunks: list[str] = []
+    total_chars = 0
+
+    for file_path in markdown_files[:MAX_KNOWLEDGE_FILES]:
+        try:
+            raw_text = file_path.read_text(encoding="utf-8")
+        except OSError as exc:
+            warnings.append(f"Could not read knowledge file {file_path.name}: {exc}")
+            continue
+
+        cleaned = raw_text.strip()
+        original_len = len(cleaned)
+        if not cleaned:
+            continue
+
+        if len(cleaned) > MAX_KNOWLEDGE_CHARS_PER_FILE:
+            cleaned = cleaned[:MAX_KNOWLEDGE_CHARS_PER_FILE].rstrip() + "\n...[truncated]"
+
+        chunk = f"[{file_path.name}]\n{cleaned}"
+        if total_chars + len(chunk) > MAX_KNOWLEDGE_TOTAL_CHARS:
+            remaining = max(MAX_KNOWLEDGE_TOTAL_CHARS - total_chars, 0)
+            if remaining > 80:
+                chunk = chunk[:remaining].rstrip() + "\n...[truncated]"
+                chunks.append(chunk)
+            warnings.append("Knowledge context exceeded size limit; some files were truncated.")
+            break
+
+        total_chars += len(chunk)
+        chunks.append(chunk)
+        file_entries.append(
+            {
+                "name": file_path.name,
+                "chars": original_len,
+            }
+        )
+
+    context["files"] = file_entries
+    context["combined_text"] = "\n\n---\n\n".join(chunks)
+    context["generated_at"] = isoformat(now_utc()) if chunks else None
+    context["status"] = "ok" if chunks else "empty"
+    return context, warnings
 
 
 class HttpClient:
@@ -1438,10 +1547,11 @@ def calculate_funnel(
     sales_status: str,
 ) -> dict[str, Any]:
     funnel = deep_copy_dict(previous_funnel)
+    ad_sets = list_of_dicts(meta_ads.get("ad_sets"))
 
     if meta_status not in {"failed", "skipped"}:
-        impressions = sum(safe_int(ad_set.get("impressions")) for ad_set in meta_ads.get("ad_sets", []))
-        clicks = sum(safe_int(ad_set.get("clicks")) for ad_set in meta_ads.get("ad_sets", []))
+        impressions = sum(safe_int(ad_set.get("impressions")) for ad_set in ad_sets)
+        clicks = sum(safe_int(ad_set.get("clicks")) for ad_set in ad_sets)
         opt_ins = safe_int(meta_ads.get("total_leads"))
         funnel["impressions"] = impressions
         funnel["clicks"] = clicks
@@ -1618,6 +1728,8 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
     errors: list[str] = []
     warnings: list[str] = []
     refreshed_sources = 0
+    knowledge_context, knowledge_warnings = collect_ads_knowledge_context()
+    warnings.extend(knowledge_warnings)
 
     meta_ads, meta_status, meta_errors, meta_warnings, _, meta_refreshed = fetch_meta_ads(client, previous_data)
     instagram_organic, instagram_status, instagram_errors, instagram_warnings, instagram_refreshed = fetch_instagram_organic(client, previous_data)
@@ -1665,6 +1777,7 @@ def build_final_payload(previous_data: dict[str, Any]) -> dict[str, Any]:
         MAILERLITE_SOURCE: mailerlite,
         "funnel": funnel,
         "analysis": analysis,
+        "knowledge_context": knowledge_context,
     }
     return sanitize_output_payload(payload)
 
