@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-17T07:05:18Z",
+  "last_updated": "2026-04-17T09:48:45Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -25,16 +25,16 @@
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 78.52,
-        "impressions": 519,
-        "clicks": 39,
-        "cpm": 151.29,
-        "ctr": 7.5145,
+        "spend": 84.36,
+        "impressions": 541,
+        "clicks": 42,
+        "cpm": 155.93,
+        "ctr": 7.7634,
         "cpc": 2.01,
         "frequency": 1.12,
         "leads": 9,
         "purchases": 0,
-        "cpl": 8.72,
+        "cpl": 9.37,
         "cpa": 0,
         "decision": "MONITOR"
       },
@@ -43,16 +43,16 @@
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 62.84,
-        "impressions": 646,
+        "spend": 66.45,
+        "impressions": 672,
         "clicks": 26,
-        "cpm": 97.28,
-        "ctr": 4.0248,
-        "cpc": 2.42,
-        "frequency": 1.1,
+        "cpm": 98.88,
+        "ctr": 3.869,
+        "cpc": 2.56,
+        "frequency": 1.11,
         "leads": 3,
         "purchases": 0,
-        "cpl": 20.95,
+        "cpl": 22.15,
         "cpa": 0,
         "decision": "MONITOR"
       },
@@ -61,32 +61,32 @@
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 69.89,
-        "impressions": 602,
-        "clicks": 23,
-        "cpm": 116.1,
-        "ctr": 3.8206,
-        "cpc": 3.04,
-        "frequency": 1.14,
+        "spend": 76.8,
+        "impressions": 647,
+        "clicks": 24,
+        "cpm": 118.7,
+        "ctr": 3.7094,
+        "cpc": 3.2,
+        "frequency": 1.16,
         "leads": 3,
         "purchases": 0,
-        "cpl": 23.3,
+        "cpl": 25.6,
         "cpa": 0,
-        "decision": "MONITOR"
+        "decision": "OPTIMIZE"
       }
     ],
-    "total_spend": 211.25,
+    "total_spend": 227.61,
     "total_leads": 15,
     "total_purchases": 0,
-    "avg_cpl": 14.08,
+    "avg_cpl": 15.17,
     "avg_cpa": 0,
     "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 36,
+    "followers": 37,
     "posts_this_week": 5,
     "avg_reach": 43.33,
-    "avg_engagement_rate": 6.25,
+    "avg_engagement_rate": 6.08,
     "top_posts": [
       {
         "id": "17990896226786576",
@@ -94,7 +94,7 @@
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
         "reach": 135,
-        "engagement_rate": 11.11,
+        "engagement_rate": 10.81,
         "likes": 4,
         "comments": 0
       },
@@ -104,7 +104,7 @@
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
         "reach": 31,
-        "engagement_rate": 11.11,
+        "engagement_rate": 10.81,
         "likes": 4,
         "comments": 0
       },
@@ -114,7 +114,7 @@
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
         "timestamp": "2026-04-15T08:08:39+0000",
         "reach": 25,
-        "engagement_rate": 8.33,
+        "engagement_rate": 8.11,
         "likes": 3,
         "comments": 0
       },
@@ -124,7 +124,7 @@
         "permalink": "https://www.instagram.com/p/DXMKb_uDLow/",
         "timestamp": "2026-04-16T10:58:51+0000",
         "reach": 10,
-        "engagement_rate": 8.33,
+        "engagement_rate": 8.11,
         "likes": 1,
         "comments": 2
       },
@@ -134,7 +134,7 @@
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
         "reach": 154,
-        "engagement_rate": 5.56,
+        "engagement_rate": 5.41,
         "likes": 0,
         "comments": 2
       }
@@ -143,8 +143,8 @@
   "sales": {
     "currency": "PLN",
     "source_currency": "USD",
-    "fx_rate_usd_pln": 3.5983,
-    "fx_rate_date": "2026-04-16",
+    "fx_rate_usd_pln": 3.5912,
+    "fx_rate_date": "2026-04-17",
     "total_revenue_usd": 0.0,
     "total_revenue_pln": 0.0,
     "orders_this_month": 0,
@@ -178,27 +178,27 @@
         "name": "Prosta wiadomość powitalna 2",
         "status": "",
         "subscribers": 0,
-        "emails": 1
+        "emails": 3
       }
     ]
   },
   "funnel": {
-    "impressions": 1767,
-    "clicks": 88,
-    "lp_visits": 88,
+    "impressions": 1860,
+    "clicks": 92,
+    "lp_visits": 92,
     "opt_ins": 15,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 4.98,
-    "lp_cvr": 17.05,
+    "ctr": 4.95,
+    "lp_cvr": 16.3,
     "email_cvr": 0.0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": -211.25,
-    "top_problem_area": "No major operating issue detected right now",
+    "revenue_minus_spend": -227.61,
+    "top_problem_area": "High CPL on active ad sets",
     "top_opportunity_area": "Healthy CPL with room to scale",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No major operating issue detected right now. Healthy CPL with room to scale. Paid spend is 211.25 PLN with 15 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -211.25 PLN. USD to PLN rate is 3.5983 (2026-04-16). MailerLite has 9 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 88 clicks, 15 opt-ins, LP CVR 17.05%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: High CPL on active ad sets. Healthy CPL with room to scale. Paid spend is 227.61 PLN with 15 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -227.61 PLN. USD to PLN rate is 3.5912 (2026-04-17). MailerLite has 9 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 92 clicks, 15 opt-ins, LP CVR 16.3%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-04-17T07:04:47Z"
+    "generated_at": "2026-04-17T09:48:34Z"
   }
 }
