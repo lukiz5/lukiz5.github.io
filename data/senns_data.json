@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-16T21:04:39Z",
+  "last_updated": "2026-04-17T07:05:18Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -25,34 +25,34 @@
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 73.12,
-        "impressions": 491,
-        "clicks": 38,
-        "cpm": 148.92,
-        "ctr": 7.7393,
-        "cpc": 1.92,
-        "frequency": 1.11,
+        "spend": 78.52,
+        "impressions": 519,
+        "clicks": 39,
+        "cpm": 151.29,
+        "ctr": 7.5145,
+        "cpc": 2.01,
+        "frequency": 1.12,
         "leads": 9,
         "purchases": 0,
-        "cpl": 8.12,
+        "cpl": 8.72,
         "cpa": 0,
-        "decision": "LEARNING"
+        "decision": "MONITOR"
       },
       {
         "id": "120240407374040192",
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 55.23,
-        "impressions": 591,
-        "clicks": 24,
-        "cpm": 93.45,
-        "ctr": 4.0609,
-        "cpc": 2.3,
+        "spend": 62.84,
+        "impressions": 646,
+        "clicks": 26,
+        "cpm": 97.28,
+        "ctr": 4.0248,
+        "cpc": 2.42,
         "frequency": 1.1,
-        "leads": 0,
+        "leads": 3,
         "purchases": 0,
-        "cpl": 0,
+        "cpl": 20.95,
         "cpa": 0,
         "decision": "MONITOR"
       },
@@ -61,40 +61,40 @@
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 65.76,
-        "impressions": 563,
-        "clicks": 22,
-        "cpm": 116.8,
-        "ctr": 3.9076,
-        "cpc": 2.99,
-        "frequency": 1.13,
+        "spend": 69.89,
+        "impressions": 602,
+        "clicks": 23,
+        "cpm": 116.1,
+        "ctr": 3.8206,
+        "cpc": 3.04,
+        "frequency": 1.14,
         "leads": 3,
         "purchases": 0,
-        "cpl": 21.92,
+        "cpl": 23.3,
         "cpa": 0,
         "decision": "MONITOR"
       }
     ],
-    "total_spend": 194.11,
-    "total_leads": 12,
+    "total_spend": 211.25,
+    "total_leads": 15,
     "total_purchases": 0,
-    "avg_cpl": 16.18,
+    "avg_cpl": 14.08,
     "avg_cpa": 0,
     "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 34,
+    "followers": 36,
     "posts_this_week": 5,
-    "avg_reach": 42.25,
-    "avg_engagement_rate": 6.37,
+    "avg_reach": 43.33,
+    "avg_engagement_rate": 6.25,
     "top_posts": [
       {
         "id": "17990896226786576",
         "caption": "Same brief. Two results.\n\nOne side: what you get without direction. The other: what a production system delivers. Same category, same starting point. The gap is light control, skin rendering, expression direction.\n\nGeneric tools produce ima",
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
-        "reach": 134,
-        "engagement_rate": 11.76,
+        "reach": 135,
+        "engagement_rate": 11.11,
         "likes": 4,
         "comments": 0
       },
@@ -103,8 +103,8 @@
         "caption": "Every line earned. Every pore real.\n\nThis face has crow's feet that don't match on both sides. \nSun spots on the forehead. Salt in the beard that follows \nnatural growth patterns. Catchlights in the eyes reflecting \nthe actual light source.",
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
-        "reach": 30,
-        "engagement_rate": 11.76,
+        "reach": 31,
+        "engagement_rate": 11.11,
         "likes": 4,
         "comments": 0
       },
@@ -113,30 +113,30 @@
         "caption": "Same jacket. Nine locations. One city.\n\nLaundromat. Parking garage. Bodega. Fire escape. Rooftop. Subway platform. Overpass. Mural wall. Park bench.\n\nOne model, one outfit, one afternoon. A lookbook that covers every angle a streetwear bran",
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
         "timestamp": "2026-04-15T08:08:39+0000",
-        "reach": 24,
-        "engagement_rate": 8.82,
+        "reach": 25,
+        "engagement_rate": 8.33,
         "likes": 3,
         "comments": 0
+      },
+      {
+        "id": "18351721831213295",
+        "caption": "Small product. Complex details. Full campaign.\n\nThe engraving on the medallion reads the same in every frame - packshot, on skin, in motion, at macro scale. Chain weight consistent. Clasp detail matching. Patina identical.\n\nJewelry is the h",
+        "permalink": "https://www.instagram.com/p/DXMKb_uDLow/",
+        "timestamp": "2026-04-16T10:58:51+0000",
+        "reach": 10,
+        "engagement_rate": 8.33,
+        "likes": 1,
+        "comments": 2
       },
       {
         "id": "17878807992555539",
         "caption": "One frame. Full campaign.\n\nA single directed photograph. From that one frame: campaign hero, product packshot, lifestyle still life, on-skin detail, editorial close-up, social asset. Six formats from one session.\n\nThis is what production lo",
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
-        "reach": 153,
-        "engagement_rate": 5.88,
+        "reach": 154,
+        "engagement_rate": 5.56,
         "likes": 0,
         "comments": 2
-      },
-      {
-        "id": "17902850301405153",
-        "caption": "Same face. Six completely different campaigns.\n\nBusiness editorial. Streetwear. Summer resort. Evening. Wellness. Casual.\n\nSame model. Same skin. Same quality. Same system.\n\nDifferent outfit, different scene, different energy.\nEvery single ",
-        "permalink": "https://www.instagram.com/p/DWllhslDLEF/",
-        "timestamp": "2026-04-01T11:25:11+0000",
-        "reach": 25,
-        "engagement_rate": 5.88,
-        "likes": 2,
-        "comments": 0
       }
     ]
   },
@@ -154,8 +154,8 @@
     "products": []
   },
   "mailerlite": {
-    "total_subscribers": 8,
-    "new_subscribers_7d": 7,
+    "total_subscribers": 9,
+    "new_subscribers_7d": 8,
     "avg_open_rate": 0,
     "avg_click_rate": 0,
     "sequences": [
@@ -183,22 +183,22 @@
     ]
   },
   "funnel": {
-    "impressions": 1645,
-    "clicks": 84,
-    "lp_visits": 84,
-    "opt_ins": 12,
+    "impressions": 1767,
+    "clicks": 88,
+    "lp_visits": 88,
+    "opt_ins": 15,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 5.11,
-    "lp_cvr": 14.29,
+    "ctr": 4.98,
+    "lp_cvr": 17.05,
     "email_cvr": 0.0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": -194.11,
-    "top_problem_area": "Low landing page conversion",
+    "revenue_minus_spend": -211.25,
+    "top_problem_area": "No major operating issue detected right now",
     "top_opportunity_area": "Healthy CPL with room to scale",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: Low landing page conversion. Healthy CPL with room to scale. Paid spend is 194.11 PLN with 12 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -194.11 PLN. USD to PLN rate is 3.5983 (2026-04-16). MailerLite has 8 subscribers and 7 new subscribers in the last 7 days. Funnel metrics show 84 clicks, 12 opt-ins, LP CVR 14.29%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No major operating issue detected right now. Healthy CPL with room to scale. Paid spend is 211.25 PLN with 15 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -211.25 PLN. USD to PLN rate is 3.5983 (2026-04-16). MailerLite has 9 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 88 clicks, 15 opt-ins, LP CVR 17.05%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-04-16T21:04:29Z"
+    "generated_at": "2026-04-17T07:04:47Z"
   }
 }
