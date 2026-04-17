@@ -74,12 +74,23 @@ LEAD_ACTION_TYPES = {
     "offsite_conversion.fb_pixel_lead",
     "onsite_web_lead",
 }
+LEAD_ACTION_PREFERRED_ORDER = [
+    "offsite_conversion.fb_pixel_lead",
+    "onsite_conversion.lead_grouped",
+    "onsite_web_lead",
+    "lead",
+]
 PURCHASE_ACTION_TYPES = {
     "purchase",
     "omni_purchase",
     "offsite_conversion.fb_pixel_purchase",
     "web_in_store_purchase",
 }
+PURCHASE_ACTION_PREFERRED_ORDER = [
+    "offsite_conversion.fb_pixel_purchase",
+    "purchase",
+    "omni_purchase",
+]
 
 
 def log(level: str, message: str) -> None:
@@ -643,16 +654,34 @@ def normalize_ad_account_id(account_id: str) -> str:
     return f"act_{account_id}"
 
 
-def extract_action_value(actions: Any, action_types: set[str]) -> int:
+def extract_action_value(
+    actions: Any,
+    action_types: set[str],
+    preferred_order: list[str] | None = None,
+) -> tuple[int, str | None]:
     if not isinstance(actions, list):
-        return 0
-    total = 0
+        return 0, None
+    values_by_type: dict[str, int] = {}
     for action in actions:
         if not isinstance(action, dict):
             continue
-        if action.get("action_type") in action_types:
-            total += safe_int(action.get("value"))
-    return total
+        action_type = str(action.get("action_type", ""))
+        if action_type in action_types:
+            values_by_type[action_type] = safe_int(action.get("value"))
+
+    if preferred_order:
+        for action_type in preferred_order:
+            value = values_by_type.get(action_type, 0)
+            if value > 0:
+                return value, action_type
+
+    selected_type: str | None = None
+    selected_value = 0
+    for action_type, value in values_by_type.items():
+        if value > selected_value:
+            selected_type = action_type
+            selected_value = value
+    return selected_value, selected_type
 
 
 def extract_roas_value(roas_payload: Any) -> float:
@@ -968,8 +997,16 @@ def fetch_meta_ads(
             ctr = safe_round(safe_float(insight.get("ctr")), 4)
             cpc = safe_round(safe_float(insight.get("cpc")))
             frequency = safe_round(safe_float(insight.get("frequency")), 2)
-            leads = extract_action_value(actions, LEAD_ACTION_TYPES)
-            purchases = extract_action_value(actions, PURCHASE_ACTION_TYPES)
+            leads, selected_lead_action = extract_action_value(
+                actions,
+                LEAD_ACTION_TYPES,
+                preferred_order=LEAD_ACTION_PREFERRED_ORDER,
+            )
+            purchases, selected_purchase_action = extract_action_value(
+                actions,
+                PURCHASE_ACTION_TYPES,
+                preferred_order=PURCHASE_ACTION_PREFERRED_ORDER,
+            )
             cpl = safe_round(spend / leads) if leads else 0
             cpa = safe_round(spend / purchases) if purchases else 0
 
@@ -992,6 +1029,14 @@ def fetch_meta_ads(
             }
             parsed_ad_set["decision"] = decide_ad_set(parsed_ad_set)
             parsed_ad_sets.append(parsed_ad_set)
+            log(
+                "INFO",
+                (
+                    f"Meta ad set action selection: name='{parsed_ad_set['name']}', "
+                    f"leads={leads} via {selected_lead_action or 'none'}, "
+                    f"purchases={purchases} via {selected_purchase_action or 'none'}"
+                ),
+            )
 
             meta_context["impressions"] += impressions
             meta_context["clicks"] += clicks
@@ -1031,9 +1076,25 @@ def fetch_meta_ads(
             total_impressions = safe_int(account_row.get("impressions"))
             total_clicks = safe_int(account_row.get("clicks"))
             actions = account_row.get("actions", [])
-            total_leads = extract_action_value(actions, LEAD_ACTION_TYPES)
-            total_purchases = extract_action_value(actions, PURCHASE_ACTION_TYPES)
+            total_leads, selected_total_lead_action = extract_action_value(
+                actions,
+                LEAD_ACTION_TYPES,
+                preferred_order=LEAD_ACTION_PREFERRED_ORDER,
+            )
+            total_purchases, selected_total_purchase_action = extract_action_value(
+                actions,
+                PURCHASE_ACTION_TYPES,
+                preferred_order=PURCHASE_ACTION_PREFERRED_ORDER,
+            )
             blended_roas = safe_round(extract_roas_value(account_row.get("purchase_roas")), 4)
+            log(
+                "INFO",
+                (
+                    "Meta account action selection: "
+                    f"leads={total_leads} via {selected_total_lead_action or 'none'}, "
+                    f"purchases={total_purchases} via {selected_total_purchase_action or 'none'}"
+                ),
+            )
 
             if total_spend > 0 or meta_context["spend"] == 0:
                 section["total_spend"] = total_spend
