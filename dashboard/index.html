@@ -365,19 +365,19 @@
     }
 
     table {
-      width: 100%;
+      width: max-content;
+      min-width: 100%;
       border-collapse: collapse;
-      min-width: 1020px;
-      table-layout: fixed;
+      table-layout: auto;
     }
 
     th,
     td {
-      padding: 12px 12px;
+      padding: 12px 14px;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       vertical-align: middle;
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       white-space: nowrap;
     }
 
@@ -386,11 +386,13 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       background: rgba(255, 255, 255, 0.03);
       position: sticky;
       top: 0;
       z-index: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     td {
@@ -411,8 +413,8 @@
 
     th:first-child,
     td:first-child {
-      width: 36%;
-      min-width: 300px;
+      width: 34%;
+      min-width: 320px;
     }
 
     th:nth-child(2),
@@ -421,17 +423,15 @@
       min-width: 130px;
     }
 
-    th:nth-child(3),
-    td:nth-child(3) {
-      width: 90px;
-      min-width: 90px;
+    th:nth-child(n+3):not(:last-child),
+    td:nth-child(n+3):not(:last-child) {
+      min-width: 78px;
     }
 
     th:last-child,
     td:last-child {
-      width: 120px;
-      min-width: 120px;
-      white-space: normal;
+      width: 128px;
+      min-width: 128px;
     }
 
     .chat-panel {
