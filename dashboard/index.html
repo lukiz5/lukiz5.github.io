@@ -243,7 +243,7 @@
 
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -280,6 +280,7 @@
       letter-spacing: -0.03em;
       color: var(--text);
       line-height: 1.2;
+      overflow-wrap: anywhere;
     }
 
     .kpi-footnote,
@@ -342,11 +343,11 @@
     .funnel-grid,
     .source-grid,
     .insight-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .current-state-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
     }
 
     .source-card {
@@ -366,7 +367,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 980px;
+      min-width: 860px;
     }
 
     th,
@@ -701,13 +702,7 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 1500px) {
-      .kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 1760px) {
+    @media (max-width: 1360px) {
       .dashboard-layout {
         display: grid;
         grid-template-columns: 1fr;
@@ -736,18 +731,15 @@
       }
     }
 
-    @media (max-width: 1360px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
     @media (max-width: 900px) {
       .funnel-grid,
       .insight-grid,
-      .source-grid,
-      .current-state-grid {
+      .source-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
       }
     }
 
