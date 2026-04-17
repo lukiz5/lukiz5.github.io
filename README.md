@@ -21,6 +21,12 @@ GitHub → Actions → `Fetch SENNS Dashboard Data` → `Run workflow`
 - `GOOGLE_SERVICE_ACCOUNT_JSON`
 - `MAILERLITE_API_KEY`
 
+### Meta attribution note (2026-04-17)
+Meta lead/purchase events use preferred_order deduplication (fix 2026-04-17).
+Canonical lead event: `offsite_conversion.fb_pixel_lead` (LP form submit on `senns.studio/kit`).
+Canonical purchase event: `offsite_conversion.fb_pixel_purchase` (Payhip webhook via Make).
+See [`scripts/fetch_data.py`](/Users/apple/Desktop/SENNS.STUDIO/Strona/SENNS.STUDIO WEB/scripts/fetch_data.py) `LEAD_ACTION_PREFERRED_ORDER` and `PURCHASE_ACTION_PREFERRED_ORDER` for fallback logic.
+
 ### Access
 Open `/dashboard`
 Open `/dashboard/cover-generator.html` for the internal cover tool.
