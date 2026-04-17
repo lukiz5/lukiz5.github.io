@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-17T12:05:02Z",
+  "last_updated": "2026-04-17T15:16:51Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -25,16 +25,16 @@
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
         "status": "ACTIVE",
         "daily_budget": 36.0,
-        "spend": 88.05,
-        "impressions": 555,
-        "clicks": 43,
-        "cpm": 158.65,
-        "ctr": 7.7477,
-        "cpc": 2.05,
+        "spend": 95.18,
+        "impressions": 584,
+        "clicks": 48,
+        "cpm": 162.98,
+        "ctr": 8.2192,
+        "cpc": 1.98,
         "frequency": 1.13,
         "leads": 9,
         "purchases": 0,
-        "cpl": 9.78,
+        "cpl": 10.58,
         "cpa": 0,
         "decision": "MONITOR"
       },
@@ -43,50 +43,50 @@
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
         "status": "ACTIVE",
         "daily_budget": 30.0,
-        "spend": 69.46,
-        "impressions": 689,
+        "spend": 75.5,
+        "impressions": 728,
         "clicks": 27,
-        "cpm": 100.81,
-        "ctr": 3.9187,
-        "cpc": 2.57,
-        "frequency": 1.11,
+        "cpm": 103.71,
+        "ctr": 3.7088,
+        "cpc": 2.8,
+        "frequency": 1.12,
         "leads": 3,
         "purchases": 0,
-        "cpl": 23.15,
+        "cpl": 25.17,
         "cpa": 0,
-        "decision": "MONITOR"
+        "decision": "OPTIMIZE"
       },
       {
         "id": "120240405871220192",
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
         "status": "ACTIVE",
         "daily_budget": 15.0,
-        "spend": 78.64,
-        "impressions": 666,
-        "clicks": 28,
-        "cpm": 118.08,
-        "ctr": 4.2042,
-        "cpc": 2.81,
+        "spend": 79.85,
+        "impressions": 686,
+        "clicks": 29,
+        "cpm": 116.4,
+        "ctr": 4.2274,
+        "cpc": 2.75,
         "frequency": 1.16,
         "leads": 3,
         "purchases": 0,
-        "cpl": 26.21,
+        "cpl": 26.62,
         "cpa": 0,
         "decision": "OPTIMIZE"
       }
     ],
-    "total_spend": 236.15,
+    "total_spend": 250.53,
     "total_leads": 15,
     "total_purchases": 0,
-    "avg_cpl": 15.74,
+    "avg_cpl": 16.7,
     "avg_cpa": 0,
     "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 38,
+    "followers": 39,
     "posts_this_week": 4,
-    "avg_reach": 43.33,
-    "avg_engagement_rate": 5.92,
+    "avg_reach": 43.83,
+    "avg_engagement_rate": 5.77,
     "top_posts": [
       {
         "id": "17990896226786576",
@@ -94,7 +94,7 @@
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
         "reach": 135,
-        "engagement_rate": 10.53,
+        "engagement_rate": 10.26,
         "likes": 4,
         "comments": 0
       },
@@ -104,7 +104,7 @@
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
         "reach": 31,
-        "engagement_rate": 10.53,
+        "engagement_rate": 10.26,
         "likes": 4,
         "comments": 0
       },
@@ -113,8 +113,8 @@
         "caption": "Same jacket. Nine locations. One city.\n\nLaundromat. Parking garage. Bodega. Fire escape. Rooftop. Subway platform. Overpass. Mural wall. Park bench.\n\nOne model, one outfit, one afternoon. A lookbook that covers every angle a streetwear bran",
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
         "timestamp": "2026-04-15T08:08:39+0000",
-        "reach": 25,
-        "engagement_rate": 7.89,
+        "reach": 26,
+        "engagement_rate": 7.69,
         "likes": 3,
         "comments": 0
       },
@@ -123,8 +123,8 @@
         "caption": "Small product. Complex details. Full campaign.\n\nThe engraving on the medallion reads the same in every frame - packshot, on skin, in motion, at macro scale. Chain weight consistent. Clasp detail matching. Patina identical.\n\nJewelry is the h",
         "permalink": "https://www.instagram.com/p/DXMKb_uDLow/",
         "timestamp": "2026-04-16T10:58:51+0000",
-        "reach": 10,
-        "engagement_rate": 7.89,
+        "reach": 12,
+        "engagement_rate": 7.69,
         "likes": 1,
         "comments": 2
       },
@@ -133,8 +133,8 @@
         "caption": "One frame. Full campaign.\n\nA single directed photograph. From that one frame: campaign hero, product packshot, lifestyle still life, on-skin detail, editorial close-up, social asset. Six formats from one session.\n\nThis is what production lo",
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
-        "reach": 154,
-        "engagement_rate": 5.26,
+        "reach": 156,
+        "engagement_rate": 5.13,
         "likes": 0,
         "comments": 2
       }
@@ -183,22 +183,22 @@
     ]
   },
   "funnel": {
-    "impressions": 1910,
-    "clicks": 98,
-    "lp_visits": 98,
+    "impressions": 1998,
+    "clicks": 104,
+    "lp_visits": 104,
     "opt_ins": 15,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 5.13,
-    "lp_cvr": 15.31,
+    "ctr": 5.21,
+    "lp_cvr": 14.42,
     "email_cvr": 0.0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": -236.15,
+    "revenue_minus_spend": -250.53,
     "top_problem_area": "High CPL on active ad sets",
     "top_opportunity_area": "Healthy CPL with room to scale",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: High CPL on active ad sets. Healthy CPL with room to scale. Paid spend is 236.15 PLN with 15 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -236.15 PLN. USD to PLN rate is 3.5912 (2026-04-17). MailerLite has 9 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 98 clicks, 15 opt-ins, LP CVR 15.31%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: High CPL on active ad sets. Healthy CPL with room to scale. Paid spend is 250.53 PLN with 15 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -250.53 PLN. USD to PLN rate is 3.5912 (2026-04-17). MailerLite has 9 subscribers and 8 new subscribers in the last 7 days. Funnel metrics show 104 clicks, 15 opt-ins, LP CVR 14.42%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-04-17T12:04:51Z"
+    "generated_at": "2026-04-17T15:16:37Z"
   }
 }
