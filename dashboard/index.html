@@ -367,13 +367,13 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 0;
+      min-width: 1020px;
       table-layout: fixed;
     }
 
     th,
     td {
-      padding: 12px 10px;
+      padding: 12px 12px;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       vertical-align: middle;
@@ -386,7 +386,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       background: rgba(255, 255, 255, 0.03);
       position: sticky;
       top: 0;
@@ -411,8 +411,20 @@
 
     th:first-child,
     td:first-child {
-      width: 34%;
-      min-width: 240px;
+      width: 36%;
+      min-width: 300px;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 130px;
+      min-width: 130px;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 90px;
+      min-width: 90px;
     }
 
     th:last-child,
