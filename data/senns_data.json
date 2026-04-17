@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-17T16:28:23Z",
+  "last_updated": "2026-04-17T18:06:24Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -23,70 +23,70 @@
       {
         "id": "120240407398440192",
         "name": "SegB_Reel_BrandManager_ColdInterest_03",
-        "status": "ACTIVE",
+        "status": "PAUSED",
         "daily_budget": 36.0,
-        "spend": 101.66,
-        "impressions": 608,
+        "spend": 101.86,
+        "impressions": 611,
         "clicks": 50,
-        "cpm": 167.2,
-        "ctr": 8.2237,
-        "cpc": 2.03,
+        "cpm": 166.71,
+        "ctr": 8.1833,
+        "cpc": 2.04,
         "frequency": 1.13,
-        "leads": 3,
+        "leads": 4,
         "purchases": 0,
-        "cpl": 33.89,
+        "cpl": 25.46,
         "cpa": 0,
-        "decision": "OPTIMIZE"
+        "decision": "PAUSED"
       },
       {
         "id": "120240407374040192",
         "name": "SegA_Reel_CreatorBusiness_ColdInterest_02",
-        "status": "ACTIVE",
+        "status": "PAUSED",
         "daily_budget": 30.0,
-        "spend": 77.69,
-        "impressions": 755,
-        "clicks": 27,
-        "cpm": 102.9,
-        "ctr": 3.5762,
-        "cpc": 2.88,
-        "frequency": 1.13,
+        "spend": 79.09,
+        "impressions": 762,
+        "clicks": 28,
+        "cpm": 103.79,
+        "ctr": 3.6745,
+        "cpc": 2.82,
+        "frequency": 1.12,
         "leads": 1,
         "purchases": 0,
-        "cpl": 77.69,
+        "cpl": 79.09,
         "cpa": 0,
-        "decision": "PAUSE"
+        "decision": "PAUSED"
       },
       {
         "id": "120240405871220192",
         "name": "SegA_Reel_AI-Tools_ColdInterest_01",
-        "status": "ACTIVE",
+        "status": "PAUSED",
         "daily_budget": 15.0,
-        "spend": 80.96,
-        "impressions": 698,
+        "spend": 80.99,
+        "impressions": 699,
         "clicks": 29,
-        "cpm": 115.99,
-        "ctr": 4.1547,
+        "cpm": 115.87,
+        "ctr": 4.1488,
         "cpc": 2.79,
-        "frequency": 1.16,
+        "frequency": 1.17,
         "leads": 1,
         "purchases": 0,
-        "cpl": 80.96,
+        "cpl": 80.99,
         "cpa": 0,
-        "decision": "PAUSE"
+        "decision": "PAUSED"
       }
     ],
-    "total_spend": 260.31,
-    "total_leads": 5,
+    "total_spend": 261.94,
+    "total_leads": 6,
     "total_purchases": 0,
-    "avg_cpl": 52.06,
+    "avg_cpl": 43.66,
     "avg_cpa": 0,
     "blended_roas": 0.0
   },
   "instagram_organic": {
     "followers": 39,
-    "posts_this_week": 4,
-    "avg_reach": 43.83,
-    "avg_engagement_rate": 5.77,
+    "posts_this_week": 5,
+    "avg_reach": 41.83,
+    "avg_engagement_rate": 5.34,
     "top_posts": [
       {
         "id": "17990896226786576",
@@ -183,22 +183,22 @@
     ]
   },
   "funnel": {
-    "impressions": 2061,
-    "clicks": 106,
-    "lp_visits": 106,
-    "opt_ins": 5,
+    "impressions": 2072,
+    "clicks": 107,
+    "lp_visits": 107,
+    "opt_ins": 6,
     "purchases_l1": 0,
     "consultations_l2": 0,
-    "ctr": 5.14,
-    "lp_cvr": 4.72,
+    "ctr": 5.16,
+    "lp_cvr": 5.61,
     "email_cvr": 0.0
   },
   "analysis": {
     "break_even_roas": 0,
-    "revenue_minus_spend": -260.31,
-    "top_problem_area": "High CPL on active ad sets",
+    "revenue_minus_spend": -261.94,
+    "top_problem_area": "Low landing page conversion",
     "top_opportunity_area": "Email list is growing but still too small for conversion conclusions",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: High CPL on active ad sets. Email list is growing but still too small for conversion conclusions. Paid spend is 260.31 PLN with 5 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -260.31 PLN. USD to PLN rate is 3.5912 (2026-04-17). MailerLite has 10 subscribers and 9 new subscribers in the last 7 days. Funnel metrics show 106 clicks, 5 opt-ins, LP CVR 4.72%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: Low landing page conversion. Email list is growing but still too small for conversion conclusions. Paid spend is 261.94 PLN with 6 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -261.94 PLN. USD to PLN rate is 3.5912 (2026-04-17). MailerLite has 10 subscribers and 9 new subscribers in the last 7 days. Funnel metrics show 107 clicks, 6 opt-ins, LP CVR 5.61%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-04-17T16:28:09Z"
+    "generated_at": "2026-04-17T18:06:12Z"
   }
 }
