@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-22T07:05:41Z",
+  "last_updated": "2026-04-22T09:53:03Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -84,8 +84,8 @@
   },
   "instagram_organic": {
     "followers": 39,
-    "posts_this_week": 4,
-    "avg_reach": 52.0,
+    "posts_this_week": 3,
+    "avg_reach": 52.58,
     "avg_engagement_rate": 5.56,
     "top_posts": [
       {
@@ -113,7 +113,7 @@
         "caption": "Same jacket. Nine locations. One city.\n\nLaundromat. Parking garage. Bodega. Fire escape. Rooftop. Subway platform. Overpass. Mural wall. Park bench.\n\nOne model, one outfit, one afternoon. A lookbook that covers every angle a streetwear bran",
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
         "timestamp": "2026-04-15T08:08:39+0000",
-        "reach": 26,
+        "reach": 27,
         "engagement_rate": 7.69,
         "likes": 3,
         "comments": 0
@@ -123,7 +123,7 @@
         "caption": "Small product. Complex details. Full campaign.\n\nThe engraving on the medallion reads the same in every frame - packshot, on skin, in motion, at macro scale. Chain weight consistent. Clasp detail matching. Patina identical.\n\nJewelry is the h",
         "permalink": "https://www.instagram.com/p/DXMKb_uDLow/",
         "timestamp": "2026-04-16T10:58:51+0000",
-        "reach": 16,
+        "reach": 17,
         "engagement_rate": 7.69,
         "likes": 1,
         "comments": 2
@@ -133,7 +133,7 @@
         "caption": "One frame. Full campaign.\n\nA single directed photograph. From that one frame: campaign hero, product packshot, lifestyle still life, on-skin detail, editorial close-up, social asset. Six formats from one session.\n\nThis is what production lo",
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
-        "reach": 158,
+        "reach": 159,
         "engagement_rate": 5.13,
         "likes": 0,
         "comments": 2
@@ -143,8 +143,8 @@
   "sales": {
     "currency": "PLN",
     "source_currency": "USD",
-    "fx_rate_usd_pln": 3.597,
-    "fx_rate_date": "2026-04-21",
+    "fx_rate_usd_pln": 3.608,
+    "fx_rate_date": "2026-04-22",
     "total_revenue_usd": 0.0,
     "total_revenue_pln": 0.0,
     "orders_this_month": 0,
@@ -198,7 +198,7 @@
     "revenue_minus_spend": -261.94,
     "top_problem_area": "Low landing page conversion",
     "top_opportunity_area": "Email list is growing but still too small for conversion conclusions",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: Low landing page conversion. Email list is growing but still too small for conversion conclusions. Paid spend is 261.94 PLN with 6 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -261.94 PLN. USD to PLN rate is 3.597 (2026-04-21). MailerLite has 10 subscribers and 9 new subscribers in the last 7 days. Funnel metrics show 107 clicks, 6 opt-ins, LP CVR 5.61%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: Low landing page conversion. Email list is growing but still too small for conversion conclusions. Paid spend is 261.94 PLN with 6 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is -261.94 PLN. USD to PLN rate is 3.608 (2026-04-22). MailerLite has 10 subscribers and 9 new subscribers in the last 7 days. Funnel metrics show 107 clicks, 6 opt-ins, LP CVR 5.61%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-04-22T07:05:28Z"
+    "generated_at": "2026-04-22T09:52:53Z"
   }
 }
