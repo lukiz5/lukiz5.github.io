@@ -1,22 +1,14 @@
 {
-  "last_updated": "2026-06-12T14:15:37Z",
+  "last_updated": "2026-06-12T19:22:23Z",
   "data_freshness_hours": 0.0,
-  "errors": [
-    "Meta Ads campaigns fetch failed: HTTP 500 while calling https://graph.facebook.com/v25.0/act_1858820458110741/campaigns - OAuthException - code 1 - An unknown error has occurred.",
-    "Meta Ads ad sets fetch failed: HTTP 500 while calling https://graph.facebook.com/v25.0/act_1858820458110741/adsets - OAuthException - code 1 - An unknown error has occurred.",
-    "Meta Ads account insights fetch failed: HTTP 500 while calling https://graph.facebook.com/v25.0/act_1858820458110741/insights - OAuthException - code 1 - An unknown error has occurred.",
-    "Meta Ads integration failed completely; preserving previous data.",
-    "Instagram profile fetch failed: HTTP 500 while calling https://graph.facebook.com/v25.0/17841476591964618 - OAuthException - code 1 - An unknown error has occurred.",
-    "Instagram media fetch failed: HTTP 500 while calling https://graph.facebook.com/v25.0/17841476591964618/media - OAuthException - code 1 - An unknown error has occurred.",
-    "Instagram integration failed completely; preserving previous data."
-  ],
+  "errors": [],
   "warnings": [],
   "sources_status": {
-    "meta_ads": "failed",
-    "instagram_organic": "failed",
+    "meta_ads": "ok",
+    "instagram_organic": "ok",
     "sales": "ok",
     "mailerlite": "ok",
-    "overall": "partial"
+    "overall": "ok"
   },
   "meta_ads": {
     "campaigns": [
@@ -204,9 +196,9 @@
   "analysis": {
     "break_even_roas": 0,
     "revenue_minus_spend": 0.0,
-    "top_problem_area": "Source failure is limiting conclusions (Meta Ads, Instagram)",
-    "top_opportunity_area": "Keep collecting fresh signal before making bigger optimizations",
-    "claude_context_summary": "Technical state: Failed sources: Meta Ads, Instagram. Business state: Source failure is limiting conclusions (Meta Ads, Instagram). Keep collecting fresh signal before making bigger optimizations. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.6697 (2026-06-12). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "top_problem_area": "No paid activity detected yet",
+    "top_opportunity_area": "Meta and Instagram integrations are healthy",
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.6697 (2026-06-12). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -218,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-06-12T14:15:27Z"
+    "generated_at": "2026-06-12T19:22:04Z"
   }
 }
