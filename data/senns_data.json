@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-16T20:19:22Z",
+  "last_updated": "2026-06-17T10:04:14Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -83,10 +83,10 @@
     "blended_roas": 0.0
   },
   "instagram_organic": {
-    "followers": 39,
+    "followers": 38,
     "posts_this_week": 0,
     "avg_reach": 57.83,
-    "avg_engagement_rate": 5.56,
+    "avg_engagement_rate": 5.7,
     "top_posts": [
       {
         "id": "17990896226786576",
@@ -94,7 +94,7 @@
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
         "reach": 141,
-        "engagement_rate": 10.26,
+        "engagement_rate": 10.53,
         "likes": 4,
         "comments": 0
       },
@@ -104,7 +104,7 @@
         "permalink": "https://www.instagram.com/p/DWqjOBujJoA/",
         "timestamp": "2026-04-03T09:41:13+0000",
         "reach": 33,
-        "engagement_rate": 10.26,
+        "engagement_rate": 10.53,
         "likes": 4,
         "comments": 0
       },
@@ -114,7 +114,7 @@
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
         "timestamp": "2026-04-15T08:08:39+0000",
         "reach": 34,
-        "engagement_rate": 7.69,
+        "engagement_rate": 7.89,
         "likes": 3,
         "comments": 0
       },
@@ -124,7 +124,7 @@
         "permalink": "https://www.instagram.com/p/DXMKb_uDLow/",
         "timestamp": "2026-04-16T10:58:51+0000",
         "reach": 23,
-        "engagement_rate": 7.69,
+        "engagement_rate": 7.89,
         "likes": 1,
         "comments": 2
       },
@@ -134,7 +134,7 @@
         "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
         "timestamp": "2026-04-13T07:52:48+0000",
         "reach": 165,
-        "engagement_rate": 5.13,
+        "engagement_rate": 5.26,
         "likes": 0,
         "comments": 2
       }
@@ -143,8 +143,8 @@
   "sales": {
     "currency": "PLN",
     "source_currency": "USD",
-    "fx_rate_usd_pln": 3.6589,
-    "fx_rate_date": "2026-06-16",
+    "fx_rate_usd_pln": 3.6542,
+    "fx_rate_date": "2026-06-17",
     "total_revenue_usd": 0.0,
     "total_revenue_pln": 0.0,
     "orders_this_month": 0,
@@ -198,7 +198,7 @@
     "revenue_minus_spend": 0.0,
     "top_problem_area": "No paid activity detected yet",
     "top_opportunity_area": "Meta and Instagram integrations are healthy",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.6589 (2026-06-16). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.6542 (2026-06-17). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-06-16T20:19:03Z"
+    "generated_at": "2026-06-17T10:04:01Z"
   }
 }
