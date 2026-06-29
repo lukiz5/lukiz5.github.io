@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-29T14:53:00Z",
+  "last_updated": "2026-06-29T19:15:45Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -85,7 +85,7 @@
   "instagram_organic": {
     "followers": 39,
     "posts_this_week": 0,
-    "avg_reach": 57.92,
+    "avg_reach": 58.17,
     "avg_engagement_rate": 5.56,
     "top_posts": [
       {
@@ -93,7 +93,7 @@
         "caption": "Same brief. Two results.\n\nOne side: what you get without direction. The other: what a production system delivers. Same category, same starting point. The gap is light control, skin rendering, expression direction.\n\nGeneric tools produce ima",
         "permalink": "https://www.instagram.com/reel/DWx_RKkgdXI/",
         "timestamp": "2026-04-06T07:01:27+0000",
-        "reach": 141,
+        "reach": 142,
         "engagement_rate": 10.26,
         "likes": 4,
         "comments": 0
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-06-29T14:52:41Z"
+    "generated_at": "2026-06-29T19:15:32Z"
   }
 }
