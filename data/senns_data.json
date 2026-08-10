@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-10T06:42:07Z",
+  "last_updated": "2026-08-10T09:47:38Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -143,8 +143,8 @@
   "sales": {
     "currency": "PLN",
     "source_currency": "USD",
-    "fx_rate_usd_pln": 3.7324,
-    "fx_rate_date": "2026-08-07",
+    "fx_rate_usd_pln": 3.7226,
+    "fx_rate_date": "2026-08-10",
     "total_revenue_usd": 0.0,
     "total_revenue_pln": 0.0,
     "orders_this_month": 0,
@@ -198,7 +198,7 @@
     "revenue_minus_spend": 0.0,
     "top_problem_area": "No paid activity detected yet",
     "top_opportunity_area": "Meta and Instagram integrations are healthy",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.7324 (2026-08-07). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.7226 (2026-08-10). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-08-10T06:41:58Z"
+    "generated_at": "2026-08-10T09:47:28Z"
   }
 }
