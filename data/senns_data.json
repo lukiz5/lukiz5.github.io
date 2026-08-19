@@ -1,14 +1,16 @@
 {
-  "last_updated": "2026-08-19T08:54:30Z",
+  "last_updated": "2026-08-19T11:41:30Z",
   "data_freshness_hours": 0.0,
-  "errors": [],
+  "errors": [
+    "Sales sheet metadata fetch failed: Timeout while calling https://sheets.googleapis.com/v4/spreadsheets/1yv9EmGQbYjfup141LvEv8R3i9NHf-2Kn4HMkyWKoEU8"
+  ],
   "warnings": [],
   "sources_status": {
     "meta_ads": "ok",
     "instagram_organic": "ok",
-    "sales": "ok",
+    "sales": "failed",
     "mailerlite": "ok",
-    "overall": "ok"
+    "overall": "partial"
   },
   "meta_ads": {
     "campaigns": [
@@ -85,7 +87,7 @@
   "instagram_organic": {
     "followers": 39,
     "posts_this_week": 0,
-    "avg_reach": 61.5,
+    "avg_reach": 61.58,
     "avg_engagement_rate": 5.56,
     "top_posts": [
       {
@@ -196,9 +198,9 @@
   "analysis": {
     "break_even_roas": 0,
     "revenue_minus_spend": 0.0,
-    "top_problem_area": "No paid activity detected yet",
+    "top_problem_area": "Source failure is limiting conclusions (Sales)",
     "top_opportunity_area": "Meta and Instagram integrations are healthy",
-    "claude_context_summary": "Technical state: All integrations healthy. Business state: No paid activity detected yet. Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.7307 (2026-08-18). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
+    "claude_context_summary": "Technical state: Failed sources: Sales. Business state: Source failure is limiting conclusions (Sales). Meta and Instagram integrations are healthy. Paid spend is 0.0 PLN with 0 leads, 0 level-1 purchases, and blended ROAS 0.0. Sales revenue is 0.0 PLN, so revenue minus spend is 0.0 PLN. USD to PLN rate is 3.7307 (2026-08-18). MailerLite has 11 subscribers and 0 new subscribers in the last 7 days. Funnel metrics show 0 clicks, 0 opt-ins, LP CVR 0.0%, and email CVR 0.0%."
   },
   "knowledge_context": {
     "source_dir": "knowledge/ads",
@@ -210,6 +212,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-08-19T08:54:18Z"
+    "generated_at": "2026-08-19T11:40:51Z"
   }
 }
