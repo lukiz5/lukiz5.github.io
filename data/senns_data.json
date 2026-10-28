@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-28T11:20:52Z",
+  "last_updated": "2026-10-28T19:34:38Z",
   "data_freshness_hours": 0.0,
   "errors": [],
   "warnings": [],
@@ -86,7 +86,7 @@
     "followers": 41,
     "posts_this_week": 0,
     "avg_reach": 62.92,
-    "avg_engagement_rate": 5.69,
+    "avg_engagement_rate": 5.9,
     "top_posts": [
       {
         "id": "17990896226786576",
@@ -109,6 +109,16 @@
         "comments": 0
       },
       {
+        "id": "17949473987980383",
+        "caption": "Everyone has access to the same tools. The outputs look identical.\n\nThe difference isn't the model you use. It's the session thinking behind it - light direction, character continuity, knowing which frame serves which purpose in a campaign.",
+        "permalink": "https://www.instagram.com/reel/DXWVfAxFDzT/",
+        "timestamp": "2026-04-20T09:48:13+0000",
+        "reach": 140,
+        "engagement_rate": 7.32,
+        "likes": 3,
+        "comments": 0
+      },
+      {
         "id": "17962198127915732",
         "caption": "Same jacket. Nine locations. One city.\n\nLaundromat. Parking garage. Bodega. Fire escape. Rooftop. Subway platform. Overpass. Mural wall. Park bench.\n\nOne model, one outfit, one afternoon. A lookbook that covers every angle a streetwear bran",
         "permalink": "https://www.instagram.com/p/DXJSKgbDMhF/",
@@ -126,16 +136,6 @@
         "reach": 28,
         "engagement_rate": 7.32,
         "likes": 1,
-        "comments": 2
-      },
-      {
-        "id": "17878807992555539",
-        "caption": "One frame. Full campaign.\n\nA single directed photograph. From that one frame: campaign hero, product packshot, lifestyle still life, on-skin detail, editorial close-up, social asset. Six formats from one session.\n\nThis is what production lo",
-        "permalink": "https://www.instagram.com/reel/DXEGtMYkh5F/",
-        "timestamp": "2026-04-13T07:52:48+0000",
-        "reach": 168,
-        "engagement_rate": 4.88,
-        "likes": 0,
         "comments": 2
       }
     ]
@@ -210,6 +210,6 @@
       }
     ],
     "combined_text": "[README.md]\n# Ads Knowledge Files\n\nWrzucaj tutaj pliki `.md` z założeniami reklamowymi, notatkami strategicznymi, testami, insightami i regułami operacyjnymi.\n\nŚcieżka:\n`knowledge/ads/*.md`\n\nJak to działa:\n- Pipeline `scripts/fetch_data.py` przy każdym odświeżeniu dashboardu czyta wszystkie markdowny z tego folderu.\n- Zawartość jest dodawana do `data/senns_data.json` jako `knowledge_context`.\n- Claude Chat w dashboardzie automatycznie dołącza ten kontekst do promptu przed odpowiedzią.\n\nWskazówki:\n- Najlepiej 1 temat = 1 plik.\n- Używaj konkretnych tytułów, np. `offer-positioning.md`, `meta-scaling-rules.md`, `icp-objections.md`.\n- Gdy plik jest bardzo długi, kontekst może zostać automatycznie skrócony do bezpiecznego limitu.",
-    "generated_at": "2026-10-28T11:20:41Z"
+    "generated_at": "2026-10-28T19:34:28Z"
   }
 }
